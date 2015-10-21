@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CellStyle" nillable="true" type="CellStyle" />
+  <xs:complexType name="CellStyle">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="ShrinkToFit" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Font" type="FontStyle" />
+      <xs:element minOccurs="1" maxOccurs="1" name="ScriptStyle" type="FontScriptStyle" />
+      <xs:element minOccurs="1" maxOccurs="1" name="IsHidden" type="xs:boolean" />
+      <xs:element minOccurs="1" maxOccurs="1" name="IsLocked" type="xs:boolean" />
+      <xs:element minOccurs="1" maxOccurs="1" name="HorizontalAlignment" type="HorizontalAlignment" />
+      <xs:element minOccurs="1" maxOccurs="1" name="VerticalAlignment" type="VerticalAlignment" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Indent" type="xs:unsignedByte" />
+      <xs:element minOccurs="1" maxOccurs="1" name="WrapText" type="xs:boolean" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Rotation" type="xs:byte" />
+      <xs:element minOccurs="0" maxOccurs="1" name="BorderStyleTop" type="BorderStyle" />
+      <xs:element minOccurs="0" maxOccurs="1" name="BorderStyleBottom" type="BorderStyle" />
+      <xs:element minOccurs="0" maxOccurs="1" name="BorderStyleLeft" type="BorderStyle" />
+      <xs:element minOccurs="0" maxOccurs="1" name="BorderStyleRight" type="BorderStyle" />
+      <xs:element minOccurs="0" maxOccurs="1" name="BorderStyleDiagonalLeftToRight" type="BorderStyle" />
+      <xs:element minOccurs="0" maxOccurs="1" name="BorderStyleDiagonalRightToLeft" type="BorderStyle" />
+      <xs:element minOccurs="1" maxOccurs="1" name="FillPatternStyle" type="FillPatternStyle" />
+      <xs:element minOccurs="1" maxOccurs="1" name="FillPatternColor" type="Color" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FontStyle">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="FontNmae" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="IsItalic" type="xs:boolean" />
+      <xs:element minOccurs="1" maxOccurs="1" name="IsBold" type="xs:boolean" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Size" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Underline" type="UnderLineStyle" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Color" type="Color" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="UnderLineStyle">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Single" />
+      <xs:enumeration value="Double" />
+      <xs:enumeration value="SingleAccounting" />
+      <xs:enumeration value="DoubleAccounting" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="Color" />
+  <xs:simpleType name="FontScriptStyle">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Superscript" />
+      <xs:enumeration value="Subscript" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="HorizontalAlignment">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="General" />
+      <xs:enumeration value="Left" />
+      <xs:enumeration value="Center" />
+      <xs:enumeration value="Right" />
+      <xs:enumeration value="Fill" />
+      <xs:enumeration value="Justify" />
+      <xs:enumeration value="CenterAcrossSelection" />
+      <xs:enumeration value="Distributed" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="VerticalAlignment">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Top" />
+      <xs:enumeration value="Center" />
+      <xs:enumeration value="Justify" />
+      <xs:enumeration value="Distributed" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="BorderStyle">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="Type" type="BorderType" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Color" type="Color" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="BorderType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Thin" />
+      <xs:enumeration value="Medium" />
+      <xs:enumeration value="Dashed" />
+      <xs:enumeration value="Dotted" />
+      <xs:enumeration value="Thick" />
+      <xs:enumeration value="Double" />
+      <xs:enumeration value="Hair" />
+      <xs:enumeration value="MediumDashed" />
+      <xs:enumeration value="DashDot" />
+      <xs:enumeration value="MediumDashDot" />
+      <xs:enumeration value="DashDotDot" />
+      <xs:enumeration value="MediumDashDotDot" />
+      <xs:enumeration value="SlantedDashDot" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FillPatternStyle">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Solid" />
+      <xs:enumeration value="ThreeQuarters" />
+      <xs:enumeration value="OneHalf" />
+      <xs:enumeration value="OneQuarter" />
+      <xs:enumeration value="OneEight" />
+      <xs:enumeration value="OneSixteenth" />
+      <xs:enumeration value="HorizontalStripe" />
+      <xs:enumeration value="VerticalStripe" />
+      <xs:enumeration value="ReverseDiagonalStripe" />
+      <xs:enumeration value="DiagonalStripe" />
+      <xs:enumeration value="DiagonalCrosshatch" />
+      <xs:enumeration value="ThickDiagonalCrosshatch" />
+      <xs:enumeration value="ThinHorizontalStripe" />
+      <xs:enumeration value="ThinVerticalStripe" />
+      <xs:enumeration value="ThinReverseDiagonalStripe" />
+      <xs:enumeration value="ThinDiagonalStripe" />
+      <xs:enumeration value="ThinHorizontalCrosshatch" />
+      <xs:enumeration value="ThinDiagonalCrosshatch" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

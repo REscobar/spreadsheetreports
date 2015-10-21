@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="ReportDefinition" nillable="true" type="ReportDefinition" />
+  <xs:complexType name="ReportDefinition">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Content" type="ReportSection" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReportSection">
+    <xs:complexContent mixed="false">
+      <xs:extension base="DetailSection">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Header" type="HeaderSection" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Detail" type="DetailSection" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Footer" type="FooterSection" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DetailSection" abstract="true" />
+  <xs:complexType name="HeaderSection">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Rows" type="ArrayOfRow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfRow">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" nillable="true" type="Row" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Row">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Cells" type="ArrayOfCell" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfCell">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Cell" nillable="true" type="Cell" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Cell" />
+  <xs:complexType name="FooterSection">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Rows" type="ArrayOfRow" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
