@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace SpreadSheetsReports.ReportModel
 {
-    class CellBinding
+    public class CellBinding
     {
+        public string CellPropertyName { get; set; }
+        public string DataMember { get; set; }
+        public object DataSource { get; set; }
+
+        public CellBinding(string cellPorpertyName, object dataSource, string dataMember)
+        {
+            this.CellPropertyName = cellPorpertyName;
+            this.DataSource = dataSource;
+            this.DataMember = dataMember;
+        }
     }
 }

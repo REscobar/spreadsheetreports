@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cell.cs" />
+    <Compile Include="ReportModel\CellBindingCollection.cs" />
     <Compile Include="ReportModel\CellBinding.cs" />
     <Compile Include="ReportModel\CellType.cs" />
     <Compile Include="DocumentModel\BorderType.cs" />

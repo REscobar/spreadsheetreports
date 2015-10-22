@@ -1,22 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="SpreadSheetsReports.Cell">
-    <Position X="4.25" Y="6" Width="1.5" />
-    <AssociationLine Name="Style" Type="SpreadSheetsReports.DocumentModel.CellStyle" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="5.125" Y="7.296" />
-        <Point X="5.125" Y="7.671" />
-        <Point X="5.125" Y="7.671" />
-        <Point X="5.125" Y="8.25" />
-      </Path>
-    </AssociationLine>
+    <Position X="4.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAABAAACAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAABUAACAAAAAA=</HashCode>
       <FileName>Cell.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Style" />
+      <Property Name="Type" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Bindings" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="SpreadSheetsReports.FooterSection">
     <Position X="6.5" Y="1.25" Width="1.5" />
@@ -160,6 +156,7 @@
       <FileName>DocumentModel\CellStyle.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="Font" />
       <Property Name="HorizontalAlignment" />
       <Property Name="VerticalAlignment" />
       <Property Name="BorderStyleTop" />
@@ -169,7 +166,6 @@
       <Property Name="BorderStyleDiagonalLeftToRight" />
       <Property Name="BorderStyleDiagonalRightToLeft" />
       <Property Name="FillPatternStyle" />
-      <Property Name="Font" />
       <Property Name="FillPatternColor" />
     </ShowAsAssociation>
   </Class>
@@ -201,10 +197,41 @@
       <FileName>DocumentModel\FontStyle.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="ScriptStyle" />
       <Property Name="Underline" />
+      <Property Name="ScriptStyle" />
       <Property Name="Color" />
     </ShowAsAssociation>
+  </Class>
+  <Class Name="SpreadSheetsReports.ReportModel.CellBindingCollection">
+    <Position X="11.75" Y="3" Width="1.75" />
+    <InheritanceLine Type="System.Collections.Generic.List&lt;T&gt;" FixedToPoint="true">
+      <Path>
+        <Point X="12.625" Y="2.312" />
+        <Point X="12.625" Y="3" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReportModel\CellBindingCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpreadSheetsReports.ReportModel.CellBinding">
+    <Position X="8" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAACAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReportModel\CellBinding.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Collections.Generic.List&lt;T&gt;" Collapsed="true">
+    <Position X="11.75" Y="1.75" Width="1.75" />
+    <NestedTypes>
+      <Struct Name="System.Collections.Generic.List&lt;T&gt;.Enumerator" Collapsed="true">
+        <TypeIdentifier />
+        <Lollipop Position="0.2" />
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
   </Class>
   <Struct Name="SpreadSheetsReports.DocumentModel.Color">
     <Position X="4.5" Y="13.5" Width="1.5" />
@@ -214,7 +241,7 @@
     </TypeIdentifier>
   </Struct>
   <Enum Name="SpreadSheetsReports.DocumentModel.FillPatternStyle">
-    <Position X="11" Y="8.25" Width="2" />
+    <Position X="10.5" Y="8.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAQAAAABAARAAIAAAAAAQhAgAAACAAAIAAgQWAAAAAI=</HashCode>
       <FileName>DocumentModel\FillPatternStyle.cs</FileName>
@@ -235,7 +262,7 @@
     </TypeIdentifier>
   </Enum>
   <Enum Name="SpreadSheetsReports.DocumentModel.VerticalAlignment">
-    <Position X="9.25" Y="9" Width="1.5" />
+    <Position X="8.75" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAACAAAAAAAAAACAIAAAAAAAAAAAIAAA=</HashCode>
       <FileName>DocumentModel\VerticalAlignment.cs</FileName>
@@ -253,6 +280,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAACCAAAACAAAAAAAAAIEAAAA=</HashCode>
       <FileName>DocumentModel\UnderLineStyle.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SpreadSheetsReports.ReportModel.CellType">
+    <Position X="1.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAABAABAAAACAAAAAA=</HashCode>
+      <FileName>ReportModel\CellType.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />
