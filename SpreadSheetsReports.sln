@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadSheetsReports", "Spre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadSheetsReports.WpfUi", "SpreadSheetsReports.WpfUi\SpreadSheetsReports.WpfUi.csproj", "{BA2C15A5-B0FC-43FD-AF26-87C0EE690B31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadSheetsReports.NPOIRenderer", "SpreadSheetsReports.NPOIRenderer\SpreadSheetsReports.NPOIRenderer.csproj", "{3C83B237-AD64-474B-B674-922840D6CCB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadSheetsReports.SpreadsheetLightRenderer", "SpreadSheetsReports.SpreadsheetLightRenderer\SpreadSheetsReports.SpreadsheetLightRenderer.csproj", "{5BC16EC3-E8F0-48EB-9E6B-AA2F6E806890}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{BA2C15A5-B0FC-43FD-AF26-87C0EE690B31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA2C15A5-B0FC-43FD-AF26-87C0EE690B31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA2C15A5-B0FC-43FD-AF26-87C0EE690B31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C83B237-AD64-474B-B674-922840D6CCB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C83B237-AD64-474B-B674-922840D6CCB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C83B237-AD64-474B-B674-922840D6CCB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C83B237-AD64-474B-B674-922840D6CCB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BC16EC3-E8F0-48EB-9E6B-AA2F6E806890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BC16EC3-E8F0-48EB-9E6B-AA2F6E806890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BC16EC3-E8F0-48EB-9E6B-AA2F6E806890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BC16EC3-E8F0-48EB-9E6B-AA2F6E806890}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

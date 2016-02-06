@@ -18,5 +18,23 @@ namespace SpreadSheetsReports.ReportModel
             this.DataSource = dataSource;
             this.DataMember = dataMember;
         }
+        
+        internal void PerformBind(Cell cell)
+        {
+            object value = ResolveValue();
+            switch (this.CellPropertyName)
+            {
+                case nameof(Cell.Value):
+                    cell.Value = value;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private object ResolveValue()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

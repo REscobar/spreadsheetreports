@@ -16,9 +16,17 @@ namespace SpreadSheetsReports
         }
         public CellStyle Style { get; set; }
         public string ClassName { get; set; }
-        public string Text { get; set; }
+        public object Value { get; set; }
         public CellType Type { get; set; }
 
         public CellBindingCollection Bindings { get; private set; }
+
+        public void Render()
+        {
+            foreach (var binding in this.Bindings)
+            {
+                binding.PerformBind(this);
+            }
+        }
     }
 }
