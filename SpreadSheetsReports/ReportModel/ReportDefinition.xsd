@@ -3,14 +3,25 @@
   <xs:element name="ReportDefinition" nillable="true" type="ReportDefinition" />
   <xs:complexType name="ReportDefinition">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="Content" type="ReportSection" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Sheets" type="ArrayOfSheet" />
       <xs:element minOccurs="0" maxOccurs="1" name="DataSource" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfSheet">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Sheet" nillable="true" type="Sheet" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Sheet">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Content" type="ReportSection" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="ReportSection">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="1" name="Header" type="HeaderSection" />
-      <xs:element minOccurs="0" maxOccurs="1" name="Detail" type="ReportSection" />
+      <xs:element minOccurs="0" maxOccurs="1" name="SubSection" type="ReportSection" />
       <xs:element minOccurs="0" maxOccurs="1" name="Footer" type="FooterSection" />
     </xs:sequence>
   </xs:complexType>
@@ -38,8 +49,9 @@
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="1" name="Style" type="CellStyle" />
       <xs:element minOccurs="0" maxOccurs="1" name="ClassName" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="Text" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Value" />
       <xs:element minOccurs="1" maxOccurs="1" name="Type" type="CellType" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Bindings" type="ArrayOfCellBinding" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CellStyle">
@@ -57,8 +69,8 @@
       <xs:element minOccurs="0" maxOccurs="1" name="BorderStyleBottom" type="BorderStyle" />
       <xs:element minOccurs="0" maxOccurs="1" name="BorderStyleLeft" type="BorderStyle" />
       <xs:element minOccurs="0" maxOccurs="1" name="BorderStyleRight" type="BorderStyle" />
-      <xs:element minOccurs="0" maxOccurs="1" name="BorderStyleDiagonalLeftToRight" type="BorderStyle" />
-      <xs:element minOccurs="0" maxOccurs="1" name="BorderStyleDiagonalRightToLeft" type="BorderStyle" />
+      <xs:element minOccurs="0" maxOccurs="1" name="BorderStyleDiagonalUpLeftToBottomRight" type="BorderStyle" />
+      <xs:element minOccurs="0" maxOccurs="1" name="BorderStyleDiagonalUpRightToBottomLeft" type="BorderStyle" />
       <xs:element minOccurs="1" maxOccurs="1" name="FillPatternStyle" type="FillPatternStyle" />
       <xs:element minOccurs="1" maxOccurs="1" name="FillPatternColor" nillable="true" type="Color" />
     </xs:sequence>
@@ -112,10 +124,12 @@
   </xs:simpleType>
   <xs:simpleType name="VerticalAlignment">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="Bottom" />
       <xs:enumeration value="Top" />
       <xs:enumeration value="Center" />
       <xs:enumeration value="Justify" />
       <xs:enumeration value="Distributed" />
+      <xs:enumeration value="JustifyDistributed" />
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="BorderStyle">
@@ -172,6 +186,18 @@
       <xs:enumeration value="Formula" />
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="ArrayOfCellBinding">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CellBinding" nillable="true" type="CellBinding" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CellBinding">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="CellPropertyName" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="DataMember" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="DataSource" />
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="FooterSection">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="1" name="Rows" type="ArrayOfRow" />

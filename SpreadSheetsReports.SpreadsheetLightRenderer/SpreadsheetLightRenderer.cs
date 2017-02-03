@@ -8,9 +8,10 @@
     using SpreadsheetLight;
     using SpreadSheetsReports.DocumentModel;
     using ReportModel;
+    using System.IO;
     class SpreadsheetLightRenderer : IReportRenderer
     {
-        public void Render(ReportDefinition report)
+        public Stream Render(ReportDefinition report)
         {
             using (SLDocument document = new SLDocument())
             {
@@ -24,6 +25,9 @@
                         rowCounter++;
                     }
                 }
+                var stream = new MemoryStream();
+                document.SaveAs(stream);
+                return stream;
             }
         }
 

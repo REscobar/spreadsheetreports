@@ -9,7 +9,7 @@
 
     public class FontStyle
     {
-        public string FontNmae { get; set; }
+        public string FontName { get; set; }
 
         public bool IsItalic { get; set; }
 

@@ -8,7 +8,7 @@
 
     public class ReportDefinition
     {
-        public IEnumerable<Sheet> Sheets { get; set; }
+        public List<Sheet> Sheets { get; set; }
 
         public object DataSource { get; set; }
     }

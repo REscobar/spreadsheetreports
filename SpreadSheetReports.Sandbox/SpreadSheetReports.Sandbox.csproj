@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{83A56F6B-AEAA-407D-9846-AE04F29182FF}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{C114138F-AEC2-4692-9E9C-2693F0FFC502}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpreadSheetsReports</RootNamespace>
-    <AssemblyName>SpreadSheetsReports</AssemblyName>
+    <RootNamespace>SpreadSheetReports.Sandbox</RootNamespace>
+    <AssemblyName>SpreadSheetReports.Sandbox</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,43 +43,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReportModel\Cell.cs" />
-    <Compile Include="IReportRenderer.cs" />
-    <Compile Include="ReportModel\CellBindingCollection.cs" />
-    <Compile Include="ReportModel\CellBinding.cs" />
-    <Compile Include="ReportModel\CellType.cs" />
-    <Compile Include="DocumentModel\BorderType.cs" />
-    <Compile Include="DocumentModel\BorderStyle.cs" />
-    <Compile Include="DocumentModel\CellStyle.cs" />
-    <Compile Include="DocumentModel\Color.cs" />
-    <Compile Include="DocumentModel\FillPatternStyle.cs" />
-    <Compile Include="DocumentModel\FontScriptStyle.cs" />
-    <Compile Include="DocumentModel\FontStyle.cs" />
-    <Compile Include="DocumentModel\UnderLineStyle.cs" />
-    <Compile Include="DocumentModel\VerticalAlignment.cs" />
-    <Compile Include="ReportModel\FooterSection.cs" />
-    <Compile Include="DocumentModel\HorizontalAlignment.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReportModel\ICellBinding.cs" />
-    <Compile Include="ReportModel\ReportDefinition.cs" />
-    <Compile Include="ReportModel\ReportSection.cs" />
-    <Compile Include="ReportModel\Row.cs" />
-    <Compile Include="ReportModel\HeaderSection.cs" />
-    <Compile Include="ReportModel\RowCollection.cs" />
-    <Compile Include="ReportModel\Sheet.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="packages.config" />
-    <AdditionalFiles Include="stylecop.json" />
-    <None Include="ReportModel\ReportDefinition.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <Content Include="TestData.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SpreadSheetsReports.NPOIRenderer\SpreadSheetsReports.NPOIRenderer.csproj">
+      <Project>{3c83b237-ad64-474b-b674-922840d6ccb5}</Project>
+      <Name>SpreadSheetsReports.NPOIRenderer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpreadSheetsReports\SpreadSheetsReports.csproj">
+      <Project>{83a56f6b-aeaa-407d-9846-ae04f29182ff}</Project>
+      <Name>SpreadSheetsReports</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

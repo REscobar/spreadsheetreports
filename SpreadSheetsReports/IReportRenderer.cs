@@ -1,14 +1,14 @@
 ﻿namespace SpreadSheetsReports
 {
-    using ReportModel;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-
+    using ReportModel;
+    using System.IO;
     public interface IReportRenderer
     {
-        void Render(ReportDefinition report);
+        Stream Render(ReportDefinition report);
     }
 }

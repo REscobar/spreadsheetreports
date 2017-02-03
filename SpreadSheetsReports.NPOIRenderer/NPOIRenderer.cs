@@ -2,16 +2,18 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
     using NPOI.SS.UserModel;
     using NPOI.XSSF.UserModel;
-    using SpreadSheetsReports.DocumentModel;
     using ReportModel;
-    class NPOIRenderer : IReportRenderer
+    using SpreadSheetsReports.DocumentModel;
+
+    public class NPOIRenderer : IReportRenderer
     {
-        public void Render(ReportDefinition report)
+        public Stream Render(ReportDefinition report)
         {
             IWorkbook workbook = new XSSFWorkbook();
             foreach (var sheet in report.Sheets)
@@ -21,11 +23,26 @@
                 foreach (var row in sheet.Content.Header.Rows)
                 {
                     IRow sheetrow = documentSheet.CreateRow(rowCounter);
+                    rowCounter++;
+
+                    if (row == null)
+                    {
+                        continue;
+                    }
+
                     RenderRow(sheetrow, row);
 
-                    rowCounter++;
                 }
             }
+
+            var path = Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+            Stream stream = File.Create(path);
+
+            workbook.Write(stream);
+
+            stream = new MemoryStream(File.ReadAllBytes(path));
+
+            return stream;
         }
 
         private void RenderRow(IRow sheetrow, Row row)
@@ -34,16 +51,22 @@
             foreach (var cell in row.Cells)
             {
                 ICell sheetCell = sheetrow.CreateCell(cellCounter);
+                cellCounter++;
+
+                if (cell == null)
+                {
+                    continue;
+                }
+
                 RenderCell(sheetCell, cell);
                 ApplyStyle(sheetCell, cell);
 
-                cellCounter++;
             }
         }
 
         private void RenderCell(ICell sheetCell, Cell cell)
         {
-            switch (Type.GetTypeCode( cell.Value.GetType()))
+            switch (Type.GetTypeCode(cell.Value.GetType()))
             {
                 case TypeCode.Boolean:
                     sheetCell.SetCellValue(Convert.ToBoolean(cell.Value));
@@ -96,6 +119,9 @@
                     break;
                 case DocumentModel.VerticalAlignment.Center:
                     cellStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;
+                    break;
+                case DocumentModel.VerticalAlignment.Bottom:
+                    cellStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Bottom;
                     break;
                 case DocumentModel.VerticalAlignment.Justify:
                     cellStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Justify;

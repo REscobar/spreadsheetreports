@@ -8,6 +8,11 @@
 
     public class CellBinding : ICellBinding
     {
+        public CellBinding()
+        {
+
+        }
+
         public CellBinding(string cellPorpertyName, object dataSource, string dataMember)
         {
             this.CellPropertyName = cellPorpertyName;
