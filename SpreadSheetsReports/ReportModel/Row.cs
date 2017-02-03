@@ -1,14 +1,13 @@
-﻿namespace SpreadSheetsReports
+﻿namespace SpreadSheetsReports.ReportModel
 {
-    using ReportModel;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IReportRenderer
+    public class Row
     {
-        void Render(ReportDefinition report);
+        public List<Cell> Cells { get; set; }
     }
 }

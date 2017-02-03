@@ -2,7 +2,7 @@
 {
     public enum FillPatternStyle
     {
-        Solid,
+        Solid = 0,
         ThreeQuarters,
         OneHalf,
         OneQuarter,

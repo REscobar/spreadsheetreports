@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpreadSheetsReports.DocumentModel
+﻿namespace SpreadSheetsReports.DocumentModel
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     public class CellStyle
     {
-        
         public bool ShrinkToFit { get; set; }
 
         public FontStyle Font { get; set; }
-
 
         public bool IsHidden { get; set; }
 
@@ -30,11 +28,16 @@ namespace SpreadSheetsReports.DocumentModel
         public sbyte Rotation { get; set; }
 
         public BorderStyle BorderStyleTop { get; set; }
+
         public BorderStyle BorderStyleBottom { get; set; }
+
         public BorderStyle BorderStyleLeft { get; set; }
+
         public BorderStyle BorderStyleRight { get; set; }
-        public BorderStyle BorderStyleDiagonalLeftToRight { get; set; }
-        public BorderStyle BorderStyleDiagonalRightToLeft { get; set; }
+
+        public BorderStyle BorderStyleDiagonalUpLeftToBottomRight { get; set; }
+
+        public BorderStyle BorderStyleDiagonalUpRightToBottomLeft { get; set; }
 
         public FillPatternStyle FillPatternStyle { get; set; }
 

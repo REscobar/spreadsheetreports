@@ -1,24 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SpreadsheetLight;
-using SpreadSheetsReports.DocumentModel;
-
-namespace SpreadSheetsReports.SpreadsheetLightRenderer
+﻿namespace SpreadSheetsReports.SpreadsheetLightRenderer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using SpreadsheetLight;
+    using SpreadSheetsReports.DocumentModel;
+    using ReportModel;
     class SpreadsheetLightRenderer : IReportRenderer
     {
         public void Render(ReportDefinition report)
         {
             using (SLDocument document = new SLDocument())
             {
-                int rowCounter = 0;
-                foreach (var row in report.Content.Header.Rows)
+                foreach (var sheet in report.Sheets)
                 {
-                    RenderRow(document, row,rowCounter);
-                    rowCounter++;
+
+                    int rowCounter = 0;
+                    foreach (var row in sheet.Content.Header.Rows)
+                    {
+                        RenderRow(document, row, rowCounter);
+                        rowCounter++;
+                    }
                 }
             }
         }

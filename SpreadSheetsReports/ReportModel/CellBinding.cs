@@ -1,40 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpreadSheetsReports.ReportModel
+﻿namespace SpreadSheetsReports.ReportModel
 {
-    public class CellBinding
-    {
-        public string CellPropertyName { get; set; }
-        public string DataMember { get; set; }
-        public object DataSource { get; set; }
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
 
+    public class CellBinding : ICellBinding
+    {
         public CellBinding(string cellPorpertyName, object dataSource, string dataMember)
         {
             this.CellPropertyName = cellPorpertyName;
             this.DataSource = dataSource;
             this.DataMember = dataMember;
         }
-        
+
+        public string CellPropertyName { get; set; }
+
+        public string DataMember { get; set; }
+
+        public object DataSource { get; set; }
+
         internal void PerformBind(Cell cell)
         {
-            object value = ResolveValue();
-            switch (this.CellPropertyName)
+            if (cell == null)
             {
-                case nameof(Cell.Value):
-                    cell.Value = value;
-                    break;
-                default:
-                    break;
+                throw new ArgumentNullException(nameof(cell));
             }
+
+            object value = this.ResolveValue();
+
+            cell.GetType().GetProperty(this.CellPropertyName).SetMethod.Invoke(cell, new[] { value });
         }
 
         private object ResolveValue()
         {
-            throw new NotImplementedException();
+            return this.DataSource.GetType().GetProperty(this.DataMember).GetValue(this.DataSource);
         }
     }
 }

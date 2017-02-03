@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cell.cs" />
+    <Compile Include="ReportModel\Cell.cs" />
     <Compile Include="IReportRenderer.cs" />
     <Compile Include="ReportModel\CellBindingCollection.cs" />
     <Compile Include="ReportModel\CellBinding.cs" />
@@ -55,22 +55,30 @@
     <Compile Include="DocumentModel\FontStyle.cs" />
     <Compile Include="DocumentModel\UnderLineStyle.cs" />
     <Compile Include="DocumentModel\VerticalAlignment.cs" />
-    <Compile Include="FooterSection.cs" />
+    <Compile Include="ReportModel\FooterSection.cs" />
     <Compile Include="DocumentModel\HorizontalAlignment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReportDefinition.cs" />
-    <Compile Include="ReportSection.cs" />
-    <Compile Include="Row.cs" />
-    <Compile Include="HeaderSection.cs" />
-    <Compile Include="RowCollection.cs" />
+    <Compile Include="ReportModel\ICellBinding.cs" />
+    <Compile Include="ReportModel\ReportDefinition.cs" />
+    <Compile Include="ReportModel\ReportSection.cs" />
+    <Compile Include="ReportModel\Row.cs" />
+    <Compile Include="ReportModel\HeaderSection.cs" />
+    <Compile Include="ReportModel\RowCollection.cs" />
+    <Compile Include="ReportModel\Sheet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
     <None Include="ReportDefinition.xsd">
       <SubType>Designer</SubType>
     </None>
+    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

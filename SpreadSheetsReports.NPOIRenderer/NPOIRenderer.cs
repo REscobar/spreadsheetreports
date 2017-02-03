@@ -1,28 +1,30 @@
-﻿using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SpreadSheetsReports.DocumentModel;
-
-namespace SpreadSheetsReports.NPOIRenderer
+﻿namespace SpreadSheetsReports.NPOIRenderer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using NPOI.SS.UserModel;
+    using NPOI.XSSF.UserModel;
+    using SpreadSheetsReports.DocumentModel;
+    using ReportModel;
     class NPOIRenderer : IReportRenderer
     {
         public void Render(ReportDefinition report)
         {
             IWorkbook workbook = new XSSFWorkbook();
-            ISheet sheet = workbook.CreateSheet();
-            int rowCounter = 0;
-            foreach (var row in report.Content.Header.Rows)
+            foreach (var sheet in report.Sheets)
             {
-              
-                IRow sheetrow = sheet.CreateRow(rowCounter);
-                RenderRow(sheetrow, row);
-               
-                rowCounter++;
+                ISheet documentSheet = workbook.CreateSheet();
+                int rowCounter = 0;
+                foreach (var row in sheet.Content.Header.Rows)
+                {
+                    IRow sheetrow = documentSheet.CreateRow(rowCounter);
+                    RenderRow(sheetrow, row);
+
+                    rowCounter++;
+                }
             }
         }
 

@@ -2,7 +2,7 @@
 {
     public enum HorizontalAlignment : byte
     {
-        General,
+        General = 0,
         Left,
         Center,
         Right,

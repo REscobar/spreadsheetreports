@@ -2,9 +2,11 @@
 {
     public enum VerticalAlignment
     {
+        Bottom = 0,
         Top,
         Center,
         Justify,
-        Distributed
+        Distributed,
+        JustifyDistributed
     }
 }

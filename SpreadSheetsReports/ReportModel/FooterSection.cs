@@ -1,4 +1,4 @@
-﻿namespace SpreadSheetsReports
+﻿namespace SpreadSheetsReports.ReportModel
 {
     public class FooterSection
     {
