@@ -9,7 +9,8 @@
     using SpreadSheetsReports.DocumentModel;
     using ReportModel;
     using System.IO;
-    class SpreadsheetLightRenderer : IReportRenderer
+
+    public class SpreadsheetLightRenderer : IReportRenderer
     {
         public Stream Render(ReportDefinition report)
         {
@@ -18,7 +19,7 @@
                 foreach (var sheet in report.Sheets)
                 {
 
-                    int rowCounter = 0;
+                    int rowCounter = 1;
                     foreach (var row in sheet.Content.Header.Rows)
                     {
                         RenderRow(document, row, rowCounter);
@@ -27,6 +28,9 @@
                 }
                 var stream = new MemoryStream();
                 document.SaveAs(stream);
+
+                stream.Seek(0, SeekOrigin.Begin);
+
                 return stream;
             }
         }
@@ -34,11 +38,20 @@
         private void RenderRow(SLDocument document, Row row, int rowCounter)
         {
             int cellCounter = 0;
+
+            if (row.Height.HasValue)
+            {
+                document.SetRowHeight(rowCounter, row.Height.Value);
+            }
+
             foreach (var cell in row.Cells)
             {
-                RenderCell(document, cell, rowCounter, cellCounter);
-                ApplyStyle(document, cell, rowCounter, cellCounter);
                 cellCounter++;
+                if(cell != null)
+                {
+                    RenderCell(document, cell, rowCounter, cellCounter);
+                    ApplyStyle(document, cell, rowCounter, cellCounter);
+                }
             }
         }
 

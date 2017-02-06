@@ -1,18 +1,12 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using SpreadSheetsReports.DocumentModel;
-    using SpreadSheetsReports.ReportModel;
+    using DocumentModel;
 
-    public class Cell
+    public class Cell : ReportControl
     {
         public Cell()
         {
-            this.Bindings = new CellBindingCollection();
+            this.Style = new CellStyle();
         }
 
         public CellStyle Style { get; set; }
@@ -22,15 +16,5 @@
         public object Value { get; set; }
 
         public CellType Type { get; set; }
-
-        public CellBindingCollection Bindings { get; private set; }
-
-        public void Render()
-        {
-            foreach (var binding in this.Bindings)
-            {
-                binding.PerformBind(this);
-            }
-        }
     }
 }

@@ -1,13 +1,26 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
-    public class Row
+    public class Row : ReportControl
     {
         public List<Cell> Cells { get; set; }
+
+        public float? Height { get; set; }
+
+        internal override void DoRender()
+        {
+            base.DoRender();
+
+            foreach (var cell in this.Cells)
+            {
+                if (cell == null)
+                {
+                    continue;
+                }
+
+                cell.DoRender();
+            }
+        }
     }
 }

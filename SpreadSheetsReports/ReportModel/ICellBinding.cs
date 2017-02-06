@@ -1,8 +1,8 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
-    public interface ICellBinding
+    public interface IPropertyBinding
     {
-        string CellPropertyName { get; set; }
+        string PropertyName { get; set; }
 
         string DataMember { get; set; }
 

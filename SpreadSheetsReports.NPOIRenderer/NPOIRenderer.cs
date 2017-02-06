@@ -16,6 +16,9 @@
         public Stream Render(ReportDefinition report)
         {
             IWorkbook workbook = new XSSFWorkbook();
+
+            report.Render();
+
             foreach (var sheet in report.Sheets)
             {
                 ISheet documentSheet = workbook.CreateSheet();
@@ -30,7 +33,7 @@
                         continue;
                     }
 
-                    RenderRow(sheetrow, row);
+                    this.RenderRow(sheetrow, row);
 
                 }
             }
@@ -48,6 +51,12 @@
         private void RenderRow(IRow sheetrow, Row row)
         {
             int cellCounter = 0;
+
+            if (row.Height.HasValue)
+            {
+                sheetrow.HeightInPoints = row.Height.Value;
+            }
+
             foreach (var cell in row.Cells)
             {
                 ICell sheetCell = sheetrow.CreateCell(cellCounter);

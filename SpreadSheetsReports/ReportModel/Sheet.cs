@@ -1,16 +1,21 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    public class Sheet
+    public class Sheet : ReportControl
     {
         public ReportSection Content { get; set; }
 
         public string Name { get; set; }
 
+        internal override void DoRender()
+        {
+            base.DoRender();
+
+            if (this.Content == null)
+            {
+                return;
+            }
+
+            this.Content.DoRender();
+        }
     }
 }

@@ -2,33 +2,40 @@
 <xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="ReportDefinition" nillable="true" type="ReportDefinition" />
   <xs:complexType name="ReportDefinition">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ReportControl">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Sheets" type="ArrayOfSheet" />
+          <xs:element minOccurs="0" maxOccurs="1" name="DataSource" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ReportControl" abstract="true">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="Sheets" type="ArrayOfSheet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Bindings" type="ArrayOfPropertyBinding" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfPropertyBinding">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PropertyBinding" nillable="true" type="PropertyBinding" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PropertyBinding">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="PropertyName" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="DataMember" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="DataSource" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="ArrayOfSheet">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Sheet" nillable="true" type="Sheet" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="Sheet">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="Content" type="ReportSection" />
-      <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="ReportSection">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="Header" type="HeaderSection" />
-      <xs:element minOccurs="0" maxOccurs="1" name="SubSection" type="ReportSection" />
-      <xs:element minOccurs="0" maxOccurs="1" name="Footer" type="FooterSection" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="HeaderSection">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="Rows" type="ArrayOfRow" />
-    </xs:sequence>
+  <xs:complexType name="FooterSection">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ReportControl">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Rows" type="ArrayOfRow" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="ArrayOfRow">
     <xs:sequence>
@@ -36,9 +43,14 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="Row">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="Cells" type="ArrayOfCell" />
-    </xs:sequence>
+    <xs:complexContent mixed="false">
+      <xs:extension base="ReportControl">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Cells" type="ArrayOfCell" />
+          <xs:element minOccurs="1" maxOccurs="1" name="Height" nillable="true" type="xs:float" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="ArrayOfCell">
     <xs:sequence>
@@ -46,13 +58,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="Cell">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="Style" type="CellStyle" />
-      <xs:element minOccurs="0" maxOccurs="1" name="ClassName" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="Value" />
-      <xs:element minOccurs="1" maxOccurs="1" name="Type" type="CellType" />
-      <xs:element minOccurs="0" maxOccurs="1" name="Bindings" type="ArrayOfCellBinding" />
-    </xs:sequence>
+    <xs:complexContent mixed="false">
+      <xs:extension base="ReportControl">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Style" type="CellStyle" />
+          <xs:element minOccurs="0" maxOccurs="1" name="ClassName" type="xs:string" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Value" />
+          <xs:element minOccurs="1" maxOccurs="1" name="Type" type="CellType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="CellStyle">
     <xs:sequence>
@@ -77,7 +92,7 @@
   </xs:complexType>
   <xs:complexType name="FontStyle">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="FontNmae" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="FontName" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="IsItalic" type="xs:boolean" />
       <xs:element minOccurs="1" maxOccurs="1" name="IsBold" type="xs:boolean" />
       <xs:element minOccurs="1" maxOccurs="1" name="Size" type="xs:decimal" />
@@ -186,21 +201,39 @@
       <xs:enumeration value="Formula" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="ArrayOfCellBinding">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="CellBinding" nillable="true" type="CellBinding" />
-    </xs:sequence>
+  <xs:complexType name="HeaderSection">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ReportControl">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Rows" type="ArrayOfRow" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="CellBinding">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="CellPropertyName" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="DataMember" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="DataSource" />
-    </xs:sequence>
+  <xs:complexType name="ReportSection">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ReportControl">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Header" type="HeaderSection" />
+          <xs:element minOccurs="0" maxOccurs="1" name="SubSection" type="ReportSection" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Footer" type="FooterSection" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="FooterSection">
+  <xs:complexType name="Sheet">
+    <xs:complexContent mixed="false">
+      <xs:extension base="ReportControl">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="Content" type="ReportSection" />
+          <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfSheet">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="Rows" type="ArrayOfRow" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Sheet" nillable="true" type="Sheet" />
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

@@ -11,9 +11,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadSheetsReports.NPOIRen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadSheetsReports.SpreadsheetLightRenderer", "SpreadSheetsReports.SpreadsheetLightRenderer\SpreadSheetsReports.SpreadsheetLightRenderer.csproj", "{5BC16EC3-E8F0-48EB-9E6B-AA2F6E806890}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadSheetReports.Sandbox", "SpreadSheetReports.Sandbox\SpreadSheetReports.Sandbox.csproj", "{C114138F-AEC2-4692-9E9C-2693F0FFC502}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadSheetsReports.Sandbox", "SpreadSheetReports.Sandbox\SpreadSheetsReports.Sandbox.csproj", "{C114138F-AEC2-4692-9E9C-2693F0FFC502}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A4346387-6D1D-45B5-ACDA-D94C159DB6CD}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+		Performance2.psess = Performance2.psess
+	EndProjectSection
 EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
