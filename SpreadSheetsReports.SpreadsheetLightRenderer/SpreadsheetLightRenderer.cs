@@ -9,7 +9,7 @@
     using SpreadSheetsReports.DocumentModel;
     using ReportModel;
     using System.IO;
-
+    using Renderer;
     public class SpreadsheetLightRenderer : IReportRenderer
     {
         public Stream Render(ReportDefinition report)

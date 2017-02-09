@@ -1,5 +1,6 @@
 ﻿using SpreadSheetsReports;
 using SpreadSheetsReports.NPOIRenderer;
+using SpreadSheetsReports.Renderer;
 using SpreadSheetsReports.ReportModel;
 using SpreadSheetsReports.SpreadsheetLightRenderer;
 using System;
@@ -44,7 +45,7 @@ namespace SpreadSheetsReports.Sandbox
                     {
                         Content = new ReportSection
                         {
-                            Header = new HeaderSection
+                            Header = new RowCollectionSection
                             {
                                 Rows = new RowCollection
                                 {

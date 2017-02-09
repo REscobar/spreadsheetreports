@@ -1,23 +1,20 @@
 ﻿namespace SpreadSheetsReports.NPOIRenderer
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using DocumentModel;
     using NPOI.SS.UserModel;
     using NPOI.XSSF.UserModel;
+    using Renderer;
     using ReportModel;
-    using SpreadSheetsReports.DocumentModel;
 
-    public class NPOIRenderer : IReportRenderer
+    public class NPOIRenderer : BaseReportRenderer
     {
         public Stream Render(ReportDefinition report)
         {
             IWorkbook workbook = new XSSFWorkbook();
 
-            report.Render();
+            report.Render(this);
 
             foreach (var sheet in report.Sheets)
             {
@@ -34,7 +31,6 @@
                     }
 
                     this.RenderRow(sheetrow, row);
-
                 }
             }
 

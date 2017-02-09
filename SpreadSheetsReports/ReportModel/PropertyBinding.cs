@@ -3,11 +3,7 @@
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq.Expressions;
-    using System.Reflection;
-    using System.Reflection.Emit;
-    using System.Runtime.CompilerServices;
     using System.Xml.Serialization;
 
     [Serializable]
@@ -50,40 +46,29 @@
             }
 
             object value = this.ResolveValue();
-            obj.GetType().GetProperty(this.PropertyName).SetValue(obj, value);
-            return;
             var objectType = obj.GetType();
             var setter = GetWriter(objectType);
 
             setter(obj, this.PropertyName, value);
-
-            obj.GetType().GetProperty(this.PropertyName).SetMethod.Invoke(obj, new[] { value });
         }
 
-        private object ResolveValue()
+        private static Action<object, string, object> GetWriter(Type parameterType)
         {
-            return this.DataSource.GetType().GetProperty(this.DataMember).GetValue(this.DataSource);
-            return GetReader(this.DataSource.GetType())(this.DataSource, this.DataMember);
-        }
-
-        private static Action<object, string, object> GetWriter(Type t)
-        {
-            return WriterCache.GetOrAdd(t, (k) =>
+            return WriterCache.GetOrAdd(parameterType, (k) =>
             {
-
                 Type objectType = typeof(object);
                 Type voidType = typeof(void);
 
                 ParameterExpression obj = Expression.Parameter(objectType, "obj");
                 ParameterExpression property = Expression.Parameter(typeof(string), "property");
 
-                ParameterExpression item = Expression.Parameter(t, "item");
+                ParameterExpression item = Expression.Parameter(parameterType, "item");
                 ParameterExpression value = Expression.Parameter(objectType, "value");
 
-                BinaryExpression cast = Expression.Assign(item, Expression.TypeAs(obj, t));
+                BinaryExpression cast = Expression.Assign(item, Expression.TypeAs(obj, parameterType));
 
                 List<SwitchCase> cases = new List<SwitchCase>();
-                foreach (var prop in t.GetProperties())
+                foreach (var prop in parameterType.GetProperties())
                 {
                     var targetProperty = Expression.Property(item, prop.Name);
                     BinaryExpression caseExpression = Expression.Assign(targetProperty, Expression.Convert(value, targetProperty.Type));
@@ -95,24 +80,11 @@
 
                 //MethodCallExpression debugger = Expression.Call(null, typeof(System.Diagnostics.Debugger).GetMethod("Break"));
 
-                BlockExpression block = Expression.Block(voidType, new[] { item }, cast, switchStatment);
+                BlockExpression block = Expression.Block(voidType,new[] { item }, cast, switchStatment);
 
                 var lambda = Expression.Lambda<Action<object, string, object>>(block, obj, property, value);
                 return lambda.Compile();
             });
-
-            return (object obj, string name, object value) =>
-            {
-                object real = (object)obj;
-                switch (name)
-                {
-                    default:
-                        break;
-                    case "prop1":
-                        //real.Prop1 = value;
-                        break;
-                }
-            };
         }
 
         private static Func<object, string, object> GetReader(Type t)
@@ -137,7 +109,6 @@
                     cases.Add(caseStatement);
                 }
 
-
                 SwitchExpression switchStatment = Expression.Switch(property, assign, cases.ToArray());
 
                 BlockExpression block = Expression.Block(objectType, new[] { item, result }, cast, assign, switchStatment);
@@ -145,6 +116,11 @@
                 var lambda = Expression.Lambda<Func<object, string, object>>(block, obj, property);
                 return lambda.Compile();
             });
+        }
+
+        private object ResolveValue()
+        {
+            return GetReader(this.DataSource.GetType())(this.DataSource, this.DataMember);
         }
     }
 }

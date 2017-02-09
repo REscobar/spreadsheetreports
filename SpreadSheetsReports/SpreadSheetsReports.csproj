@@ -43,8 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Renderer\BaseReportRenderer.cs" />
     <Compile Include="ReportModel\Cell.cs" />
-    <Compile Include="IReportRenderer.cs" />
+    <Compile Include="Renderer\IReportRenderer.cs" />
     <Compile Include="ReportModel\CellType.cs" />
     <Compile Include="DocumentModel\BorderType.cs" />
     <Compile Include="DocumentModel\BorderStyle.cs" />
@@ -55,7 +56,6 @@
     <Compile Include="DocumentModel\FontStyle.cs" />
     <Compile Include="DocumentModel\UnderLineStyle.cs" />
     <Compile Include="DocumentModel\VerticalAlignment.cs" />
-    <Compile Include="ReportModel\FooterSection.cs" />
     <Compile Include="DocumentModel\HorizontalAlignment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportModel\ICellBinding.cs" />
@@ -65,8 +65,8 @@
     <Compile Include="ReportModel\ReportDefinition.cs" />
     <Compile Include="ReportModel\ReportSection.cs" />
     <Compile Include="ReportModel\Row.cs" />
-    <Compile Include="ReportModel\HeaderSection.cs" />
     <Compile Include="ReportModel\RowCollection.cs" />
+    <Compile Include="ReportModel\RowCollectionSection.cs" />
     <Compile Include="ReportModel\Sheet.cs" />
   </ItemGroup>
   <ItemGroup>

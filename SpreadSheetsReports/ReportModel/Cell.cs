@@ -1,6 +1,8 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
+    using System;
     using DocumentModel;
+    using Renderer;
 
     public class Cell : ReportControl
     {
@@ -16,5 +18,10 @@
         public object Value { get; set; }
 
         public CellType Type { get; set; }
+
+        protected override void DoRender(IReportRenderer renderer)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

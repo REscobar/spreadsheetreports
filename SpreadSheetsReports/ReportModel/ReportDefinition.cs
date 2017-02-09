@@ -1,6 +1,8 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
+    using Renderer;
     using System.Collections.Generic;
+    using System;
 
     public class ReportDefinition : ReportControl
     {
@@ -8,12 +10,7 @@
 
         public object DataSource { get; set; }
 
-        public void Render()
-        {
-            this.DoRender();
-        }
-
-        internal override void DoRender()
+        protected override void DoRender(IReportRenderer renderer)
         {
             foreach (var sheet in this.Sheets)
             {
@@ -22,7 +19,7 @@
                     continue;
                 }
 
-                sheet.DoRender();
+                sheet.Render(renderer);
             }
         }
     }

@@ -1,6 +1,8 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
+    using System;
     using System.Collections.Generic;
+    using Renderer;
 
     public class Row : ReportControl
     {
@@ -8,10 +10,8 @@
 
         public float? Height { get; set; }
 
-        internal override void DoRender()
+        protected override void DoRender(IReportRenderer renderer)
         {
-            base.DoRender();
-
             foreach (var cell in this.Cells)
             {
                 if (cell == null)
@@ -19,7 +19,7 @@
                     continue;
                 }
 
-                cell.DoRender();
+                cell.Render(renderer);
             }
         }
     }

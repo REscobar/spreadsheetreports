@@ -1,29 +1,31 @@
-﻿namespace SpreadSheetsReports.ReportModel
+﻿using System;
+using SpreadSheetsReports.Renderer;
+
+namespace SpreadSheetsReports.ReportModel
 {
     public class ReportSection : ReportControl
     {
-        public HeaderSection Header { get; set; }
+        public RowCollectionSection Header { get; set; }
 
         public ReportSection SubSection { get; set; }
 
-        public FooterSection Footer { get; set; }
+        public RowCollectionSection Footer { get; set; }
 
-        internal override void DoRender()
+        protected override void DoRender(IReportRenderer renderer)
         {
-            base.DoRender();
             if (this.Header != null)
             {
-                this.Header.DoRender();
+                this.Header.Render(renderer);
             }
 
             if (this.SubSection != null)
             {
-                this.SubSection.DoRender();
+                this.SubSection.Render(renderer);
             }
 
             if (this.SubSection != null)
             {
-                this.Footer.DoRender();
+                this.Footer.Render(renderer);
             }
         }
     }
