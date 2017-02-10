@@ -2,32 +2,32 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Renderer;
     using SpreadsheetLight;
     using SpreadSheetsReports.DocumentModel;
-    using ReportModel;
-    using System.IO;
-    using Renderer;
-    public class SpreadsheetLightRenderer : IReportRenderer
+
+    public class SpreadsheetLightRenderer : BaseReportRenderer
     {
-        public Stream Render(ReportDefinition report)
+        protected override Stream RenderToStream(Document document)
         {
-            using (SLDocument document = new SLDocument())
+            using (SLDocument slDocument = new SLDocument())
             {
-                foreach (var sheet in report.Sheets)
+                foreach (var sheet in document.Sheets)
                 {
 
                     int rowCounter = 1;
-                    foreach (var row in sheet.Content.Header.Rows)
+                    foreach (var row in sheet.Rows)
                     {
-                        RenderRow(document, row, rowCounter);
+                        RenderRow(slDocument, row, rowCounter);
                         rowCounter++;
                     }
                 }
                 var stream = new MemoryStream();
-                document.SaveAs(stream);
+                slDocument.SaveAs(stream);
 
                 stream.Seek(0, SeekOrigin.Begin);
 
@@ -126,5 +126,6 @@
                     break;
             }
         }
+
     }
 }

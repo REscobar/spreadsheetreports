@@ -1,13 +1,22 @@
 ﻿using System;
-using SpreadSheetsReports.Renderer;
+using System.Collections.Generic;
+using SpreadSheetsReports.DocumentModel;
 
 namespace SpreadSheetsReports.ReportModel
 {
-    public class RowCollectionSection : ReportControl
+    public class RowCollectionSection : ReportControl, IRowCollectionGenerator
     {
         public RowCollection Rows { get; set; }
 
-        protected override void DoRender(IReportRenderer renderer)
+        public IEnumerable<DocumentModel.Row> Generate()
+        {
+            foreach (var row in this.Rows)
+            {
+                yield return row.Generate();
+            }
+        }
+
+        protected override void DoRender()
         {
             foreach (var row in this.Rows)
             {
@@ -16,7 +25,7 @@ namespace SpreadSheetsReports.ReportModel
                     continue;
                 }
 
-                row.Databind();
+                row.Render();
             }
         }
     }

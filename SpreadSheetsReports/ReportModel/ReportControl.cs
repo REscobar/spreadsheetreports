@@ -1,6 +1,4 @@
-﻿using SpreadSheetsReports.Renderer;
-
-namespace SpreadSheetsReports.ReportModel
+﻿namespace SpreadSheetsReports.ReportModel
 {
     public abstract class ReportControl
     {
@@ -11,15 +9,15 @@ namespace SpreadSheetsReports.ReportModel
 
         public PropertyBindingCollection Bindings { get; set; }
 
-        public virtual void Render(IReportRenderer renderer)
+        public virtual void Render()
         {
             this.Databind();
-            this.DoRender(renderer);
+            this.DoRender();
         }
 
-        protected abstract void DoRender(IReportRenderer renderer);
+        protected abstract void DoRender();
 
-        internal virtual void Databind()
+        protected virtual void Databind()
         {
             foreach (var binding in this.Bindings)
             {

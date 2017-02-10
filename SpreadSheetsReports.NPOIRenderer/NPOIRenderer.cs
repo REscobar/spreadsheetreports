@@ -6,21 +6,18 @@
     using NPOI.SS.UserModel;
     using NPOI.XSSF.UserModel;
     using Renderer;
-    using ReportModel;
 
     public class NPOIRenderer : BaseReportRenderer
     {
-        public Stream Render(ReportDefinition report)
+        protected override Stream RenderToStream(Document document)
         {
             IWorkbook workbook = new XSSFWorkbook();
 
-            report.Render(this);
-
-            foreach (var sheet in report.Sheets)
+            foreach (var sheet in document.Sheets)
             {
-                ISheet documentSheet = workbook.CreateSheet();
+                ISheet documentSheet = sheet.Name != null ? workbook.CreateSheet(sheet.Name) : workbook.CreateSheet();
                 int rowCounter = 0;
-                foreach (var row in sheet.Content.Header.Rows)
+                foreach (var row in sheet.Rows)
                 {
                     IRow sheetrow = documentSheet.CreateRow(rowCounter);
                     rowCounter++;
@@ -34,7 +31,7 @@
                 }
             }
 
-            var path = Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+            var path = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
             Stream stream = File.Create(path);
 
             workbook.Write(stream);
@@ -63,9 +60,8 @@
                     continue;
                 }
 
-                RenderCell(sheetCell, cell);
-                ApplyStyle(sheetCell, cell);
-
+                this.RenderCell(sheetCell, cell);
+                this.ApplyStyle(sheetCell, cell);
             }
         }
 
@@ -101,23 +97,143 @@
                     sheetCell.SetCellValue(cell.Value.ToString());
                     break;
             }
-
         }
 
         private void ApplyStyle(ICell sheetCell, Cell cell)
         {
-            ApplyStyle(sheetCell.CellStyle, cell.Style);
+            this.ApplyStyle(sheetCell.CellStyle, cell.Style);
         }
 
         private void ApplyStyle(ICellStyle cellStyle, CellStyle style)
         {
-            ApplyHorizontalAlignment(cellStyle, style);
-            ApplyVerticalAlignment(cellStyle, style);
+            this.ApplyHorizontalAlignment(cellStyle, style.HorizontalAlignment);
+            this.ApplyVerticalAlignment(cellStyle, style.VerticalAlignment);
+            this.ApplyBorderStyleTop(cellStyle, style.BorderStyleTop);
+            this.ApplyBorderStyleBottom(cellStyle, style.BorderStyleBottom);
+            this.ApplyBorderStyleLeft(cellStyle, style.BorderStyleLeft);
+            this.ApplyBorderStyleRight(cellStyle, style.BorderStyleRight);
+
+            //this.ApplyBorderDiagonalStyle(cellStyle, style.BorderStyleDiagonalUpLeftToBottomRight, style.BorderStyleDiagonalUpRightToBottomLeft);
+            //this.ApplyFont(cellStyle, style.Font);
         }
 
-        private void ApplyVerticalAlignment(ICellStyle cellStyle, CellStyle style)
+        private void ApplyBorderStyleRight(ICellStyle cellStyle, DocumentModel.BorderStyle borderStyleRight)
         {
-            switch (style.VerticalAlignment)
+            if (borderStyleRight == null)
+            {
+                return;
+            }
+
+            cellStyle.BorderRight = this.GetBorderStyle(borderStyleRight.Type);
+            XSSFCellStyle style = cellStyle as XSSFCellStyle;
+            var color = borderStyleRight.Color.Value;
+            style.RightBorderXSSFColor.SetRgb(new[] { color.Red, color.Green, color.Blue });
+        }
+
+        private void ApplyBorderStyleLeft(ICellStyle cellStyle, DocumentModel.BorderStyle borderStyleLeft)
+        {
+            if (borderStyleLeft == null)
+            {
+                return;
+            }
+
+            cellStyle.BorderLeft = this.GetBorderStyle(borderStyleLeft.Type);
+            XSSFCellStyle style = cellStyle as XSSFCellStyle;
+            var color = borderStyleLeft.Color.Value;
+            style.RightBorderXSSFColor.SetRgb(new[] { color.Red, color.Green, color.Blue });
+        }
+
+        private void ApplyBorderStyleBottom(ICellStyle cellStyle, DocumentModel.BorderStyle borderStyleBottom)
+        {
+            if (borderStyleBottom == null)
+            {
+                return;
+            }
+
+            cellStyle.BorderBottom = this.GetBorderStyle(borderStyleBottom.Type);
+            XSSFCellStyle style = cellStyle as XSSFCellStyle;
+            var color = borderStyleBottom.Color.Value;
+            style.RightBorderXSSFColor.SetRgb(new[] { color.Red, color.Green, color.Blue });
+        }
+
+        private void ApplyBorderStyleTop(ICellStyle cellStyle, DocumentModel.BorderStyle borderStyleTop)
+        {
+            if (borderStyleTop == null)
+            {
+                return;
+            }
+
+            cellStyle.BorderTop = this.GetBorderStyle(borderStyleTop.Type);
+            XSSFCellStyle style = cellStyle as XSSFCellStyle;
+            var color = borderStyleTop.Color.Value;
+            style.RightBorderXSSFColor.SetRgb(new[] { color.Red, color.Green, color.Blue });
+        }
+
+        private void ApplyBorderDiagonalStyle(ICellStyle cellStyle, DocumentModel.BorderStyle borderStyleDiagonalUpLeftToBottomRight, DocumentModel.BorderStyle borderStyleDiagonalUpRightToBottomLeft)
+        {
+            if (borderStyleDiagonalUpLeftToBottomRight == null || borderStyleDiagonalUpRightToBottomLeft == null)
+            {
+                return;
+            }
+            if(borderStyleDiagonalUpLeftToBottomRight.Type != BorderType.None && borderStyleDiagonalUpRightToBottomLeft.Type != BorderType.None)
+            {
+                cellStyle.BorderDiagonal = BorderDiagonal.Both;
+            }
+            else if(borderStyleDiagonalUpLeftToBottomRight.Type != BorderType.None)
+            {
+                cellStyle.BorderDiagonal = BorderDiagonal.Backward;
+            }
+            else if(borderStyleDiagonalUpRightToBottomLeft.Type != BorderType.None)
+            {
+                cellStyle.BorderDiagonal = BorderDiagonal.Forward;
+            }
+        }
+
+        private NPOI.SS.UserModel.BorderStyle GetBorderStyle(DocumentModel.BorderType borderStyle)
+        {
+            switch (borderStyle)
+            {
+                case BorderType.None:
+                    return NPOI.SS.UserModel.BorderStyle.None;
+                case BorderType.Thin:
+                    return NPOI.SS.UserModel.BorderStyle.Thin;
+                case BorderType.Medium:
+                    return NPOI.SS.UserModel.BorderStyle.Medium;
+                case BorderType.Dashed:
+                    return NPOI.SS.UserModel.BorderStyle.Dashed;
+                case BorderType.Dotted:
+                    return NPOI.SS.UserModel.BorderStyle.Dotted;
+                case BorderType.Thick:
+                    return NPOI.SS.UserModel.BorderStyle.Thick;
+                case BorderType.Double:
+                    return NPOI.SS.UserModel.BorderStyle.Double;
+                case BorderType.Hair:
+                    return NPOI.SS.UserModel.BorderStyle.Hair;
+                case BorderType.MediumDashed:
+                    return NPOI.SS.UserModel.BorderStyle.MediumDashed;
+                case BorderType.DashDot:
+                    return NPOI.SS.UserModel.BorderStyle.DashDot;
+                case BorderType.MediumDashDot:
+                    return NPOI.SS.UserModel.BorderStyle.MediumDashDot;
+                case BorderType.DashDotDot:
+                    return NPOI.SS.UserModel.BorderStyle.DashDotDot;
+                case BorderType.MediumDashDotDot:
+                    return NPOI.SS.UserModel.BorderStyle.MediumDashDotDot;
+                case BorderType.SlantedDashDot:
+                    return NPOI.SS.UserModel.BorderStyle.SlantedDashDot;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(borderStyle));
+            }
+        }
+
+        private void ApplyFont(ICellStyle cellStyle, FontStyle font)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ApplyVerticalAlignment(ICellStyle cellStyle, DocumentModel.VerticalAlignment style)
+        {
+            switch (style)
             {
                 case DocumentModel.VerticalAlignment.Top:
                     cellStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Top;
@@ -139,10 +255,9 @@
             }
         }
 
-
-        private void ApplyHorizontalAlignment(ICellStyle cellStyle, CellStyle style)
+        private void ApplyHorizontalAlignment(ICellStyle cellStyle, DocumentModel.HorizontalAlignment style)
         {
-            switch (style.HorizontalAlignment)
+            switch (style)
             {
                 case DocumentModel.HorizontalAlignment.General:
                     cellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.General;
@@ -169,7 +284,7 @@
                     cellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Distributed;
                     break;
                 default:
-                    throw new InvalidOperationException("Unknown Horizontal Alignment value: " + style.HorizontalAlignment.ToString());
+                    throw new InvalidOperationException("Unknown Horizontal Alignment value: " + style.ToString());
             }
         }
     }

@@ -1,18 +1,17 @@
 ﻿namespace SpreadSheetsReports.Renderer
 {
-    using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using SpreadSheetsReports.ReportModel;
+    using DocumentModel;
+    using ReportModel;
 
-    public class BaseReportRenderer : IReportRenderer
+    public abstract class BaseReportRenderer : IReportRenderer
     {
         public virtual Stream Render(ReportDefinition report)
         {
-            throw new NotImplementedException();
+            var document = report.Generate();
+            return this.RenderToStream(document);
         }
+
+        protected abstract Stream RenderToStream(Document document);
     }
 }

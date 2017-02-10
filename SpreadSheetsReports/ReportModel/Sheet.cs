@@ -1,22 +1,30 @@
-﻿namespace SpreadSheetsReports.ReportModel
-{
-    using System;
-    using SpreadSheetsReports.Renderer;
+﻿using System;
+using SpreadSheetsReports.DocumentModel;
 
-    public class Sheet : ReportControl
+namespace SpreadSheetsReports.ReportModel
+{
+    public class Sheet : ReportControl, ISheetGenerator
     {
         public ReportSection Content { get; set; }
 
         public string Name { get; set; }
 
-        protected override void DoRender(IReportRenderer renderer)
+        public DocumentModel.Sheet Generate()
+        {
+            DocumentModel.Sheet sheet = new DocumentModel.Sheet();
+            sheet.Name = this.Name;
+            sheet.Rows = this.Content.Generate();
+            return sheet;
+        }
+
+        protected override void DoRender()
         {
             if (this.Content == null)
             {
                 return;
             }
 
-            this.Content.Render(renderer);
+            this.Content.Render();
         }
     }
 }

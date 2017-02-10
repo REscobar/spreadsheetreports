@@ -2,9 +2,8 @@
 {
     using System;
     using DocumentModel;
-    using Renderer;
 
-    public class Cell : ReportControl
+    public class Cell : ReportControl, ICellGenerator
     {
         public Cell()
         {
@@ -19,9 +18,21 @@
 
         public CellType Type { get; set; }
 
-        protected override void DoRender(IReportRenderer renderer)
+        protected override void DoRender()
         {
-            throw new NotImplementedException();
+
+        }
+
+        public DocumentModel.Cell Generate()
+        {
+            var cell = new DocumentModel.Cell();
+
+            cell.ClassName = this.ClassName;
+            cell.Value = this.Value;
+            cell.Type = this.Type;
+            cell.Style = this.Style;
+
+            return cell;
         }
     }
 }

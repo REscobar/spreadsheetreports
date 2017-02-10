@@ -1,16 +1,26 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
-    using Renderer;
-    using System.Collections.Generic;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using DocumentModel;
 
-    public class ReportDefinition : ReportControl
+    public class ReportDefinition : ReportControl, IDocumentGenerator
     {
         public List<Sheet> Sheets { get; set; }
 
         public object DataSource { get; set; }
 
-        protected override void DoRender(IReportRenderer renderer)
+        public Document Generate()
+        {
+            Document doc = new Document();
+            this.Render();
+
+            doc.Sheets = this.Sheets.Select(s => s.Generate());
+            return doc;
+        }
+
+        protected override void DoRender()
         {
             foreach (var sheet in this.Sheets)
             {
@@ -19,8 +29,9 @@
                     continue;
                 }
 
-                sheet.Render(renderer);
+                sheet.Render();
             }
         }
+
     }
 }
