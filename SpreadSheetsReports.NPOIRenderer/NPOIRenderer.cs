@@ -9,13 +9,15 @@
 
     public class NPOIRenderer : BaseReportRenderer
     {
+        private XSSFWorkbook workbook;
+
         protected override Stream RenderToStream(Document document)
         {
-            IWorkbook workbook = new XSSFWorkbook();
+            this.workbook = new XSSFWorkbook();
 
             foreach (var sheet in document.Sheets)
             {
-                ISheet documentSheet = sheet.Name != null ? workbook.CreateSheet(sheet.Name) : workbook.CreateSheet();
+                ISheet documentSheet = sheet.Name != null ? this.workbook.CreateSheet(sheet.Name) : this.workbook.CreateSheet();
                 int rowCounter = 0;
                 foreach (var row in sheet.Rows)
                 {
@@ -31,12 +33,14 @@
                 }
             }
 
-            var path = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+            var path = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + ".xlsx");
             Stream stream = File.Create(path);
 
-            workbook.Write(stream);
+            this.workbook.Write(stream);
 
             stream = new MemoryStream(File.ReadAllBytes(path));
+
+            File.Delete(path);
 
             return stream;
         }
@@ -53,6 +57,7 @@
             foreach (var cell in row.Cells)
             {
                 ICell sheetCell = sheetrow.CreateCell(cellCounter);
+                sheetCell.CellStyle = this.workbook.CreateCellStyle();
                 cellCounter++;
 
                 if (cell == null)
@@ -114,7 +119,7 @@
             this.ApplyBorderStyleRight(cellStyle, style.BorderStyleRight);
 
             //this.ApplyBorderDiagonalStyle(cellStyle, style.BorderStyleDiagonalUpLeftToBottomRight, style.BorderStyleDiagonalUpRightToBottomLeft);
-            //this.ApplyFont(cellStyle, style.Font);
+            this.ApplyFont(cellStyle, style.FontStyle);
         }
 
         private void ApplyBorderStyleRight(ICellStyle cellStyle, DocumentModel.BorderStyle borderStyleRight)
@@ -125,9 +130,13 @@
             }
 
             cellStyle.BorderRight = this.GetBorderStyle(borderStyleRight.Type);
-            XSSFCellStyle style = cellStyle as XSSFCellStyle;
-            var color = borderStyleRight.Color.Value;
-            style.RightBorderXSSFColor.SetRgb(new[] { color.Red, color.Green, color.Blue });
+
+            if (borderStyleRight.Color.HasValue)
+            {
+                XSSFCellStyle style = cellStyle as XSSFCellStyle;
+                var color = borderStyleRight.Color.Value;
+                style.SetRightBorderColor(new XSSFColor(new[] { color.Red, color.Green, color.Blue }));
+            }
         }
 
         private void ApplyBorderStyleLeft(ICellStyle cellStyle, DocumentModel.BorderStyle borderStyleLeft)
@@ -138,9 +147,13 @@
             }
 
             cellStyle.BorderLeft = this.GetBorderStyle(borderStyleLeft.Type);
-            XSSFCellStyle style = cellStyle as XSSFCellStyle;
-            var color = borderStyleLeft.Color.Value;
-            style.RightBorderXSSFColor.SetRgb(new[] { color.Red, color.Green, color.Blue });
+
+            if (borderStyleLeft.Color.HasValue)
+            {
+                XSSFCellStyle style = cellStyle as XSSFCellStyle;
+                var color = borderStyleLeft.Color.Value;
+                style.SetLeftBorderColor(new XSSFColor(new[] { color.Red, color.Green, color.Blue }));
+            }
         }
 
         private void ApplyBorderStyleBottom(ICellStyle cellStyle, DocumentModel.BorderStyle borderStyleBottom)
@@ -151,9 +164,14 @@
             }
 
             cellStyle.BorderBottom = this.GetBorderStyle(borderStyleBottom.Type);
-            XSSFCellStyle style = cellStyle as XSSFCellStyle;
-            var color = borderStyleBottom.Color.Value;
-            style.RightBorderXSSFColor.SetRgb(new[] { color.Red, color.Green, color.Blue });
+
+            if (borderStyleBottom.Color.HasValue)
+            {
+                XSSFCellStyle style = cellStyle as XSSFCellStyle;
+                var color = borderStyleBottom.Color.Value;
+
+                style.SetBottomBorderColor(new XSSFColor(new[] { color.Red, color.Green, color.Blue }));
+            }
         }
 
         private void ApplyBorderStyleTop(ICellStyle cellStyle, DocumentModel.BorderStyle borderStyleTop)
@@ -164,9 +182,15 @@
             }
 
             cellStyle.BorderTop = this.GetBorderStyle(borderStyleTop.Type);
-            XSSFCellStyle style = cellStyle as XSSFCellStyle;
-            var color = borderStyleTop.Color.Value;
-            style.RightBorderXSSFColor.SetRgb(new[] { color.Red, color.Green, color.Blue });
+
+            if (borderStyleTop.Color.HasValue)
+            {
+                XSSFCellStyle style = cellStyle as XSSFCellStyle;
+
+                var color = borderStyleTop.Color.Value;
+
+                style.SetTopBorderColor(new XSSFColor(new[] { color.Red, color.Green, color.Blue }));
+            }
         }
 
         private void ApplyBorderDiagonalStyle(ICellStyle cellStyle, DocumentModel.BorderStyle borderStyleDiagonalUpLeftToBottomRight, DocumentModel.BorderStyle borderStyleDiagonalUpRightToBottomLeft)
@@ -175,15 +199,16 @@
             {
                 return;
             }
-            if(borderStyleDiagonalUpLeftToBottomRight.Type != BorderType.None && borderStyleDiagonalUpRightToBottomLeft.Type != BorderType.None)
+
+            if (borderStyleDiagonalUpLeftToBottomRight.Type != BorderType.None && borderStyleDiagonalUpRightToBottomLeft.Type != BorderType.None)
             {
                 cellStyle.BorderDiagonal = BorderDiagonal.Both;
             }
-            else if(borderStyleDiagonalUpLeftToBottomRight.Type != BorderType.None)
+            else if (borderStyleDiagonalUpLeftToBottomRight.Type != BorderType.None)
             {
                 cellStyle.BorderDiagonal = BorderDiagonal.Backward;
             }
-            else if(borderStyleDiagonalUpRightToBottomLeft.Type != BorderType.None)
+            else if (borderStyleDiagonalUpRightToBottomLeft.Type != BorderType.None)
             {
                 cellStyle.BorderDiagonal = BorderDiagonal.Forward;
             }
@@ -226,9 +251,66 @@
             }
         }
 
-        private void ApplyFont(ICellStyle cellStyle, FontStyle font)
+        private void ApplyFont(ICellStyle cellStyle, FontStyle fontStyle)
         {
-            throw new NotImplementedException();
+            if (fontStyle == null)
+            {
+                return;
+            }
+
+            var font = this.workbook.CreateFont();
+            font.FontName = fontStyle.FontName;
+            font.IsBold = fontStyle.IsBold;
+            font.IsItalic = fontStyle.IsItalic;
+            font.IsStrikeout = fontStyle.IsStrikeout;
+
+            font.TypeOffset = this.GetFontSuperScript(fontStyle.ScriptStyle);
+            font.Underline = this.GetFontUnderLine(fontStyle.Underline);
+
+            if (fontStyle.Color.HasValue)
+            {
+                var casted = (XSSFFont)font;
+                var color = fontStyle.Color.Value;
+
+                casted.SetColor(new XSSFColor(new[] { color.Red, color.Green, color.Blue }));
+            }
+
+            cellStyle.SetFont(font);
+
+        }
+
+        private FontSuperScript GetFontSuperScript(FontScriptStyle scriptStyle)
+        {
+            switch (scriptStyle)
+            {
+                case FontScriptStyle.None:
+                    return FontSuperScript.None;
+                case FontScriptStyle.Superscript:
+                    return FontSuperScript.Super;
+                case FontScriptStyle.Subscript:
+                    return FontSuperScript.Sub;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(scriptStyle));
+            }
+        }
+
+        private FontUnderlineType GetFontUnderLine(UnderLineStyle underline)
+        {
+            switch (underline)
+            {
+                case UnderLineStyle.None:
+                    return FontUnderlineType.None;
+                case UnderLineStyle.Single:
+                    return FontUnderlineType.Single;
+                case UnderLineStyle.Double:
+                    return FontUnderlineType.Double;
+                case UnderLineStyle.SingleAccounting:
+                    return FontUnderlineType.SingleAccounting;
+                case UnderLineStyle.DoubleAccounting:
+                    return FontUnderlineType.DoubleAccounting;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(underline));
+            }
         }
 
         private void ApplyVerticalAlignment(ICellStyle cellStyle, DocumentModel.VerticalAlignment style)
@@ -251,7 +333,7 @@
                     cellStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Distributed;
                     break;
                 default:
-                    break;
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
 
@@ -284,7 +366,7 @@
                     cellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Distributed;
                     break;
                 default:
-                    throw new InvalidOperationException("Unknown Horizontal Alignment value: " + style.ToString());
+                    throw new ArgumentOutOfRangeException(nameof(style));
             }
         }
     }

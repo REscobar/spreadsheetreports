@@ -8,6 +8,8 @@
 
         public bool IsBold { get; set; }
 
+        public bool IsStrikeout { get; set; }
+
         public decimal Size { get; set; }
 
         public UnderLineStyle Underline { get; set; }

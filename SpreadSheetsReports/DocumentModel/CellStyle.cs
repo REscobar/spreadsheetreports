@@ -2,9 +2,20 @@
 {
     public class CellStyle
     {
+        public CellStyle()
+        {
+            //this.FontStyle = new FontStyle();
+            //this.BorderStyleBottom = new BorderStyle();
+            //this.BorderStyleDiagonalUpLeftToBottomRight = new BorderStyle();
+            //this.BorderStyleDiagonalUpRightToBottomLeft = new BorderStyle();
+            //this.BorderStyleLeft = new BorderStyle();
+            //this.BorderStyleRight = new BorderStyle();
+            //this.BorderStyleTop = new BorderStyle();
+        }
+
         public bool ShrinkToFit { get; set; }
 
-        public FontStyle Font { get; set; }
+        public FontStyle FontStyle { get; set; }
 
         public bool IsHidden { get; set; }
 

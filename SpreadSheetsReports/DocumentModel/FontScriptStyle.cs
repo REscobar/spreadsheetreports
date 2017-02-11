@@ -3,7 +3,7 @@
     public enum FontScriptStyle : byte
     {
         None = 0,
-        Superscript,
-        Subscript
+        Superscript = 1,
+        Subscript = 2
     }
 }

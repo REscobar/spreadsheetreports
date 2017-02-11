@@ -2,10 +2,10 @@
 {
     public enum UnderLineStyle : byte
     {
-        None,
-        Single,
-        Double,
-        SingleAccounting,
-        DoubleAccounting
+        None = 0,
+        Single = 1,
+        Double = 2,
+        SingleAccounting = 3,
+        DoubleAccounting = 4
     }
 }

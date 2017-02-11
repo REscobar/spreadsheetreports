@@ -64,7 +64,29 @@ namespace SpreadSheetsReports.Sandbox
                                             },
                                             new Cell
                                             {
-                                                Value = "NotReplaced"
+                                                Value = "NotReplaced",
+                                                Style = new DocumentModel.CellStyle
+                                                {
+                                                    BorderStyleBottom = new DocumentModel.BorderStyle
+                                                    {
+                                                        Type = DocumentModel.BorderType.Thick,
+                                                        Color = new DocumentModel.Color
+                                                        {
+                                                            Red = 255
+                                                        }
+                                                    },
+                                                    FontStyle = new DocumentModel.FontStyle
+                                                    {
+                                                        Color = new DocumentModel.Color
+                                                        {
+                                                            Alpha = 255,
+                                                            Red = 127,
+                                                            Blue = 255,
+                                                            Green = 255
+                                                        },
+                                                        FontName = "Algerian"
+                                                    }
+                                                }
                                             }
                                         }
                                     },
