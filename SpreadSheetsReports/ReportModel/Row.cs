@@ -1,6 +1,7 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
     using System.Collections.Generic;
+    using DocumentModel;
 
     public class Row : ReportControl, IRowGenerator
     {
@@ -8,11 +9,14 @@
 
         public float? Height { get; set; }
 
+        public CellStyle Style { get; set; }
+
         public DocumentModel.Row Generate()
         {
             var row = new DocumentModel.Row();
             row.Cells = this.GetCells();
             row.Height = this.Height;
+            row.Style = this.Style;
             return row;
         }
 

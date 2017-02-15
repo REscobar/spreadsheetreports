@@ -9,7 +9,8 @@
             this.Rows = new List<Row>();
         }
 
-        public string Name { get; internal set; }
+        public string Name { get; set; }
+
         public IEnumerable<Row> Rows { get; set; }
     }
 }

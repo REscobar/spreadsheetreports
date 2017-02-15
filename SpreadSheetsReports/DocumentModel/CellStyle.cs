@@ -4,13 +4,6 @@
     {
         public CellStyle()
         {
-            //this.FontStyle = new FontStyle();
-            //this.BorderStyleBottom = new BorderStyle();
-            //this.BorderStyleDiagonalUpLeftToBottomRight = new BorderStyle();
-            //this.BorderStyleDiagonalUpRightToBottomLeft = new BorderStyle();
-            //this.BorderStyleLeft = new BorderStyle();
-            //this.BorderStyleRight = new BorderStyle();
-            //this.BorderStyleTop = new BorderStyle();
         }
 
         public bool ShrinkToFit { get; set; }
@@ -43,8 +36,10 @@
 
         public BorderStyle BorderStyleDiagonalUpRightToBottomLeft { get; set; }
 
-        public FillPatternStyle FillPatternStyle { get; set; }
+        public FillPatternStyle? FillPatternStyle { get; set; }
 
         public Color? FillPatternColor { get; set; }
+
+        public Color? BackgroundColor { get; set; }
     }
 }

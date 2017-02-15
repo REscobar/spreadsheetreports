@@ -12,5 +12,7 @@
         public IEnumerable<Cell> Cells { get; set; }
 
         public float? Height { get; set; }
+
+        public CellStyle Style { get; set; }
     }
 }

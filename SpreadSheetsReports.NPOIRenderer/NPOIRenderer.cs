@@ -54,6 +54,14 @@
                 sheetrow.HeightInPoints = row.Height.Value;
             }
 
+            if (row.Style != null)
+            {
+                var style = this.workbook.CreateCellStyle();
+                this.ApplyStyle(style, row.Style);
+                sheetrow.RowStyle = style;
+                sheetrow.RowStyle = style;
+            }
+
             foreach (var cell in row.Cells)
             {
                 ICell sheetCell = sheetrow.CreateCell(cellCounter);
@@ -72,6 +80,12 @@
 
         private void RenderCell(ICell sheetCell, Cell cell)
         {
+            if (cell.Type == ReportModel.CellType.Formula)
+            {
+                sheetCell.SetCellFormula(cell.Value.ToString());
+                return;
+            }
+
             switch (Type.GetTypeCode(cell.Value.GetType()))
             {
                 case TypeCode.Boolean:
@@ -118,8 +132,94 @@
             this.ApplyBorderStyleLeft(cellStyle, style.BorderStyleLeft);
             this.ApplyBorderStyleRight(cellStyle, style.BorderStyleRight);
 
-            //this.ApplyBorderDiagonalStyle(cellStyle, style.BorderStyleDiagonalUpLeftToBottomRight, style.BorderStyleDiagonalUpRightToBottomLeft);
+            this.ApplyBorderDiagonalStyle(cellStyle, style.BorderStyleDiagonalUpLeftToBottomRight, style.BorderStyleDiagonalUpRightToBottomLeft);
             this.ApplyFont(cellStyle, style.FontStyle);
+            this.ApplyFill(cellStyle, style);
+            this.ApplyMisc(cellStyle, style);
+        }
+
+        private void ApplyFill(ICellStyle cellStyle, CellStyle style)
+        {
+            if (style.FillPatternStyle.HasValue)
+            {
+                cellStyle.FillPattern = this.GetFillPattern(style.FillPatternStyle.Value);
+            }
+
+            XSSFCellStyle xssfStyle = null;
+
+            if (style.FillPatternColor.HasValue || style.BackgroundColor.HasValue)
+            {
+                xssfStyle = cellStyle as XSSFCellStyle;
+            }
+
+            if (style.FillPatternColor.HasValue)
+            {
+                var color = style.FillPatternColor.Value;
+
+                xssfStyle.SetFillForegroundColor(new XSSFColor(new[] { color.Red, color.Green, color.Blue }));
+            }
+
+            if (style.BackgroundColor.HasValue)
+            {
+                var color = style.BackgroundColor.Value;
+
+                xssfStyle.SetFillBackgroundColor(new XSSFColor(new[] { color.Red, color.Green, color.Blue }));
+            }
+        }
+
+        private FillPattern GetFillPattern(FillPatternStyle fillPatternStyle)
+        {
+            switch (fillPatternStyle)
+            {
+                case FillPatternStyle.Solid:
+                    return FillPattern.SolidForeground;
+                case FillPatternStyle.ThreeQuarters:
+                    return FillPattern.AltBars;
+                case FillPatternStyle.OneHalf:
+                    return FillPattern.FineDots;
+                case FillPatternStyle.OneQuarter:
+                    return FillPattern.SparseDots;
+                case FillPatternStyle.OneEight:
+                    return FillPattern.LessDots;
+                case FillPatternStyle.OneSixteenth:
+                    return FillPattern.LeastDots;
+                case FillPatternStyle.HorizontalStripe:
+                    return FillPattern.ThickHorizontalBands;
+                case FillPatternStyle.VerticalStripe:
+                    return FillPattern.ThickVerticalBands;
+                case FillPatternStyle.ReverseDiagonalStripe:
+                    return FillPattern.ThickBackwardDiagonals;
+                case FillPatternStyle.DiagonalStripe:
+                    return FillPattern.ThickForwardDiagonals;
+                case FillPatternStyle.DiagonalCrosshatch:
+                    return FillPattern.BigSpots;
+                case FillPatternStyle.ThickDiagonalCrosshatch:
+                    return FillPattern.Bricks;
+                case FillPatternStyle.ThinHorizontalStripe:
+                    return FillPattern.ThinHorizontalBands;
+                case FillPatternStyle.ThinVerticalStripe:
+                    return FillPattern.ThinVerticalBands;
+                case FillPatternStyle.ThinReverseDiagonalStripe:
+                    return FillPattern.ThinBackwardDiagonals;
+                case FillPatternStyle.ThinDiagonalStripe:
+                    return FillPattern.ThinForwardDiagonals;
+                case FillPatternStyle.ThinHorizontalCrosshatch:
+                    return FillPattern.Squares;
+                case FillPatternStyle.ThinDiagonalCrosshatch:
+                    return FillPattern.Diamonds;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void ApplyMisc(ICellStyle cellStyle, CellStyle style)
+        {
+            cellStyle.Indention = style.Indent;
+            cellStyle.WrapText = style.WrapText;
+            cellStyle.Rotation = style.Rotation;
+            cellStyle.IsHidden = style.IsHidden;
+            cellStyle.IsLocked = style.IsLocked;
+            cellStyle.ShrinkToFit = style.ShrinkToFit;
         }
 
         private void ApplyBorderStyleRight(ICellStyle cellStyle, DocumentModel.BorderStyle borderStyleRight)
@@ -195,22 +295,37 @@
 
         private void ApplyBorderDiagonalStyle(ICellStyle cellStyle, DocumentModel.BorderStyle borderStyleDiagonalUpLeftToBottomRight, DocumentModel.BorderStyle borderStyleDiagonalUpRightToBottomLeft)
         {
-            if (borderStyleDiagonalUpLeftToBottomRight == null || borderStyleDiagonalUpRightToBottomLeft == null)
+            if (borderStyleDiagonalUpLeftToBottomRight == null && borderStyleDiagonalUpRightToBottomLeft == null)
             {
                 return;
             }
 
-            if (borderStyleDiagonalUpLeftToBottomRight.Type != BorderType.None && borderStyleDiagonalUpRightToBottomLeft.Type != BorderType.None)
+            var style = (XSSFCellStyle)cellStyle;
+
+            if (borderStyleDiagonalUpLeftToBottomRight != null && borderStyleDiagonalUpRightToBottomLeft != null && borderStyleDiagonalUpLeftToBottomRight.Type != BorderType.None && borderStyleDiagonalUpRightToBottomLeft.Type != BorderType.None)
             {
-                cellStyle.BorderDiagonal = BorderDiagonal.Both;
+                style.BorderDiagonal = BorderDiagonal.Both;
             }
-            else if (borderStyleDiagonalUpLeftToBottomRight.Type != BorderType.None)
+            else if (borderStyleDiagonalUpLeftToBottomRight != null && borderStyleDiagonalUpLeftToBottomRight.Type != BorderType.None)
             {
-                cellStyle.BorderDiagonal = BorderDiagonal.Backward;
+                style.BorderDiagonal = BorderDiagonal.Backward;
+                style.BorderDiagonalLineStyle = this.GetBorderStyle(borderStyleDiagonalUpLeftToBottomRight.Type);
+                if (borderStyleDiagonalUpLeftToBottomRight.Color.HasValue)
+                {
+                    var color = borderStyleDiagonalUpLeftToBottomRight.Color.Value;
+                    style.SetDiagonalBorderColor(new XSSFColor(new[] { color.Red, color.Green, color.Blue }));
+                }
             }
-            else if (borderStyleDiagonalUpRightToBottomLeft.Type != BorderType.None)
+            else if (borderStyleDiagonalUpRightToBottomLeft != null && borderStyleDiagonalUpRightToBottomLeft.Type != BorderType.None)
             {
-                cellStyle.BorderDiagonal = BorderDiagonal.Forward;
+                style.BorderDiagonal = BorderDiagonal.Forward;
+                style.BorderDiagonalLineStyle = this.GetBorderStyle(borderStyleDiagonalUpRightToBottomLeft.Type);
+
+                if (borderStyleDiagonalUpRightToBottomLeft.Color.HasValue)
+                {
+                    var color = borderStyleDiagonalUpRightToBottomLeft.Color.Value;
+                    style.SetDiagonalBorderColor(new XSSFColor(new[] { color.Red, color.Green, color.Blue }));
+                }
             }
         }
 
@@ -266,6 +381,7 @@
 
             font.TypeOffset = this.GetFontSuperScript(fontStyle.ScriptStyle);
             font.Underline = this.GetFontUnderLine(fontStyle.Underline);
+            font.Underline = font.Underline;
 
             if (fontStyle.Color.HasValue)
             {
@@ -276,7 +392,6 @@
             }
 
             cellStyle.SetFont(font);
-
         }
 
         private FontSuperScript GetFontSuperScript(FontScriptStyle scriptStyle)
