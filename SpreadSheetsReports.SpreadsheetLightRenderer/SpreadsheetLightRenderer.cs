@@ -29,6 +29,11 @@
                 foreach (var row in sheets[0].Rows)
                 {
                     rowCounter++;
+                    if (row == null)
+                    {
+                        continue;
+                    }
+
                     this.RenderRow(slDocument, row, rowCounter);
                 }
 
@@ -46,6 +51,11 @@
                     foreach (var row in sheet.Rows)
                     {
                         rowCounter++;
+                        if (row == null)
+                        {
+                            continue;
+                        }
+
                         this.RenderRow(slDocument, row, rowCounter);
                     }
                 }
