@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SpreadSheetsReports.DocumentModel;
+using System.Linq;
 
 namespace SpreadSheetsReports.ReportModel
 {
@@ -10,23 +11,8 @@ namespace SpreadSheetsReports.ReportModel
 
         public IEnumerable<DocumentModel.Row> Generate()
         {
-            foreach (var row in this.Rows)
-            {
-                yield return row.Generate();
-            }
-        }
-
-        protected override void DoRender()
-        {
-            foreach (var row in this.Rows)
-            {
-                if (row == null)
-                {
-                    continue;
-                }
-
-                row.Render();
-            }
+            this.Databind();
+            return this.Rows.Select(r => r?.Generate()).ToList();
         }
     }
 }

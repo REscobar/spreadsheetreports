@@ -11,20 +11,11 @@ namespace SpreadSheetsReports.ReportModel
 
         public DocumentModel.Sheet Generate()
         {
+            this.Databind();
             DocumentModel.Sheet sheet = new DocumentModel.Sheet();
             sheet.Name = this.Name;
-            sheet.Rows = this.Content.Generate();
+            sheet.Rows = this.Content?.Generate();
             return sheet;
-        }
-
-        protected override void DoRender()
-        {
-            if (this.Content == null)
-            {
-                return;
-            }
-
-            this.Content.Render();
         }
     }
 }

@@ -63,13 +63,16 @@
     <Compile Include="DocumentModel\VerticalAlignment.cs" />
     <Compile Include="DocumentModel\HorizontalAlignment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportModel\DataSourceBrowser.cs" />
     <Compile Include="ReportModel\ICellBinding.cs" />
     <Compile Include="ReportModel\ICellGenerator.cs" />
+    <Compile Include="ReportModel\IDataSourceBrowser.cs" />
     <Compile Include="ReportModel\IDocumentGenerator.cs" />
     <Compile Include="ReportModel\IGenerator.cs" />
     <Compile Include="ReportModel\IRowCollectionGenerator.cs" />
     <Compile Include="ReportModel\IRowGenerator.cs" />
     <Compile Include="ReportModel\ISheetGenerator.cs" />
+    <Compile Include="ReportModel\ObjectDataSourceBrowser.cs" />
     <Compile Include="ReportModel\PropertyBinding.cs" />
     <Compile Include="ReportModel\PropertyBindingCollection.cs" />
     <Compile Include="ReportModel\ReportControl.cs" />

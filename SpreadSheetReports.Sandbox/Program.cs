@@ -34,6 +34,21 @@ namespace SpreadSheetsReports.Sandbox
             stream.Flush();
             stream.Close();
 
+
+            definition = TestReport2();
+            renderer = new NPOIRenderer.NPOIRenderer();
+            stream = File.Create("BindingNpoi.xlsx");
+            renderer.Render(definition).CopyTo(stream);
+            stream.Flush();
+            stream.Close();
+
+            definition = TestReport2();
+            renderer = new SpreadsheetLightRenderer.SpreadsheetLightRenderer();
+            stream = File.Create("BindingSL.xlsx");
+            renderer.Render(definition).CopyTo(stream);
+            stream.Flush();
+            stream.Close();
+
         }
 
         private static ReportDefinition TestReport()
@@ -5758,6 +5773,7 @@ namespace SpreadSheetsReports.Sandbox
                 Str2 = "Test2"
             };
 
+
             testing.Sheets.First().Content.Header.Rows.First().Bindings.Add(nameof(Row.Height), data, nameof(data.Height));
             testing.Sheets.First().Content.Header.Rows.First().Cells.First().Bindings.Add(nameof(Cell.Value), data, nameof(data.Str1));
             testing.Sheets.First().Content.Header.Rows.First().Cells.Skip(1).First().Bindings.Add(nameof(Cell.Value), data, nameof(data.Str2));
@@ -5767,9 +5783,151 @@ namespace SpreadSheetsReports.Sandbox
             {
                 cell.Bindings.Add(nameof(Cell.Value), data, nameof(data.Str2));
             }
-            System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(ReportDefinition));
-            reader.Serialize(File.Create("Def.xml"), testing);
+            //System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(ReportDefinition));
+            //reader.Serialize(File.Create("Def.xml"), testing);
             return testing;
+        }
+
+        private static ReportDefinition TestReport2()
+        {
+            var headerStyle = new DocumentModel.CellStyle
+            {
+                BorderStyleBottom = new DocumentModel.BorderStyle
+                {
+                    Type = DocumentModel.BorderType.Medium
+                }
+            };
+
+            var report = new ReportDefinition
+            {
+                Sheets = new List<Sheet>
+                {
+                    new Sheet
+                    {
+                        Content = new ReportSection
+                        {
+                            Header =  new RowCollectionSection
+                            {
+                                Rows = new RowCollection
+                                {
+                                    new Row
+                                    {
+                                        Cells = new List<Cell>
+                                        {
+                                            new Cell
+                                            {
+                                                Value = "Int1",
+                                                Style = headerStyle
+                                            },
+                                            new Cell
+                                            {
+                                                Value = "String1",
+                                                Style = headerStyle
+                                            },
+                                            new Cell
+                                            {
+                                                Value = "DateTime1",
+                                                Style = headerStyle
+                                            },
+                                            new Cell
+                                            {
+                                                Value = "Float1",
+                                                Style = headerStyle
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            SubSection = new ReportSection
+                            {
+                                Header = new RowCollectionSection
+                                {
+                                    Rows = new RowCollection
+                                    {
+                                        new Row
+                                        {
+                                            Cells = new List<Cell>
+                                            {
+                                                new Cell
+                                                {
+                                                    Value = "Insgdrgt1"
+                                                },
+                                                new Cell
+                                                {
+                                                    Value = "Steetrtertertrtring1"
+                                                }
+                                            }
+                                        },
+                                        new Row
+                                        {
+                                            Cells = new List<Cell>
+                                            {
+                                                null,
+                                                null,
+                                                new Cell
+                                                {
+                                                    Value = "DaertertseteTime1"
+                                                },
+                                                new Cell
+                                                {
+                                                    Value = "Floawetertt1"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var data = new List<TestPoco>
+            {
+                new TestPoco
+                {
+                    Int1 = 10,
+                    String1 = "Test 1",
+                    DateTime1 = DateTime.Now,
+                    Float1 = 10f/3f
+                },
+                new TestPoco
+                {
+                    Int1 = 20,
+                    String1 = "Test 20",
+                    DateTime1 = DateTime.Now.AddDays(-10),
+                    Float1 = 10f/4f
+                },
+                new TestPoco
+                {
+                    Int1 = 30,
+                    String1 = "Test 300",
+                    DateTime1 = DateTime.Now.AddDays(200),
+                    Float1 = 10f/5f
+                }
+            };
+
+            var datasource = new ObjectDataSourceBrowser(data);
+
+            report.Sheets.First().Content.DataSource = datasource;
+
+            report.Sheets.First().Content.SubSection.Header.Rows.First().Cells.Skip(0).First().Bindings.Add(new PropertyBinding("Value", datasource, nameof(TestPoco.Int1)));
+            report.Sheets.First().Content.SubSection.Header.Rows.First().Cells.Skip(1).First().Bindings.Add(new PropertyBinding("Value", datasource, nameof(TestPoco.String1)));
+            report.Sheets.First().Content.SubSection.Header.Rows.Skip(1).First().Cells.Skip(2).First().Bindings.Add(new PropertyBinding("Value", datasource, nameof(TestPoco.DateTime1)));
+            report.Sheets.First().Content.SubSection.Header.Rows.Skip(1).First().Cells.Skip(3).First().Bindings.Add(new PropertyBinding("Value", datasource, nameof(TestPoco.Float1)));
+
+            return report;
+        }
+
+        class TestPoco
+        {
+            public int Int1 { get; set; }
+
+            public string String1 { get; set; }
+
+            public DateTime DateTime1 { get; set; }
+
+            public float Float1 { get; set; }
         }
     }
 }

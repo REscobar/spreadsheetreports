@@ -1,20 +1,35 @@
 ﻿namespace SpreadSheetsReports.DocumentModel
 {
+    /// <summary>
+    /// Represents a cell style
+    /// </summary>
     public class CellStyle
     {
-        public CellStyle()
-        {
-        }
-
+        /// <summary>
+        /// Gets or sets a value indicating whether the content of the cell should shrink to fill the area of the cell
+        /// </summary>
         public bool ShrinkToFit { get; set; }
 
+        /// <summary>
+        /// Gets or sets the <see cref="DocumentModel.FontStyle"/>
+        /// </summary>
         public FontStyle FontStyle { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the cell is hidden
+        /// </summary>
         public bool IsHidden { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the cell is locked
+        /// </summary>
         public bool IsLocked { get; set; }
 
+        /// <summary>
+        /// Gets or sets the <see cref="DocumentModel.HorizontalAlignment"/>
+        /// </summary>
         public HorizontalAlignment HorizontalAlignment { get; set; }
+
 
         public VerticalAlignment VerticalAlignment { get; set; }
 

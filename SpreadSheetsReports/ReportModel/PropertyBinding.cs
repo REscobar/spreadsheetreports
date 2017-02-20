@@ -25,7 +25,14 @@
         public PropertyBinding(string propertyName, object dataSource, string dataMember)
         {
             this.PropertyName = propertyName;
-            this.DataSource = dataSource;
+            var dataBrowser = dataSource as DataSourceBrowser;
+
+            if (dataBrowser == null)
+            {
+                dataBrowser = new ObjectDataSourceBrowser(dataSource);
+            }
+
+            this.DataSource = dataBrowser;
             this.DataMember = dataMember;
         }
 
@@ -34,7 +41,7 @@
         public string DataMember { get; set; }
 
         [XmlIgnore]
-        public object DataSource { get; set; }
+        public DataSourceBrowser DataSource { get; set; }
 
         internal PropertyBindingCollection Owner { get; set; }
 
@@ -45,7 +52,7 @@
                 throw new ArgumentNullException(nameof(obj));
             }
 
-            object value = this.ResolveValue();
+            object value = this.DataSource.GetValue(this.DataMember);
             var objectType = obj.GetType();
             var setter = GetWriter(objectType);
 
@@ -85,42 +92,6 @@
                 var lambda = Expression.Lambda<Action<object, string, object>>(block, obj, property, value);
                 return lambda.Compile();
             });
-        }
-
-        private static Func<object, string, object> GetReader(Type t)
-        {
-            return ReaderCache.GetOrAdd(t, (k) =>
-            {
-                Type objectType = typeof(object);
-
-                ParameterExpression obj = Expression.Parameter(objectType, "obj");
-                ParameterExpression property = Expression.Parameter(typeof(string), "property");
-
-                ParameterExpression item = Expression.Parameter(t, "item");
-                ParameterExpression result = Expression.Parameter(objectType, "result");
-
-                BinaryExpression cast = Expression.Assign(item, Expression.TypeAs(obj, t));
-                BinaryExpression assign = Expression.Assign(result, Expression.TypeAs(Expression.Constant(null), objectType));
-                List<SwitchCase> cases = new List<SwitchCase>();
-                foreach (var prop in t.GetProperties())
-                {
-                    BinaryExpression caseExpression = Expression.Assign(result, Expression.TypeAs(Expression.Property(item, prop.Name), objectType));
-                    SwitchCase caseStatement = Expression.SwitchCase(caseExpression, Expression.Constant(prop.Name, typeof(string)));
-                    cases.Add(caseStatement);
-                }
-
-                SwitchExpression switchStatment = Expression.Switch(property, assign, cases.ToArray());
-
-                BlockExpression block = Expression.Block(objectType, new[] { item, result }, cast, assign, switchStatment);
-
-                var lambda = Expression.Lambda<Func<object, string, object>>(block, obj, property);
-                return lambda.Compile();
-            });
-        }
-
-        private object ResolveValue()
-        {
-            return GetReader(this.DataSource.GetType())(this.DataSource, this.DataMember);
         }
     }
 }

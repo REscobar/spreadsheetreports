@@ -13,26 +13,9 @@ namespace SpreadSheetsReports.ReportModel
 
         public RowCollectionSection Footer { get; set; }
 
-        protected override void DoRender()
-        {
-            if (this.Header != null)
-            {
-                this.Header.Render();
-            }
-
-            if (this.SubSection != null)
-            {
-                this.SubSection.Render();
-            }
-
-            if (this.SubSection != null)
-            {
-                this.Footer.Render();
-            }
-        }
-
         public IEnumerable<DocumentModel.Row> Generate()
         {
+            this.Databind();
             var rows = Enumerable.Empty<DocumentModel.Row>();
             if (this.Header != null)
             {
@@ -41,10 +24,31 @@ namespace SpreadSheetsReports.ReportModel
 
             if (this.SubSection != null)
             {
-                rows = rows.Concat(this.SubSection.Generate());
+                if (this.DataSource != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(this.DataMember))
+                    {
+                        var browser = new ObjectDataSourceBrowser(this.DataSource.Current);
+                        while (browser.MoveNext())
+                        {
+                            rows = rows.Concat(this.SubSection.Generate());
+                        }
+                    }
+                    else
+                    {
+                        while (this.DataSource.MoveNext())
+                        {
+                            rows = rows.Concat(this.SubSection.Generate());
+                        }
+                    }
+                }
+                else
+                {
+                    rows = rows.Concat(this.SubSection.Generate());
+                }
             }
 
-            if (this.SubSection != null)
+            if (this.Footer != null)
             {
                 rows = rows.Concat(this.Footer.Generate());
             }

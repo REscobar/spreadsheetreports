@@ -18,13 +18,9 @@
 
         public CellType Type { get; set; }
 
-        protected override void DoRender()
-        {
-
-        }
-
         public DocumentModel.Cell Generate()
         {
+            this.Databind();
             var cell = new DocumentModel.Cell();
 
             cell.ClassName = this.ClassName;

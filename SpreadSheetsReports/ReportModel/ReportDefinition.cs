@@ -1,6 +1,5 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using DocumentModel;
@@ -13,25 +12,9 @@
 
         public Document Generate()
         {
-            Document doc = new Document();
-            this.Render();
+            Document doc = new Document(this.Sheets.Select(s => s.Generate()));
 
-            doc.Sheets = this.Sheets.Select(s => s.Generate());
             return doc;
         }
-
-        protected override void DoRender()
-        {
-            foreach (var sheet in this.Sheets)
-            {
-                if (sheet == null)
-                {
-                    continue;
-                }
-
-                sheet.Render();
-            }
-        }
-
     }
 }

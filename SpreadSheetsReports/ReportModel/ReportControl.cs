@@ -9,13 +9,17 @@
 
         public PropertyBindingCollection Bindings { get; set; }
 
-        public virtual void Render()
-        {
-            this.Databind();
-            this.DoRender();
-        }
+        public string DataMember { get; set; }
 
-        protected abstract void DoRender();
+        public DataSourceBrowser DataSource { get; set; }
+
+        //public virtual void Render()
+        //{
+        //    this.Databind();
+        //    this.DoRender();
+        //}
+
+        //protected abstract void DoRender();
 
         protected virtual void Databind()
         {

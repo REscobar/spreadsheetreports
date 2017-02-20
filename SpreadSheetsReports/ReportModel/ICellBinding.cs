@@ -6,6 +6,6 @@
 
         string DataMember { get; set; }
 
-        object DataSource { get; set; }
+        DataSourceBrowser DataSource { get; set; }
     }
 }

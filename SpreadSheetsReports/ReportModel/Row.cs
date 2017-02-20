@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using DocumentModel;
-
+    using System.Linq;
     public class Row : ReportControl, IRowGenerator
     {
         public List<Cell> Cells { get; set; }
@@ -13,24 +13,12 @@
 
         public DocumentModel.Row Generate()
         {
+            this.Databind();
             var row = new DocumentModel.Row();
-            row.Cells = this.GetCells();
+            row.Cells = this.GetCells().ToList();
             row.Height = this.Height;
             row.Style = this.Style;
             return row;
-        }
-
-        protected override void DoRender()
-        {
-            foreach (var cell in this.Cells)
-            {
-                if (cell == null)
-                {
-                    continue;
-                }
-
-                cell.Render();
-            }
         }
 
         private IEnumerable<DocumentModel.Cell> GetCells()
