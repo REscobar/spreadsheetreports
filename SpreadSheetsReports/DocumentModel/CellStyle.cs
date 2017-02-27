@@ -30,7 +30,6 @@
         /// </summary>
         public HorizontalAlignment HorizontalAlignment { get; set; }
 
-
         public VerticalAlignment VerticalAlignment { get; set; }
 
         public byte Indent { get; set; }

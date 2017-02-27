@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using SpreadSheetsReports.DocumentModel;
-using System.Linq;
-
-namespace SpreadSheetsReports.ReportModel
+﻿namespace SpreadSheetsReports.ReportModel
 {
-    public class ReportSection : ReportControl, IRowCollectionGenerator
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using SpreadSheetsReports.DocumentModel;
+
+    public class ReportSection : DataSourceBoundReportControl, IRowCollectionGenerator
     {
         public RowCollectionSection Header { get; set; }
 
@@ -16,10 +16,10 @@ namespace SpreadSheetsReports.ReportModel
         public IEnumerable<DocumentModel.Row> Generate()
         {
             this.Databind();
-            var rows = Enumerable.Empty<DocumentModel.Row>();
+            List<DocumentModel.Row> rows = new List<DocumentModel.Row>();
             if (this.Header != null)
             {
-                rows = rows.Concat(this.Header.Generate());
+                rows.AddRange(this.Header.Generate());
             }
 
             if (this.SubSection != null)
@@ -28,29 +28,29 @@ namespace SpreadSheetsReports.ReportModel
                 {
                     if (!string.IsNullOrWhiteSpace(this.DataMember))
                     {
-                        var browser = new ObjectDataSourceBrowser(this.DataSource.Current);
+                        var browser = new ObjectDataSourceBrowser(this.DataSource.GetValue(this.DataMember));
                         while (browser.MoveNext())
                         {
-                            rows = rows.Concat(this.SubSection.Generate());
+                            rows.AddRange(this.SubSection.Generate());
                         }
                     }
                     else
                     {
                         while (this.DataSource.MoveNext())
                         {
-                            rows = rows.Concat(this.SubSection.Generate());
+                            rows.AddRange(this.SubSection.Generate());
                         }
                     }
                 }
                 else
                 {
-                    rows = rows.Concat(this.SubSection.Generate());
+                    rows.AddRange(this.SubSection.Generate());
                 }
             }
 
             if (this.Footer != null)
             {
-                rows = rows.Concat(this.Footer.Generate());
+                rows.AddRange(this.Footer.Generate());
             }
 
             return rows;

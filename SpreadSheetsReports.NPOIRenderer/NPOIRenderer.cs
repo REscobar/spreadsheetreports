@@ -80,6 +80,11 @@
 
         private void RenderCell(ICell sheetCell, Cell cell)
         {
+            if (cell.Value == null)
+            {
+                return;
+            }
+
             if (cell.Type == ReportModel.CellType.Formula)
             {
                 sheetCell.SetCellFormula(cell.Value.ToString());

@@ -4,6 +4,7 @@ using SpreadSheetsReports.Renderer;
 using SpreadSheetsReports.ReportModel;
 using SpreadSheetsReports.SpreadsheetLightRenderer;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,6 +46,20 @@ namespace SpreadSheetsReports.Sandbox
             definition = TestReport2();
             renderer = new SpreadsheetLightRenderer.SpreadsheetLightRenderer();
             stream = File.Create("BindingSL.xlsx");
+            renderer.Render(definition).CopyTo(stream);
+            stream.Flush();
+            stream.Close();
+
+            definition = TestReport3();
+            renderer = new NPOIRenderer.NPOIRenderer();
+            stream = File.Create("NestedNpoi.xlsx");
+            renderer.Render(definition).CopyTo(stream);
+            stream.Flush();
+            stream.Close();
+
+            definition = TestReport3();
+            renderer = new SpreadsheetLightRenderer.SpreadsheetLightRenderer();
+            stream = File.Create("NestedSL.xlsx");
             renderer.Render(definition).CopyTo(stream);
             stream.Flush();
             stream.Close();
@@ -5790,6 +5805,15 @@ namespace SpreadSheetsReports.Sandbox
 
         private static ReportDefinition TestReport2()
         {
+            var reportData = Enumerable.Range(1, 3).Select(i => new
+            {
+                Data = TestPocoData( i * 100 + 1, i * 100 + 100),
+                Name = $"Page {i}"
+            }).ToList();
+
+            var datasource = new ObjectDataSourceBrowser(reportData);
+            var contentSource = new ObjectDataSourceBrowser(datasource, "Data");
+
             var headerStyle = new DocumentModel.CellStyle
             {
                 BorderStyleBottom = new DocumentModel.BorderStyle
@@ -5811,8 +5835,18 @@ namespace SpreadSheetsReports.Sandbox
                 {
                     new Sheet
                     {
+                        Bindings = new PropertyBindingCollection
+                        {
+                            new PropertyBinding
+                            {
+                                DataSource = datasource,
+                                DataMember = "Name",
+                                PropertyName = nameof(Sheet.Name)
+                            }
+                        },
                         Content = new ReportSection
                         {
+                            DataSource = contentSource,
                             Header =  new RowCollectionSection
                             {
                                 Rows = new RowCollection
@@ -5857,32 +5891,293 @@ namespace SpreadSheetsReports.Sandbox
                                             {
                                                 new Cell
                                                 {
-                                                    Value = "Insgdrgt1"
+                                                    Style = new DocumentModel.CellStyle
+                                                    {
+                                                        FontStyle = new DocumentModel.FontStyle
+                                                        {
+                                                            IsItalic = true
+                                                        }
+                                                    },
+                                                    Bindings = new PropertyBindingCollection
+                                                    {
+                                                        new PropertyBinding(nameof(Cell.Value), contentSource, nameof(TestPoco.Int1))
+                                                    }
                                                 },
                                                 new Cell
                                                 {
-                                                    Value = "Steetrtertertrtring1"
+                                                    Style = new DocumentModel.CellStyle
+                                                    {
+                                                        FontStyle = new DocumentModel.FontStyle
+                                                        {
+                                                            IsBold = true
+                                                        }
+                                                    },
+                                                    Bindings = new PropertyBindingCollection
+                                                    {
+                                                        new PropertyBinding(nameof(Cell.Value), contentSource, nameof(TestPoco.String1))
+                                                    }
                                                 },
+                                        //    }
+                                        //},
+                                        //new Row
+                                        //{
+                                        //    Cells = new List<Cell>
+                                        //    {
+                                        //        null,
+                                        //        null,
+                                                new Cell
+                                                {
+                                                    Style = new DocumentModel.CellStyle
+                                                    {
+                                                        FontStyle = new DocumentModel.FontStyle
+                                                        {
+                                                            IsStrikeout = true
+                                                        }
+                                                    },
+                                                    Bindings = new PropertyBindingCollection
+                                                    {
+                                                        new PropertyBinding(nameof(Cell.Value), contentSource, nameof(TestPoco.DateTime1))
+                                                    }
+                                                },
+                                                new Cell
+                                                {
+                                                    Style = new DocumentModel.CellStyle
+                                                    {
+                                                        FontStyle = new DocumentModel.FontStyle
+                                                        {
+                                                            ScriptStyle = DocumentModel.FontScriptStyle.Superscript
+                                                        }
+                                                    },
+                                                    Bindings = new PropertyBindingCollection
+                                                    {
+                                                        new PropertyBinding(nameof(Cell.Value), contentSource, nameof(TestPoco.Float1))
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        //null,
+                                        //null
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+           
+
+            report.DataSource = datasource;
+
+            return report;
+        }
+
+        private static ReportDefinition TestReport3()
+        {
+            var reportData = Enumerable.Range(1, 3).Select(i => new
+            {
+                Data = NestedPocoData(i * 10 + 1, i * 10 + 10, 1, 10),
+                Name = $"Page {i}"
+            }).ToList();
+
+            var datasource = new ObjectDataSourceBrowser(reportData);
+            var headerSource = new ObjectDataSourceBrowser(datasource, "Data");
+            var contentSource = new ObjectDataSourceBrowser(headerSource, "Inner");
+
+            var subHeaderStyle = new DocumentModel.CellStyle
+            {
+                BorderStyleBottom = new DocumentModel.BorderStyle
+                {
+                    Type = DocumentModel.BorderType.Hair
+                },
+                FontStyle = new DocumentModel.FontStyle
+                {
+                    Color = new DocumentModel.Color
+                    {
+                        Red = 127
+                    }
+                }
+            };
+
+            var mainHeaderStyle = new DocumentModel.CellStyle
+            {
+                BorderStyleBottom = new DocumentModel.BorderStyle
+                {
+                    Type = DocumentModel.BorderType.Thick
+                },
+                HorizontalAlignment = DocumentModel.HorizontalAlignment.Right,
+                FontStyle = new DocumentModel.FontStyle
+                {
+                    Color = new DocumentModel.Color
+                    {
+                        Green = 127
+                    }
+                }
+            };
+
+            var report = new ReportDefinition
+            {
+                Sheets = new List<Sheet>
+                {
+                    new Sheet
+                    {
+                        Bindings = new PropertyBindingCollection
+                        {
+                            new PropertyBinding
+                            {
+                                DataSource = datasource,
+                                DataMember = "Name",
+                                PropertyName = nameof(Sheet.Name)
+                            }
+                        },
+                        Content = new ReportSection
+                        {
+                            DataSource = headerSource,
+                            Header = new RowCollectionSection
+                            {
+                                Rows = new RowCollection
+                                {
+                                    new Row
+                                    {
+                                        Cells = new List<Cell>
+                                        {
+                                            new Cell
+                                            {
+                                                Value ="Header1"
+                                            },
+                                            new Cell
+                                            {
+                                                Value ="Header2"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            SubSection = new ReportSection
+                            {
+                                DataSource = contentSource,
+                                Header =  new RowCollectionSection
+                                {
+                                    Rows = new RowCollection
+                                    {
+                                        new Row
+                                        {
+                                            Cells = new List<Cell>
+                                            {
+                                                new Cell
+                                                {
+                                                    Style = mainHeaderStyle,
+                                                    Bindings = new PropertyBindingCollection
+                                                    {
+                                                        new PropertyBinding(nameof(Cell.Value), headerSource, nameof(NestedPoco.Header1))
+                                                    }
+                                                },
+                                                new Cell
+                                                {
+                                                    Style = mainHeaderStyle,
+                                                    Bindings = new PropertyBindingCollection
+                                                    {
+                                                        new PropertyBinding(nameof(Cell.Value), headerSource, nameof(NestedPoco.Header2))
+                                                    }
+                                                }
                                             }
                                         },
                                         new Row
                                         {
                                             Cells = new List<Cell>
                                             {
-                                                null,
-                                                null,
                                                 new Cell
                                                 {
-                                                    Value = "DaertertseteTime1"
+                                                    Value = "Int1",
+                                                    Style = subHeaderStyle
                                                 },
                                                 new Cell
                                                 {
-                                                    Value = "Floawetertt1"
+                                                    Value = "String1",
+                                                    Style = subHeaderStyle
+                                                },
+                                                new Cell
+                                                {
+                                                    Value = "DateTime1",
+                                                    Style = subHeaderStyle
+                                                },
+                                                new Cell
+                                                {
+                                                    Value = "Float1",
+                                                    Style = subHeaderStyle
                                                 }
                                             }
-                                        },
-                                        null,
-                                        null
+                                        }
+                                    }
+                                },
+                                SubSection = new ReportSection
+                                {
+                                    Header = new RowCollectionSection
+                                    {
+                                        Rows = new RowCollection
+                                        {
+                                            new Row
+                                            {
+                                                Cells = new List<Cell>
+                                                {
+                                                    new Cell
+                                                    {
+                                                        Style = new DocumentModel.CellStyle
+                                                        {
+                                                            FontStyle = new DocumentModel.FontStyle
+                                                            {
+                                                                IsItalic = true
+                                                            }
+                                                        },
+                                                        Bindings = new PropertyBindingCollection
+                                                        {
+                                                            new PropertyBinding(nameof(Cell.Value), contentSource, nameof(TestPoco.Int1))
+                                                        }
+                                                    },
+                                                    new Cell
+                                                    {
+                                                        Style = new DocumentModel.CellStyle
+                                                        {
+                                                            FontStyle = new DocumentModel.FontStyle
+                                                            {
+                                                                IsBold = true
+                                                            }
+                                                        },
+                                                        Bindings = new PropertyBindingCollection
+                                                        {
+                                                            new PropertyBinding(nameof(Cell.Value), contentSource, nameof(TestPoco.String1))
+                                                        }
+                                                    },
+                                                    new Cell
+                                                    {
+                                                        Style = new DocumentModel.CellStyle
+                                                        {
+                                                            FontStyle = new DocumentModel.FontStyle
+                                                            {
+                                                                IsStrikeout = true
+                                                            }
+                                                        },
+                                                        Bindings = new PropertyBindingCollection
+                                                        {
+                                                            new PropertyBinding(nameof(Cell.Value), contentSource, nameof(TestPoco.DateTime1))
+                                                        }
+                                                    },
+                                                    new Cell
+                                                    {
+                                                        Style = new DocumentModel.CellStyle
+                                                        {
+                                                            FontStyle = new DocumentModel.FontStyle
+                                                            {
+                                                                ScriptStyle = DocumentModel.FontScriptStyle.Superscript
+                                                            }
+                                                        },
+                                                        Bindings = new PropertyBindingCollection
+                                                        {
+                                                            new PropertyBinding(nameof(Cell.Value), contentSource, nameof(TestPoco.Float1))
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -5891,1686 +6186,49 @@ namespace SpreadSheetsReports.Sandbox
                 }
             };
 
-            var data = new List<TestPoco>
-            {
-                new TestPoco
-                {
-                    Int1 = 10,
-                    String1 = "Test 1",
-                    DateTime1 = DateTime.Now,
-                    Float1 = 10f/3f
-                },
-                new TestPoco
-                {
-                    Int1 = 20,
-                    String1 = "Test 20",
-                    DateTime1 = DateTime.Now.AddDays(-10),
-                    Float1 = 10f/4f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                },
-                new TestPoco
-                {
-                    Int1 = 30,
-                    String1 = "Test 300",
-                    DateTime1 = DateTime.Now.AddDays(200),
-                    Float1 = 10f/5f
-                }
-            };
 
-            var datasource = new ObjectDataSourceBrowser(data);
-
-            report.Sheets.First().Content.DataSource = datasource;
-
-            report.Sheets.First().Content.SubSection.Header.Rows.First().Cells.Skip(0).First().Bindings.Add(new PropertyBinding("Value", datasource, nameof(TestPoco.Int1)));
-            report.Sheets.First().Content.SubSection.Header.Rows.First().Cells.Skip(1).First().Bindings.Add(new PropertyBinding("Value", datasource, nameof(TestPoco.String1)));
-            report.Sheets.First().Content.SubSection.Header.Rows.Skip(1).First().Cells.Skip(2).First().Bindings.Add(new PropertyBinding("Value", datasource, nameof(TestPoco.DateTime1)));
-            report.Sheets.First().Content.SubSection.Header.Rows.Skip(1).First().Cells.Skip(3).First().Bindings.Add(new PropertyBinding("Value", datasource, nameof(TestPoco.Float1)));
+            report.DataSource = datasource;
 
             return report;
+        }
+
+        private static List<NestedPoco> NestedPocoData(int headerStart, int headerEnd, int innerStart, int innerEnd)
+        {
+            var data = new List<NestedPoco>();
+            for (int i = headerStart; i < headerEnd; i++)
+            {
+                data.Add(new NestedPoco
+                {
+                    Header1 = i,
+                    Header2 = $"Header {i}",
+                    Inner = TestPocoData(10 * i + innerStart, 10 * i + innerEnd)
+                });
+            }
+            return data;
+        }
+
+        private static List<TestPoco> TestPocoData(int start, int end)
+        {
+            var data = new List<TestPoco>();
+            for (int i = start; i < end + 1; i++)
+            {
+                data.Add(new TestPoco
+                {
+                    Int1 = i * end,
+                    String1 = $"Test {i}",
+                    DateTime1 = DateTime.Now.AddHours(i),
+                    Float1 = (float)end / i
+                });
+            }
+            return data;
+        }
+
+        class NestedPoco
+        {
+            public int Header1 { get; set; }
+            public string Header2 { get; set; }
+            public IEnumerable<TestPoco> Inner { get; set; }
+        
         }
 
         class TestPoco

@@ -378,6 +378,11 @@
 
         private void RenderCell(SLDocument document, DocumentModel.Cell cell, int rowCounter, int cellCounter)
         {
+            if (cell.Value == null)
+            {
+                return;
+            }
+
             if (cell.Type == ReportModel.CellType.Formula)
             {
                 document.SetCellValue(rowCounter, cellCounter, $"={cell.Value.ToString()}");

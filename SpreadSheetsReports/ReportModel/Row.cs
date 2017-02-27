@@ -1,8 +1,9 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
     using System.Collections.Generic;
-    using DocumentModel;
     using System.Linq;
+    using DocumentModel;
+
     public class Row : ReportControl, IRowGenerator
     {
         public List<Cell> Cells { get; set; }

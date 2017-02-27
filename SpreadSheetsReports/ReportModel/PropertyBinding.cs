@@ -85,9 +85,7 @@
 
                 SwitchExpression switchStatment = Expression.Switch(voidType, property, null, null, cases.ToArray());
 
-                //MethodCallExpression debugger = Expression.Call(null, typeof(System.Diagnostics.Debugger).GetMethod("Break"));
-
-                BlockExpression block = Expression.Block(voidType,new[] { item }, cast, switchStatment);
+                BlockExpression block = Expression.Block(voidType, new[] { item }, cast, switchStatment);
 
                 var lambda = Expression.Lambda<Action<object, string, object>>(block, obj, property, value);
                 return lambda.Compile();

@@ -1,9 +1,6 @@
-﻿using System;
-using SpreadSheetsReports.DocumentModel;
-
-namespace SpreadSheetsReports.ReportModel
+﻿namespace SpreadSheetsReports.ReportModel
 {
-    public class Sheet : ReportControl, ISheetGenerator
+    public class Sheet : DataSourceBoundReportControl, ISheetGenerator, IDataSourceBound
     {
         public ReportSection Content { get; set; }
 

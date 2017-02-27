@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using SpreadSheetsReports.DocumentModel;
-using System.Linq;
-
-namespace SpreadSheetsReports.ReportModel
+﻿namespace SpreadSheetsReports.ReportModel
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using SpreadSheetsReports.DocumentModel;
+
     public class RowCollectionSection : ReportControl, IRowCollectionGenerator
     {
         public RowCollection Rows { get; set; }
