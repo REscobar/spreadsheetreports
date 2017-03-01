@@ -13,20 +13,11 @@
             List<DocumentModel.Sheet> sheets = new List<DocumentModel.Sheet>();
             if (this.DataSource != null)
             {
-                if (!string.IsNullOrWhiteSpace(this.DataMember))
+                DataSourceBrowser browser = this.GetDataBrowser();
+
+                while (this.DataSource.MoveNext())
                 {
-                    var browser = new ObjectDataSourceBrowser(this.DataSource.Current);
-                    while (browser.MoveNext())
-                    {
-                        sheets.AddRange(this.Sheets.Select(s => s.Generate()));
-                    }
-                }
-                else
-                {
-                    while (this.DataSource.MoveNext())
-                    {
-                        sheets.AddRange(this.Sheets.Select(s => s.Generate()));
-                    }
+                    sheets.AddRange(this.Sheets.Select(s => s.Generate()));
                 }
             }
             else
@@ -37,6 +28,21 @@
             Document doc = new Document(sheets);
 
             return doc;
+        }
+
+        private DataSourceBrowser GetDataBrowser()
+        {
+            DataSourceBrowser browser;
+            if (!string.IsNullOrWhiteSpace(this.DataMember))
+            {
+                browser = new ObjectDataSourceBrowser(this.DataSource, this.DataMember);
+            }
+            else
+            {
+                browser = this.DataSource;
+            }
+
+            return browser;
         }
     }
 }

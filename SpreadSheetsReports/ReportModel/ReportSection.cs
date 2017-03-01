@@ -1,9 +1,6 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using SpreadSheetsReports.DocumentModel;
 
     public class ReportSection : DataSourceBoundReportControl, IRowCollectionGenerator
     {
@@ -26,20 +23,10 @@
             {
                 if (this.DataSource != null)
                 {
-                    if (!string.IsNullOrWhiteSpace(this.DataMember))
+                    DataSourceBrowser browser = this.GetBrowser();
+                    while (this.DataSource.MoveNext())
                     {
-                        var browser = new ObjectDataSourceBrowser(this.DataSource.GetValue(this.DataMember));
-                        while (browser.MoveNext())
-                        {
-                            rows.AddRange(this.SubSection.Generate());
-                        }
-                    }
-                    else
-                    {
-                        while (this.DataSource.MoveNext())
-                        {
-                            rows.AddRange(this.SubSection.Generate());
-                        }
+                        rows.AddRange(this.SubSection.Generate());
                     }
                 }
                 else
@@ -54,6 +41,21 @@
             }
 
             return rows;
+        }
+
+        private DataSourceBrowser GetBrowser()
+        {
+            DataSourceBrowser browser;
+            if (!string.IsNullOrWhiteSpace(this.DataMember))
+            {
+                browser = new ObjectDataSourceBrowser(this.DataSource.GetValue(this.DataMember));
+            }
+            else
+            {
+                browser = this.DataSource;
+            }
+
+            return browser;
         }
     }
 }

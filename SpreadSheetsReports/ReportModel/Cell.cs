@@ -1,6 +1,5 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
-    using System;
     using DocumentModel;
 
     public class Cell : ReportControl, ICellGenerator

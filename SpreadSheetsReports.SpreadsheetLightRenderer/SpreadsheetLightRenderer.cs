@@ -17,7 +17,6 @@
         {
             using (SLDocument slDocument = new SLDocument())
             {
-
                 var sheets = document.Sheets.ToList();
 
                 if (!string.IsNullOrWhiteSpace(sheets[0].Name))
@@ -94,7 +93,6 @@
             SLStyle style = document.CreateStyle();
             this.ApplyStyle(style, cell.Style);
             document.SetCellStyle(rowCounter, cellCounter, style);
-
         }
 
         private void ApplyStyle(SLStyle cellStyle, DocumentModel.CellStyle style)
@@ -140,7 +138,6 @@
             {
                 var color = backgroundColor.Value;
                 fill.SetPatternBackgroundColor(System.Drawing.Color.FromArgb(color.Alpha, color.Red, color.Green, color.Blue));
-
             }
         }
 
@@ -337,7 +334,6 @@
                     break;
                 case VerticalAlignment.JustifyDistributed:
                     throw new NotImplementedException();
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(verticalAlignment));
             }
@@ -420,6 +416,5 @@
                     break;
             }
         }
-
     }
 }
