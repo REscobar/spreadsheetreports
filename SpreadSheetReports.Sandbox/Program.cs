@@ -102,20 +102,11 @@ namespace SpreadSheetsReports.Sandbox
                                                     BorderStyleBottom = new DocumentModel.BorderStyle
                                                     {
                                                         Type = DocumentModel.BorderType.Thick,
-                                                        Color = new DocumentModel.Color
-                                                        {
-                                                            Red = 255
-                                                        }
+                                                        Color = new DocumentModel.Color(0,255,0)
                                                     },
                                                     FontStyle = new DocumentModel.FontStyle
                                                     {
-                                                        Color = new DocumentModel.Color
-                                                        {
-                                                            Alpha = 255,
-                                                            Red = 127,
-                                                            Blue = 127,
-                                                            Green = 255
-                                                        },
+                                                        Color = new DocumentModel.Color(255, 127, 127, 255),
                                                         FontName = "Algerian"
                                                     }
                                                 }
@@ -145,43 +136,42 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     IsHidden= true,
                                                     FillPatternStyle= DocumentModel.FillPatternStyle.VerticalStripe,
-                                                    FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Red = 64,
-                                                        Blue = 255,
-                                                        Green = 0
-                                                    },
+                                                    FillPatternColor = new DocumentModel.Color(
+                                                        red:64,
+                                                        blue:255,
+                                                        green:0
+                                                    ),
                                                     BackgroundColor = new DocumentModel.Color
-                                                    {
-                                                        Red = 255,
-                                                        Blue = 64,
-                                                        Green = 0
-                                                    },
+                                                    (
+                                                        red:255,
+                                                        blue:64,
+                                                        green:0
+                                                    ),
                                                     BorderStyleBottom = new DocumentModel.BorderStyle
                                                     {
                                                         Type = DocumentModel.BorderType.Thick,
                                                         Color = new DocumentModel.Color
-                                                        {
-                                                            Red = 255
-                                                        }
+                                                        (
+                                                            red:255
+                                                        )
                                                     },
                                                     BorderStyleDiagonalUpLeftToBottomRight = new DocumentModel.BorderStyle
                                                     {
                                                         Type = DocumentModel.BorderType.DashDotDot,
                                                         Color = new DocumentModel.Color
-                                                        {
-                                                            Green = 127
-                                                        }
+                                                        (
+                                                            green:127
+                                                        )
                                                     },
                                                     FontStyle = new DocumentModel.FontStyle
                                                     {
                                                         Color = new DocumentModel.Color
-                                                        {
-                                                            Alpha = 255,
-                                                            Red = 127,
-                                                            Blue = 127,
-                                                            Green = 255
-                                                        },
+                                                        (
+                                                            alpha:255,
+                                                            red:127,
+                                                            blue:127,
+                                                            green:255
+                                                        ),
                                                         FontName = "Arial",
                                                         Underline = DocumentModel.UnderLineStyle.Double
                                                     }
@@ -205,19 +195,19 @@ namespace SpreadSheetsReports.Sandbox
                                             {
                                                 Type = DocumentModel.BorderType.Thick,
                                                 Color = new DocumentModel.Color
-                                                {
-                                                    Red = 255
-                                                }
+                                                (
+                                                    red:255
+                                                )
                                             },
                                             FontStyle = new DocumentModel.FontStyle
                                             {
                                                 Color = new DocumentModel.Color
-                                                {
-                                                    Alpha = 255,
-                                                    Red = 127,
-                                                    Blue = 127,
-                                                    Green = 255
-                                                },
+                                                (
+                                                    alpha:255,
+                                                    red:127,
+                                                    blue:127,
+                                                    green:255
+                                                ),
                                                 FontName = "Algerian"
                                             }
                                         },
@@ -2829,10 +2819,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.Solid,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -2843,10 +2833,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.ThreeQuarters,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -2857,10 +2847,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.OneHalf,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -2871,10 +2861,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.OneQuarter,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -2885,10 +2875,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.OneEight,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -2899,10 +2889,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.OneSixteenth,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -2913,10 +2903,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.HorizontalStripe,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -2927,10 +2917,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.VerticalStripe,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -2941,10 +2931,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.ReverseDiagonalStripe,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -2955,10 +2945,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.DiagonalCrosshatch,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -2969,10 +2959,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.ThickDiagonalCrosshatch,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -2983,10 +2973,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.ThinHorizontalStripe,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -2997,10 +2987,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.ThinVerticalStripe,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -3011,10 +3001,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.ThinReverseDiagonalStripe,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -3025,10 +3015,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.ThinDiagonalStripe,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -3039,10 +3029,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.ThinHorizontalCrosshatch,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             },
                                             new Cell
@@ -3053,10 +3043,10 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle = DocumentModel.FillPatternStyle.ThinDiagonalCrosshatch,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Alpha = 255,
-                                                        Red = 255
-                                                    }
+                                                    (
+                                                        alpha:255,
+                                                        red:255
+                                                    )
                                                 }
                                             }
                                         }
@@ -3094,19 +3084,19 @@ namespace SpreadSheetsReports.Sandbox
                                                     {
                                                         Type = DocumentModel.BorderType.Thick,
                                                         Color = new DocumentModel.Color
-                                                        {
-                                                            Red = 255
-                                                        }
+                                                        (
+                                                            red:255
+                                                        )
                                                     },
                                                     FontStyle = new DocumentModel.FontStyle
                                                     {
                                                         Color = new DocumentModel.Color
-                                                        {
-                                                            Alpha = 255,
-                                                            Red = 127,
-                                                            Blue = 127,
-                                                            Green = 255
-                                                        },
+                                                        (
+                                                            alpha:255,
+                                                            red:127,
+                                                            blue:127,
+                                                            green:255
+                                                        ),
                                                         FontName = "Algerian"
                                                     }
                                                 }
@@ -3125,42 +3115,42 @@ namespace SpreadSheetsReports.Sandbox
                                                 {
                                                     FillPatternStyle= DocumentModel.FillPatternStyle.VerticalStripe,
                                                     FillPatternColor = new DocumentModel.Color
-                                                    {
-                                                        Red = 64,
-                                                        Blue = 255,
-                                                        Green = 0
-                                                    },
+                                                    (
+                                                        red:64,
+                                                        blue:255,
+                                                        green:0
+                                                    ),
                                                     BackgroundColor = new DocumentModel.Color
-                                                    {
-                                                        Red = 255,
-                                                        Blue = 64,
-                                                        Green = 0
-                                                    },
+                                                    (
+                                                        red:255,
+                                                        blue:64,
+                                                        green:0
+                                                    ),
                                                     BorderStyleBottom = new DocumentModel.BorderStyle
                                                     {
                                                         Type = DocumentModel.BorderType.Thick,
                                                         Color = new DocumentModel.Color
-                                                        {
-                                                            Red = 255
-                                                        }
+                                                        (
+                                                            red:255
+                                                        )
                                                     },
                                                     BorderStyleDiagonalUpLeftToBottomRight = new DocumentModel.BorderStyle
                                                     {
                                                         Type = DocumentModel.BorderType.DashDotDot,
                                                         Color = new DocumentModel.Color
-                                                        {
-                                                            Green = 127
-                                                        }
+                                                        (
+                                                            green:127
+                                                        )
                                                     },
                                                     FontStyle = new DocumentModel.FontStyle
                                                     {
                                                         Color = new DocumentModel.Color
-                                                        {
-                                                            Alpha = 255,
-                                                            Red = 127,
-                                                            Blue = 127,
-                                                            Green = 255
-                                                        },
+                                                        (
+                                                            alpha:255,
+                                                            red:127,
+                                                            blue:127,
+                                                            green:255
+                                                        ),
                                                         FontName = "Arial",
                                                         Underline = DocumentModel.UnderLineStyle.Double
                                                     }
@@ -5823,9 +5813,9 @@ namespace SpreadSheetsReports.Sandbox
                 FontStyle = new DocumentModel.FontStyle
                 {
                     Color = new DocumentModel.Color
-                    {
-                        Red = 127
-                    }
+                    (
+                        red:127
+                    )
                 }
             };
 
@@ -5992,9 +5982,9 @@ namespace SpreadSheetsReports.Sandbox
                 FontStyle = new DocumentModel.FontStyle
                 {
                     Color = new DocumentModel.Color
-                    {
-                        Red = 127
-                    }
+                    (
+                        red:127
+                    )
                 }
             };
 
@@ -6008,9 +5998,9 @@ namespace SpreadSheetsReports.Sandbox
                 FontStyle = new DocumentModel.FontStyle
                 {
                     Color = new DocumentModel.Color
-                    {
-                        Green = 127
-                    }
+                    (
+                        green:127
+                    )
                 }
             };
 
