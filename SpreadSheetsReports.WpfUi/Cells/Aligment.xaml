@@ -5,14 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="700">
     <Grid>
-        <GroupBox x:Name="groupBox" Header="Text aligment" Margin="10,10,0,0" Height="163" VerticalAlignment="Top" HorizontalAlignment="Left" Width="193">
+        <GroupBox x:Name="groupBox" Header="Text aligment" Margin="10,10,0,0" Height="163" VerticalAlignment="Top" HorizontalAlignment="Left" Width="238">
             <Grid>
                 <Label x:Name="label" Content="Horizonatal" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="104"/>
                 <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="112"/>
+                <Label x:Name="label_Copy" Content="Vertical" HorizontalAlignment="Left" Height="23" Margin="10,65,0,0" VerticalAlignment="Top" Width="104"/>
+                <ComboBox x:Name="comboBox_Copy" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="112"/>
+                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="134,65,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="79"/>
+                <Label x:Name="label_Copy1" Content="Indent:" HorizontalAlignment="Left" Height="23" Margin="127,38,0,0" VerticalAlignment="Top" Width="104" RenderTransformOrigin="1.396,1.465"/>
             </Grid>
         </GroupBox>
+        <local:Rotation Margin="253,0,138,77"/>
 
     </Grid>
 </UserControl>
