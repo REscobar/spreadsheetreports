@@ -1,23 +1,41 @@
-﻿<UserControl x:Class="SpreadSheetsReports.WpfUi.Cells.Aligment"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="SpreadSheetsReports.WpfUi.Cells.Aligment"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="700">
+             d:DesignHeight="700" d:DesignWidth="700">
+    <UserControl.Resources>
+        <local:InvertBooleanConverter x:Key="invertBoolean" />
+    </UserControl.Resources>
     <Grid>
-        <GroupBox x:Name="groupBox" Header="Text aligment" Margin="10,10,0,0" Height="163" VerticalAlignment="Top" HorizontalAlignment="Left" Width="238">
+        <GroupBox x:Name="groupBox" Header="Text aligment" Margin="10,10,137,0" Height="163" MinWidth="40" VerticalAlignment="Top">
             <Grid>
                 <Label x:Name="label" Content="Horizonatal" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="104"/>
-                <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="112"/>
+                <ComboBox x:Name="comboBox" Margin="10,38,119,0" VerticalAlignment="Top"/>
                 <Label x:Name="label_Copy" Content="Vertical" HorizontalAlignment="Left" Height="23" Margin="10,65,0,0" VerticalAlignment="Top" Width="104"/>
-                <ComboBox x:Name="comboBox_Copy" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="112"/>
-                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="134,65,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="79"/>
-                <Label x:Name="label_Copy1" Content="Indent:" HorizontalAlignment="Left" Height="23" Margin="127,38,0,0" VerticalAlignment="Top" Width="104" RenderTransformOrigin="1.396,1.465"/>
+                <ComboBox x:Name="comboBox_Copy" Margin="10,93,119,0" VerticalAlignment="Top"/>
+                <Label x:Name="label_Copy1" Content="Indent:" HorizontalAlignment="Right" Height="23" Margin="0,38,10,0" VerticalAlignment="Top" Width="104" RenderTransformOrigin="1.396,1.465" Grid.ColumnSpan="2"/>
+                <xctk:IntegerUpDown HorizontalAlignment="Right" Margin="0,61,10,0" VerticalAlignment="Top" Width="89" Grid.ColumnSpan="2"/>
             </Grid>
         </GroupBox>
-        <local:Rotation Margin="253,0,138,77"/>
+        <GroupBox x:Name="groupBox1" Header="Text control" Margin="10,184,137,0" VerticalAlignment="Top" Height="78">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type CheckBox}">
+                        <Setter Property="Margin" Value="0,10,0,0"/>
+                    </Style>
+                </StackPanel.Resources>
+                <CheckBox x:Name="wrapText" Content="Wrap Text"/>
+                <CheckBox x:Name="shrinkToFit" Content="Shrink to Fit" IsEnabled="{Binding IsChecked, ElementName=wrapText, Converter={StaticResource invertBoolean  }}"/>
+
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="groupBox2" Header="GroupBox" Margin="0,10,10,0" VerticalAlignment="Top" Height="252" HorizontalAlignment="Right" Width="122">
+            <local:Rotation Margin="10,10,10,10"/>
+        </GroupBox>
 
     </Grid>
 </UserControl>

@@ -1,26 +1,334 @@
-﻿<UserControl x:Class="SpreadSheetsReports.WpfUi.Cells.Rotation"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="SpreadSheetsReports.WpfUi.Cells.Rotation"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="140">
+    <UserControl.Resources>
+        <sys:Double x:Key="DefaultWeigth">9</sys:Double>
+        <sys:Double x:Key="SelectedWeigth">10</sys:Double>
+        <local:NegativeValueConverter x:Key="Negate" />
+        <Style x:Key="ConditionalStyle0Deg" TargetType="Rectangle">
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Height" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Width" Value="{StaticResource DefaultWeigth}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Angle, ElementName=LabelRotation, Converter={StaticResource ResourceKey=Negate}}" Value="0">
+                    <Setter Property="Stroke" Value="Red" />
+                    <Setter Property="StrokeThickness" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Height" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Width" Value="{StaticResource SelectedWeigth}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ConditionalStyle15Deg" TargetType="Ellipse">
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Height" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Width" Value="{StaticResource DefaultWeigth}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Angle, ElementName=LabelRotation, Converter={StaticResource ResourceKey=Negate}}" Value="15">
+                    <Setter Property="Stroke" Value="Red" />
+                    <Setter Property="StrokeThickness" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Height" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Width" Value="{StaticResource SelectedWeigth}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ConditionalStyle30Deg" TargetType="Ellipse">
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Height" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Width" Value="{StaticResource DefaultWeigth}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Angle, ElementName=LabelRotation, Converter={StaticResource ResourceKey=Negate}}" Value="30">
+                    <Setter Property="Stroke" Value="Red" />
+                    <Setter Property="StrokeThickness" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Height" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Width" Value="{StaticResource SelectedWeigth}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ConditionalStyle45Deg" TargetType="Rectangle">
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Height" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Width" Value="{StaticResource DefaultWeigth}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Angle, ElementName=LabelRotation, Converter={StaticResource ResourceKey=Negate}}" Value="45">
+                    <Setter Property="Stroke" Value="Red" />
+                    <Setter Property="StrokeThickness" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Height" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Width" Value="{StaticResource SelectedWeigth}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ConditionalStyle60Deg" TargetType="Ellipse">
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Height" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Width" Value="{StaticResource DefaultWeigth}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Angle, ElementName=LabelRotation, Converter={StaticResource ResourceKey=Negate}}" Value="60">
+                    <Setter Property="Stroke" Value="Red" />
+                    <Setter Property="StrokeThickness" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Height" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Width" Value="{StaticResource SelectedWeigth}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ConditionalStyle75Deg" TargetType="Ellipse">
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Height" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Width" Value="{StaticResource DefaultWeigth}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Angle, ElementName=LabelRotation, Converter={StaticResource ResourceKey=Negate}}" Value="75">
+                    <Setter Property="Stroke" Value="Red" />
+                    <Setter Property="StrokeThickness" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Height" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Width" Value="{StaticResource SelectedWeigth}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ConditionalStyle90Deg" TargetType="Rectangle">
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Height" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Width" Value="{StaticResource DefaultWeigth}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Angle, ElementName=LabelRotation, Converter={StaticResource ResourceKey=Negate}}" Value="90">
+                    <Setter Property="Stroke" Value="Red" />
+                    <Setter Property="StrokeThickness" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Height" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Width" Value="{StaticResource SelectedWeigth}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ConditionalStyleN90Deg" TargetType="Rectangle">
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Height" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Width" Value="{StaticResource DefaultWeigth}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Angle, ElementName=LabelRotation, Converter={StaticResource ResourceKey=Negate}}" Value="-90">
+                    <Setter Property="Stroke" Value="Red" />
+                    <Setter Property="StrokeThickness" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Height" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Width" Value="{StaticResource SelectedWeigth}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ConditionalStyleN75Deg" TargetType="Ellipse">
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Height" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Width" Value="{StaticResource DefaultWeigth}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Angle, ElementName=LabelRotation, Converter={StaticResource ResourceKey=Negate}}" Value="-75">
+                    <Setter Property="Stroke" Value="Red" />
+                    <Setter Property="StrokeThickness" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Height" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Width" Value="{StaticResource SelectedWeigth}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ConditionalStyleN60Deg" TargetType="Ellipse">
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Height" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Width" Value="{StaticResource DefaultWeigth}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Angle, ElementName=LabelRotation, Converter={StaticResource ResourceKey=Negate}}" Value="-60">
+                    <Setter Property="Stroke" Value="Red" />
+                    <Setter Property="StrokeThickness" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Height" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Width" Value="{StaticResource SelectedWeigth}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ConditionalStyleN45Deg" TargetType="Rectangle">
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Height" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Width" Value="{StaticResource DefaultWeigth}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Angle, ElementName=LabelRotation, Converter={StaticResource ResourceKey=Negate}}" Value="-45">
+                    <Setter Property="Stroke" Value="Red" />
+                    <Setter Property="StrokeThickness" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Height" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Width" Value="{StaticResource SelectedWeigth}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ConditionalStyleN30Deg" TargetType="Ellipse">
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Height" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Width" Value="{StaticResource DefaultWeigth}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Angle, ElementName=LabelRotation, Converter={StaticResource ResourceKey=Negate}}" Value="-30">
+                    <Setter Property="Stroke" Value="Red" />
+                    <Setter Property="StrokeThickness" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Height" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Width" Value="{StaticResource SelectedWeigth}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ConditionalStyleN15Deg" TargetType="Ellipse">
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Height" Value="{StaticResource DefaultWeigth}" />
+            <Setter Property="Width" Value="{StaticResource DefaultWeigth}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Angle, ElementName=LabelRotation, Converter={StaticResource ResourceKey=Negate}}" Value="-15">
+                    <Setter Property="Stroke" Value="Red" />
+                    <Setter Property="StrokeThickness" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Height" Value="{StaticResource SelectedWeigth}" />
+                    <Setter Property="Width" Value="{StaticResource SelectedWeigth}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <ContentControl Margin="10,10,0,47" RenderTransformOrigin="0,0.5" BorderThickness="70,40,38,39" BorderBrush="Black">
-            <Label x:Name="label" Content="Label" Margin="20,0,30,87" VerticalAlignment="Bottom" RenderTransformOrigin="0,0.5">
-                <Label.RenderTransform>
+        <Grid  Margin="10,10,0,0"  Width="80" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" MouseMove="ContentControl_MouseMove" MouseUp="Grid_MouseUp" Panel.ZIndex="2">
+            <Rectangle Stroke="Black" StrokeThickness="40" Opacity="0"></Rectangle>
+        </Grid>
+        <Grid Margin="10,10,0,0"  Width="80" Height="160" VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="3">
+            <Rectangle RenderTransformOrigin="0.5,0.5" Style="{DynamicResource ConditionalStyle90Deg}" Tag="90" MouseDown="AnglePoint_MouseDown" MouseMove="Shape_MouseMove">
+                <Rectangle.RenderTransform>
                     <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform x:Name="Rot" Angle="1"/>
-                        <TranslateTransform/>
+                        <RotateTransform Angle="45" />
+                        <TranslateTransform X="-40" Y="-80"/>
                     </TransformGroup>
-                </Label.RenderTransform>
-            </Label>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Ellipse RenderTransformOrigin="0.5,0.5" Style="{DynamicResource ConditionalStyle75Deg}" Tag="75" MouseDown="AnglePoint_MouseDown" MouseMove="Shape_MouseMove">
+                <Ellipse.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="-19.2745" Y="-77.2741"/>
+                    </TransformGroup>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse RenderTransformOrigin="0.5,0.5" Style="{DynamicResource ConditionalStyle60Deg}" Tag="60" MouseDown="AnglePoint_MouseDown" MouseMove="Shape_MouseMove">
+                <Ellipse.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="0" Y="-69.282"/>
+                    </TransformGroup>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Rectangle RenderTransformOrigin="0.5,0.5" Style="{DynamicResource ConditionalStyle45Deg}" Tag="45" MouseDown="AnglePoint_MouseDown" MouseMove="Shape_MouseMove">
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="45" />
+                        <TranslateTransform X="16.8585" Y="-56.5685"/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Ellipse RenderTransformOrigin="0.5,0.5" Style="{DynamicResource ConditionalStyle30Deg}" Tag="30" MouseDown="AnglePoint_MouseDown" MouseMove="Shape_MouseMove">
+                <Ellipse.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="29.282" Y="-40"/>
+                    </TransformGroup>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse RenderTransformOrigin="0.5,0.5" Style="{DynamicResource ConditionalStyle15Deg}" Tag="15" MouseDown="AnglePoint_MouseDown" MouseMove="Shape_MouseMove">
+                <Ellipse.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="37.2741" Y="-20.7055"/>
+                    </TransformGroup>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Rectangle RenderTransformOrigin="0.5,0.5" Style="{DynamicResource ConditionalStyle0Deg}" Tag="0" MouseDown="AnglePoint_MouseDown" MouseMove="Shape_MouseMove">
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="45" />
+                        <TranslateTransform X="40" Y="0"/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Ellipse RenderTransformOrigin="0.5,0.5" Style="{DynamicResource ConditionalStyleN15Deg}" Tag="-15" MouseDown="AnglePoint_MouseDown" MouseMove="Shape_MouseMove">
+                <Ellipse.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="37.2741" Y="20.7055"/>
+                    </TransformGroup>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse RenderTransformOrigin="0.5,0.5" Style="{DynamicResource ConditionalStyleN30Deg}" Tag="-30" MouseDown="AnglePoint_MouseDown" MouseMove="Shape_MouseMove">
+                <Ellipse.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="29.282" Y="40"/>
+                    </TransformGroup>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Rectangle RenderTransformOrigin="0.5,0.5" Style="{DynamicResource ConditionalStyleN45Deg}" Tag="-45" MouseDown="AnglePoint_MouseDown" MouseMove="Shape_MouseMove">
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="45" />
+                        <TranslateTransform X="16.8585" Y="56.5685"/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Ellipse RenderTransformOrigin="0.5,0.5" Style="{DynamicResource ConditionalStyleN60Deg}" Tag="-60" MouseDown="AnglePoint_MouseDown" MouseMove="Shape_MouseMove">
+                <Ellipse.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="0" Y="69.282"/>
+                    </TransformGroup>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse RenderTransformOrigin="0.5,0.5" Style="{DynamicResource ConditionalStyleN75Deg}" Tag="-75" MouseDown="AnglePoint_MouseDown" MouseMove="Shape_MouseMove">
+                <Ellipse.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="-19.2745" Y="77.2741"/>
+                    </TransformGroup>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Rectangle RenderTransformOrigin="0.5,0.5" Style="{DynamicResource ConditionalStyleN90Deg}" Tag="-90" MouseDown="AnglePoint_MouseDown" MouseMove="Shape_MouseMove">
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="45" />
+                        <TranslateTransform X="-40" Y="80"/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+        </Grid>
+        <ContentControl Margin="10,10,0,0" BorderThickness="70,40,38,39" Width="80" Height="160" HorizontalAlignment="Left" VerticalAlignment="Top" >
+            <StackPanel RenderTransformOrigin="0,0.5" Orientation="Horizontal">
+                <Label x:Name="label" Content="Text" Margin="0,67" HorizontalAlignment="Left">
+                </Label>
+                <Line
+      X1="1" Y1="1"
+      X2="40" Y2="1"
+      Stroke="Black"
+      StrokeThickness="2" HorizontalAlignment="Left" Margin="0,79"/>
+                <StackPanel.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform x:Name="LabelRotation" Angle="0"/>
+                    </TransformGroup>
+                </StackPanel.RenderTransform>
+
+            </StackPanel>
         </ContentControl>
-        <TextBox Margin="10,0,10,10" Text="{Binding Angle, ElementName=Rot, Mode=TwoWay}" Height="27" VerticalAlignment="Bottom"></TextBox>
+        <xctk:IntegerUpDown Name="NUD" Margin="10,190,0,0" VerticalAlignment="Top" Value="{Binding Angle, ElementName=LabelRotation, Mode=TwoWay, Converter={StaticResource ResourceKey=Negate}}" HorizontalAlignment="Left" Width="80" ValueChanged="IntegerUpDown_ValueChanged"/>
+
+
+        <!--<StackPanel Orientation="Horizontal"  Margin="10,0,10,10" Height="27" VerticalAlignment="Bottom">
+            <TextBox Text="{Binding Angle, ElementName=Rot, Mode=TwoWay}" Height="27" VerticalAlignment="Bottom" Width="100"></TextBox>
+            <Grid Height="27">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Button x:Name="cmdUp" x:FieldModifier="private" Width="20" Content="^" Click="cmdUp_Click" Grid.Row="0" />
+                <Button x:Name="cmdDown" x:FieldModifier="private" Width="20" Content="˅" Click="cmdDown_Click" Grid.Row="1"/>
+            </Grid>
+        </StackPanel>-->
+
 
     </Grid>
 </UserControl>

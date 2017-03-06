@@ -5977,7 +5977,7 @@ namespace SpreadSheetsReports.Sandbox
             {
                 BorderStyleBottom = new DocumentModel.BorderStyle
                 {
-                    Type = DocumentModel.BorderType.Hair
+                    Type = DocumentModel.BorderType.SlantedDashDot
                 },
                 FontStyle = new DocumentModel.FontStyle
                 {
