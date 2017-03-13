@@ -5965,8 +5965,8 @@ namespace SpreadSheetsReports.Sandbox
         {
             var reportData = Enumerable.Range(1, 3).Select(i => new
             {
-                Data = NestedPocoData(i * 10 + 1, i * 10 + 10, 1, 10),
-                Name = $"Page {i}"
+                Data = NestedPocoData(i *i * 100 + 1, i * i * 100 + 10, 1, 10 * i),
+                Name = $"Hoja generada {i}"
             }).ToList();
 
             var datasource = new ObjectDataSourceBrowser(reportData);

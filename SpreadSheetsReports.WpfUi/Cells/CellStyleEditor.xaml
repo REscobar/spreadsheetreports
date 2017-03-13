@@ -8,17 +8,17 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid>
         <TabControl x:Name="tabControl"  Margin="10,10,10,35" >
-            <TabItem Header="TabItem">
+            <TabItem Header="Alignment">
                 <Grid>
                     <local:Aligment />
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
+            <TabItem Header="Font">
                 <Grid>
                     <local:Font />
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
+            <TabItem Header="Border">
                 <Grid>
                     <local:Border />
                 </Grid>

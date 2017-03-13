@@ -25,6 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\SpreadSheetsReports.WpfUi.XML</DocumentationFile>
+    <CodeAnalysisRuleSet>SpreadSheetsReports.WpfUi.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,6 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>SpreadSheetsReports.WpfUi.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -80,7 +82,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Cells\CellBinder.cs" />
+    <Compile Include="DebuggerConverter.cs" />
+    <Compile Include="Rows\ReportSectionBinder.cs" />
+    <Compile Include="Rows\RowBinder.cs" />
+    <Compile Include="Rows\RowCollectionBinder.cs" />
+    <Compile Include="Rows\RowCollectionEditor.xaml.cs">
+      <DependentUpon>RowCollectionEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Rows\ReportSectionEditor.xaml.cs">
+      <DependentUpon>ReportSectionEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Rows\RowEditor.xaml.cs">
+      <DependentUpon>RowEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sheets\Sheet.xaml.cs">
+      <DependentUpon>Sheet.xaml</DependentUpon>
+    </Compile>
     <Page Include="Cells\Border.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Cells\Cell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -111,6 +134,9 @@
     <Compile Include="Cells\Border.xaml.cs">
       <DependentUpon>Border.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Cells\Cell.xaml.cs">
+      <DependentUpon>Cell.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Cells\CellStyleEditor.xaml.cs">
       <DependentUpon>CellStyleEditor.xaml</DependentUpon>
     </Compile>
@@ -127,6 +153,22 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Rows\RowCollectionEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Rows\ReportSectionEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Rows\RowEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sheets\Sheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -153,6 +195,7 @@
     </None>
     <AppDesigner Include="Properties\" />
     <AdditionalFiles Include="stylecop.json" />
+    <None Include="SpreadSheetsReports.WpfUi.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -168,6 +211,7 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

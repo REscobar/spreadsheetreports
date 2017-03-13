@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="SpreadSheetsReports.WpfUi.Rows.ReportSectionEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Rows"
+             xmlns:e="clr-namespace:SpreadSheetsReports.WpfUi"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <local:IsNullConverter x:Key="nullConverter"/>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <EventSetter Event="Button.Click" Handler="Button_Click"></EventSetter>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <local:RowCollectionEditor DataContext="{Binding Header}"/>
+        <ContentControl>
+            <ContentControl.Style>
+                <Style TargetType="{x:Type ContentControl}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SubSection, Converter={StaticResource nullConverter}}" Value="True">
+
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Button Style="{DynamicResource ButtonStyle}" >Create</Button>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SubSection, Converter={StaticResource nullConverter}}" Value="False">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <local:ReportSectionEditor DataContext="{Binding SubSection}" />
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
+
+        <local:RowCollectionEditor DataContext="{Binding Header}"/>
+    </StackPanel>
+    <!--</DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>-->
+</UserControl>

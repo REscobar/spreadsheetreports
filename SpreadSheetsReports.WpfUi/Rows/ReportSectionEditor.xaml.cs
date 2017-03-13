@@ -1,4 +1,4 @@
-﻿namespace SpreadSheetsReports.WpfUi.Cells
+﻿namespace SpreadSheetsReports.WpfUi.Rows
 {
     using System;
     using System.Collections.Generic;
@@ -17,27 +17,33 @@
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for RowGroup.xaml
     /// </summary>
-    public partial class Aligment : UserControl
+    public partial class ReportSectionEditor : UserControl
     {
-        public Aligment()
+        public ReportSectionEditor()
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var binder = this.DataContext as ReportSectionBinder;
+
+            binder.SubSection = new ReportSectionBinder();
+        }
     }
 
-    [ValueConversion(typeof(bool), typeof(bool))]
-    public class InvertBooleanConverter : IValueConverter
+    public class IsNullConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !System.Convert.ToBoolean(value);
+            return (value == null);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !System.Convert.ToBoolean(value);
+            throw new InvalidOperationException("IsNullConverter can only be used OneWay.");
         }
     }
 }

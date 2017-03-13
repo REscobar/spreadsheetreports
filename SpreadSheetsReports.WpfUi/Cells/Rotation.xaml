@@ -299,11 +299,11 @@
         </Grid>
         <ContentControl Margin="10,10,0,0" BorderThickness="70,40,38,39" Width="80" Height="160" HorizontalAlignment="Left" VerticalAlignment="Top" >
             <StackPanel RenderTransformOrigin="0,0.5" Orientation="Horizontal">
-                <Label x:Name="label" Content="Text" Margin="0,67" HorizontalAlignment="Left">
+                <Label x:Name="label" Content="Text" Margin="0,64" HorizontalAlignment="Left" FontFamily="Calibri" FontSize="16" >
                 </Label>
                 <Line
       X1="1" Y1="1"
-      X2="40" Y2="1"
+      X2="34" Y2="1"
       Stroke="Black"
       StrokeThickness="2" HorizontalAlignment="Left" Margin="0,79"/>
                 <StackPanel.RenderTransform>

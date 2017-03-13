@@ -16,11 +16,11 @@
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for CellStyleEditor.xaml
+    /// Interaction logic for Cell.xaml
     /// </summary>
-    public partial class CellStyleEditor : UserControl
+    public partial class Cell : UserControl
     {
-        public CellStyleEditor()
+        public Cell()
         {
             InitializeComponent();
         }

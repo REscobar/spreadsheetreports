@@ -1,4 +1,4 @@
-﻿namespace SpreadSheetsReports.WpfUi.Cells
+﻿namespace SpreadSheetsReports.WpfUi.Rows
 {
     using System;
     using System.Collections.Generic;
@@ -16,11 +16,11 @@
     using System.Windows.Shapes;
 
     /// <summary>
-    /// Interaction logic for CellStyleEditor.xaml
+    /// Interaction logic for RowEditor.xaml
     /// </summary>
-    public partial class CellStyleEditor : UserControl
+    public partial class RowCollectionEditor : UserControl
     {
-        public CellStyleEditor()
+        public RowCollectionEditor()
         {
             InitializeComponent();
         }

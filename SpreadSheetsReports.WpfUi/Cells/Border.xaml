@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="600">
+             d:DesignHeight="376.5" d:DesignWidth="550.5">
     <UserControl.Resources>
         <local:VisibilityConverter x:Key="VisibilityConverter"/>
         <SolidColorBrush x:Key="LineBrush" Color="{Binding SelectedColor, Mode=OneWay, Source={x:Reference Name=colorPicker}}" />
     </UserControl.Resources>
     <Grid>
-        <GroupBox x:Name="groupBox" Header="Line" Margin="10,10,0,0" VerticalAlignment="Top" Height="349" HorizontalAlignment="Left" Width="169">
+        <GroupBox x:Name="groupBox" Header="Line" Margin="10,10,0,17" HorizontalAlignment="Left" Width="169">
             <Grid Margin="10">
                 <Label x:Name="label" Content="Style:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <ListBox x:Name="listBox"  Margin="0,26,0,66" >
@@ -91,12 +91,12 @@
                         </Label>
                     </ListBox.Items>
                 </ListBox>
-                <Label x:Name="label1" Content="Color:" HorizontalAlignment="Left" Margin="10,246,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.237,0.269"/>
+                <Label x:Name="label1" Content="Color:" HorizontalAlignment="Left" Margin="10,0,0,35" RenderTransformOrigin="-0.237,0.269" Height="26" VerticalAlignment="Bottom"/>
                 <xctk:ColorPicker x:Name="colorPicker" Margin="10,0,10,13" Height="22" VerticalAlignment="Bottom" SelectedColor="Black" ColorMode="ColorCanvas" ShowAdvancedButton="False" ShowStandardColors="False" UsingAlphaChannel="False" />
 
             </Grid>
         </GroupBox>
-        <GroupBox x:Name="groupBox1" Header="Border" Margin="184,10,0,0" Height="203" VerticalAlignment="Top" HorizontalAlignment="Left" Width="350">
+        <GroupBox x:Name="groupBox1" Header="Border" Margin="184,10,16,163">
             <Grid Margin="0">
                 <Grid.Resources>
                     <Style TargetType="{x:Type Line}">
@@ -114,19 +114,28 @@
                 <Border BorderBrush="Black" BorderThickness="1" Margin="41,10,41,41">
                     <Grid>
                         <Label x:Name="label2" Content="Text" HorizontalAlignment="Center" Width="31" Height="26" VerticalAlignment="Center" />
-                        <Line Name="Right" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="108" VerticalAlignment="Top" Margin="243,10,0,0" />
-                        <Line Name="Left" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="108" VerticalAlignment="Top" Margin="10,10,0,0" />
-                        <Line Name="Top" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="234" Height="1" VerticalAlignment="Top" Margin="10,10,0,0" />
-                        <Line Name="Bottom" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="234" Height="1" VerticalAlignment="Top" Margin="10,117,0,0" />
-                        <Line Name="LR" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="234" Height="108" VerticalAlignment="Top" Margin="10,10,0,0" />
-                        <Line Name="RL" Stretch="Fill" Stroke="Black" X2="0" X1="1" Y1="0" Y2="10" HorizontalAlignment="Left" Width="234" Height="108" VerticalAlignment="Top" Margin="10,10,0,0" />
+                        <Line Name="Right" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="Auto" Margin="0,10,10,10" HorizontalAlignment="Right" />
+                        <Line Name="Left" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="Auto" Margin="10,10,0,10" />
+                        <Line Name="Top" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" VerticalAlignment="Top" Margin="10,10,10,0" />
+                        <Line Name="Bottom" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" Margin="10,0,10,10" VerticalAlignment="Bottom" />
+                        <Line Name="LR" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="10" />
+                        <Line Name="RL" Stretch="Fill" Stroke="Black" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="10" />
 
-                        <Line Name="RightCl" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="1" HorizontalAlignment="Left" Width="15" Height="108" VerticalAlignment="Top" Margin="229,10,0,0" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Tag="{Binding ElementName=Right, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0" />
-                        <Line Name="LeftCl" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="1" HorizontalAlignment="Left" Width="15" Height="108" VerticalAlignment="Top" Margin="10,10,0,0" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Tag="{Binding ElementName=Left, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0"/>
-                        <Line Name="TopCl" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="1" HorizontalAlignment="Left" Width="234" Height="15" VerticalAlignment="Top" Margin="10,10,0,0" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Tag="{Binding ElementName=Top, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0"/>
-                        <Line Name="BottomCl" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="1" HorizontalAlignment="Left" Width="234" Height="15" VerticalAlignment="Top" Margin="10,103,0,0" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Tag="{Binding ElementName=Bottom, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0"/>
-                        <Line Name="LRCl" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="234" Height="108" VerticalAlignment="Top" Margin="10,10,0,0" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square"  Tag="{Binding ElementName=LR, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0"/>
-                        <Line Name="RLCl" Stretch="Fill" Stroke="Black" HorizontalAlignment="Left" Width="234" Height="108" VerticalAlignment="Top" Margin="10,10,0,0" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Y2="1" X1="1"  Tag="{Binding ElementName=RL, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0"/>
+                        <Line Name="RightCl" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="1" HorizontalAlignment="Right" Width="15" Height="Auto" Margin="0,10,10,10" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Tag="{Binding ElementName=Right, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0" />
+                        <Line Name="LeftCl" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="1" HorizontalAlignment="Left" Width="15" Height="Auto" Margin="10,10,0,10" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Tag="{Binding ElementName=Left, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0"/>
+                        <Line Name="TopCl" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="1" Width="Auto" Height="15" Margin="10,10,10,0" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Tag="{Binding ElementName=Top, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0" VerticalAlignment="Top"/>
+                        <Line Name="BottomCl" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="1" Width="Auto" Height="15" Margin="10,0,10,10" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Tag="{Binding ElementName=Bottom, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0" VerticalAlignment="Bottom"/>
+                        <Line Name="LRCl" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="10" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square"  Tag="{Binding ElementName=LR, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0"/>
+                        <Line Name="RLCl" Stretch="Fill" Stroke="Black" Width="Auto" Height="Auto" Margin="10" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Y2="1" X1="1"  Tag="{Binding ElementName=RL, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0"/>
+
+                        <Line  Stretch="Fill" Stroke="Gray" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="8" VerticalAlignment="Top" Margin="10,2,0,0" StrokeEndLineCap="Square" StrokeStartLineCap="Square" />
+                        <Line  Stretch="Fill" Stroke="Gray" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="8" Height="1" VerticalAlignment="Top" Margin="2,10,0,0" StrokeEndLineCap="Square" StrokeStartLineCap="Square" />
+                        <Line  Stretch="Fill" Stroke="Gray" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="8" Height="1" Margin="2,0,0,10" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" />
+                        <Line  Stretch="Fill" Stroke="Gray" X2="1" X1="0" Y1="0" Y2="10" Width="8" Height="1" Margin="0,0,2,10" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+                        <Line  Stretch="Fill" Stroke="Gray" X2="1" X1="0" Y1="0" Y2="10" Width="8" Height="1" VerticalAlignment="Top" Margin="0,10,2,0" StrokeEndLineCap="Square" StrokeStartLineCap="Square" HorizontalAlignment="Right" />
+                        <Line  Stretch="Fill" Stroke="Gray" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="8" Margin="10,0,0,2" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" />
+                        <Line  Stretch="Fill" Stroke="Gray" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="8" Margin="0,0,10,2" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+                        <Line  Stretch="Fill" Stroke="Gray" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="8" VerticalAlignment="Top" Margin="0,2,10,0" StrokeEndLineCap="Square" StrokeStartLineCap="Square" HorizontalAlignment="Right" />
 
                     </Grid>
                 </Border>

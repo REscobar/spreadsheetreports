@@ -5,9 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi"
         xmlns:cells="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
+        xmlns:rows="clr-namespace:SpreadSheetsReports.WpfUi.Rows"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="525">
+    <Window.DataContext>
+        <rows:ReportSectionBinder />
+    </Window.DataContext>
+    <ScrollViewer>
+        
     <Grid>
-        <cells:CellStyleEditor />
+        <rows:ReportSectionEditor />
     </Grid>
+    </ScrollViewer>
 </Window>
