@@ -11,15 +11,16 @@
     <UserControl.Resources>
         <e:DebuggerConverter x:Key="Debugger"/>
     </UserControl.Resources>
-    <ListView DataContext="{Binding Cells}">
+    <ListView ItemsSource="{Binding Cells}" BorderBrush="{x:Null}" Background="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Auto">
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
-                <StackPanel Orientation="Horizontal"></StackPanel>
+                <StackPanel Orientation="Horizontal"/>
             </ItemsPanelTemplate>
         </ListView.ItemsPanel>
         <ListView.ItemTemplate>
             <DataTemplate>
-                <cells:Cell Height="10" Width="10" />
+                <cells:Cell Margin="-5,-2,-5,-2" Width="40" Padding="0,0,0,0" />
+                
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

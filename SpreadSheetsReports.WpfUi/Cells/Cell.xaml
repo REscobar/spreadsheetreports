@@ -5,15 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="26" d:DesignWidth="80">
     <Grid>
         <Label x:Name="label2" Content="Text" HorizontalAlignment="Center" Width="31" Height="26" VerticalAlignment="Center" />
-        <Line Name="Right" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="Auto" Margin="0,10,10,10" HorizontalAlignment="Right" />
-        <Line Name="Left" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="Auto" Margin="10,10,0,10" />
-        <Line Name="Top" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" VerticalAlignment="Top" Margin="10,10,10,0" />
-        <Line Name="Bottom" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" Margin="10,0,10,10" VerticalAlignment="Bottom" />
-        <Line Name="LR" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="10" />
-        <Line Name="RL" Stretch="Fill" Stroke="Black" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="10" />
+        <Line Name="Right" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="Auto" Margin="0" HorizontalAlignment="Right" />
+        <Line Name="Left" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="Auto" Margin="0" />
+        <Line Name="Top" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" VerticalAlignment="Top" Margin="0" />
+        <Line Name="Bottom" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" Margin="0" VerticalAlignment="Bottom" />
+        <Line Name="LR" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0" />
+        <Line Name="RL" Stretch="Fill" Stroke="Black" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0" />
 
     </Grid>
 </UserControl>

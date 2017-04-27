@@ -16,6 +16,9 @@
         {
             this.cells = new ObservableCollection<CellBinder>();
             this.cells.Add(new CellBinder());
+            this.cells.Add(new CellBinder());
+            this.cells.Add(new CellBinder());
+            this.cells.Add(new CellBinder());
         }
 
         public ObservableCollection<CellBinder> Cells

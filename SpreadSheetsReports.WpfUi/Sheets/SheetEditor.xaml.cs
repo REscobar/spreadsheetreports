@@ -18,9 +18,9 @@
     /// <summary>
     /// Interaction logic for Sheet.xaml
     /// </summary>
-    public partial class Sheet : UserControl
+    public partial class SheetEditor : UserControl
     {
-        public Sheet()
+        public SheetEditor()
         {
             InitializeComponent();
         }

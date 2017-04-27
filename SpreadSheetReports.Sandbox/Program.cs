@@ -5795,7 +5795,7 @@ namespace SpreadSheetsReports.Sandbox
 
         private static ReportDefinition TestReport2()
         {
-            var reportData = Enumerable.Range(1, 3).Select(i => new
+            var reportData = Enumerable.Range(1, 10).Select(i => new
             {
                 Data = TestPocoData( i * 100 + 1, i * 100 + 100),
                 Name = $"Page {i}"

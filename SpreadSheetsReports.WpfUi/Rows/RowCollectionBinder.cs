@@ -16,6 +16,7 @@ namespace SpreadSheetsReports.WpfUi.Rows
             this.Rows.Add(new RowBinder());
             this.Rows.Add(new RowBinder());
             this.Rows.Add(new RowBinder());
+            this.Rows.Add(new RowBinder());
         }
 
         private readonly ObservableCollection<RowBinder> rows;

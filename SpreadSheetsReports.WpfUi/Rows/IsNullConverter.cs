@@ -16,21 +16,16 @@
     using System.Windows.Navigation;
     using System.Windows.Shapes;
 
-    /// <summary>
-    /// Interaction logic for RowGroup.xaml
-    /// </summary>
-    public partial class ReportSectionEditor : UserControl
+    public class IsNullConverter : IValueConverter
     {
-        public ReportSectionEditor()
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            InitializeComponent();
+            return (value == null);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var binder = this.DataContext as ReportSectionBinder;
-
-            binder.SubSection = new ReportSectionBinder();
+            throw new InvalidOperationException("IsNullConverter can only be used OneWay.");
         }
     }
 }

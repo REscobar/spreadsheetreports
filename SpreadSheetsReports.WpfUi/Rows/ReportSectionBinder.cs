@@ -1,28 +1,23 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Rows
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows;
     using ReportModel;
 
     public class ReportSectionBinder : INotifyPropertyChanged
     {
+        private ReportSection reportSection;
+        private RowCollectionBinder header;
+        private ReportSectionBinder subSection;
+        private RowCollectionBinder footer;
+
         public ReportSectionBinder()
         {
             this.Header = new RowCollectionBinder();
             this.Footer = new RowCollectionBinder();
         }
 
-        private ReportSection reportSection;
-
-        private RowCollectionBinder header;
-
-        private ReportSectionBinder subSection;
-        private RowCollectionBinder footer;
+        /// <inheritdoc/>
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public ReportSection ReportSection
         {
@@ -62,8 +57,6 @@
                 this.NotifyPropertyChanged(nameof(this.Header));
             }
         }
-
-        
 
         public ReportSectionBinder SubSection
         {
@@ -107,8 +100,5 @@
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        /// <inheritdoc/>
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

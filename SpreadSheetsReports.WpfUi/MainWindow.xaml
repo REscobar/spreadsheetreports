@@ -6,15 +6,14 @@
         xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi"
         xmlns:cells="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
         xmlns:rows="clr-namespace:SpreadSheetsReports.WpfUi.Rows"
+        xmlns:sheets="clr-namespace:SpreadSheetsReports.WpfUi.Sheets"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="525">
     <Window.DataContext>
-        <rows:ReportSectionBinder />
+        <sheets:SheetCollectionBinder />
     </Window.DataContext>
-    <ScrollViewer>
-        
+
     <Grid>
-        <rows:ReportSectionEditor />
+        <sheets:SheetCollectionEditor/>
     </Grid>
-    </ScrollViewer>
 </Window>
