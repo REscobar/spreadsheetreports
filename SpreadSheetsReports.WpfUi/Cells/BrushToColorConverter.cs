@@ -43,7 +43,6 @@
             return null;
         }
     }
-
     [ValueConversion(typeof(DocumentModel.BorderType), typeof(DoubleCollection))]
     public class BorderTypeToStrokeDashArrayConverter : IValueConverter
     {
@@ -61,18 +60,16 @@
                     case DocumentModel.BorderType.Medium:
                     case DocumentModel.BorderType.Thick:
                     case DocumentModel.BorderType.Hair:
-                        collection.Add(2);
+                    case DocumentModel.BorderType.Double:
                         break;
                     case DocumentModel.BorderType.Dashed:
-
+                    case DocumentModel.BorderType.MediumDashed:
+                        collection.Add(5);
+                        collection.Add(2);
                         break;
                     case DocumentModel.BorderType.Dotted:
                         collection.Add(2);
                         collection.Add(1);
-                        break;
-                    case DocumentModel.BorderType.Double:
-                        break;
-                    case DocumentModel.BorderType.MediumDashed:
                         break;
                     case DocumentModel.BorderType.DashDot:
                     case DocumentModel.BorderType.MediumDashDot:
@@ -103,13 +100,73 @@
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var brush = value as SolidColorBrush;
-            if (brush != null)
+            return null;
+        }
+    }
+
+    public class FontWeightConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var isBold = System.Convert.ToBoolean(value);
+            return isBold ? FontWeights.Bold : FontWeights.Normal;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class FontStyleConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var isItalic = System.Convert.ToBoolean(value);
+            return isItalic ? FontStyles.Italic : FontStyles.Normal;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+    public class UnderlineOrStriketroughConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var style = value as DocumentModel.FontStyle;
+            if (style != null)
             {
-                return new DocumentModel.Color(brush.Color.A, brush.Color.R, brush.Color.G, brush.Color.B);
+                return style.Underline == DocumentModel.UnderLineStyle.Single ? TextDecorations.Underline : style.IsStrikeout ? TextDecorations.Strikethrough : null;
             }
 
             return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class WrapTextConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var wrapText = value as bool?;
+            if (wrapText.HasValue)
+            {
+                return wrapText.Value ? TextWrapping.Wrap : TextWrapping.NoWrap;
+            }
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -10,10 +10,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="525">
     <Window.DataContext>
-        <sheets:SheetCollectionBinder />
+        <cells:CellBinder/>
     </Window.DataContext>
 
     <Grid>
-        <sheets:SheetCollectionEditor/>
+        <cells:CellStyleEditor/>
     </Grid>
 </Window>

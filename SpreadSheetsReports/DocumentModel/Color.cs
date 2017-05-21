@@ -13,7 +13,7 @@
         /// <param name="blue">The blue channel value.</param>
         public Color(byte red, byte green, byte blue)
         {
-            this.Alpha = 0;
+            this.Alpha = 255;
             this.Red = red;
             this.Green = green;
             this.Blue = blue;
@@ -26,7 +26,7 @@
         /// <param name="red">The red channel value.</param>
         /// <param name="green">The green channel value.</param>
         /// <param name="blue">The blue channel value.</param>
-        public Color(byte alpha = 0, byte red = 0, byte green = 0, byte blue = 0)
+        public Color(byte alpha = 255, byte red = 0, byte green = 0, byte blue = 0)
         {
             this.Alpha = alpha;
             this.Red = red;

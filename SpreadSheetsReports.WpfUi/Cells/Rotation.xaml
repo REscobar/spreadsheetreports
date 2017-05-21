@@ -7,7 +7,8 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="SpreadSheetsReports.WpfUi.Cells.Rotation"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="140">
+             d:DesignHeight="300" d:DesignWidth="140"
+             d:DataContext="{d:DesignInstance Type=local:CellBinder, IsDesignTimeCreatable=True}" >
     <UserControl.Resources>
         <sys:Double x:Key="DefaultWeigth">9</sys:Double>
         <sys:Double x:Key="SelectedWeigth">10</sys:Double>
@@ -308,13 +309,13 @@
       StrokeThickness="2" HorizontalAlignment="Left" Margin="0,79"/>
                 <StackPanel.RenderTransform>
                     <TransformGroup>
-                        <RotateTransform x:Name="LabelRotation" Angle="0"/>
+                        <RotateTransform x:Name="LabelRotation" Angle="{Binding Value, ElementName=NUD}"/>
                     </TransformGroup>
                 </StackPanel.RenderTransform>
 
             </StackPanel>
         </ContentControl>
-        <xctk:IntegerUpDown Name="NUD" Margin="10,190,0,0" VerticalAlignment="Top" Value="{Binding Angle, ElementName=LabelRotation, Mode=TwoWay, Converter={StaticResource ResourceKey=Negate}}" HorizontalAlignment="Left" Width="80" ValueChanged="IntegerUpDown_ValueChanged"/>
+        <xctk:IntegerUpDown Name="NUD" Margin="10,190,0,0" VerticalAlignment="Top" Value="{Binding Style.Rotation, Converter={StaticResource Negate}}" HorizontalAlignment="Left" Width="80" ValueChanged="IntegerUpDown_ValueChanged"/>
 
 
         <!--<StackPanel Orientation="Horizontal"  Margin="10,0,10,10" Height="27" VerticalAlignment="Bottom">

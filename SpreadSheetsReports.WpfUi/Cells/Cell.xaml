@@ -6,35 +6,177 @@
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
              xmlns:Rows="clr-namespace:SpreadSheetsReports.WpfUi.Rows" x:Class="SpreadSheetsReports.WpfUi.Cells.Cell"
              mc:Ignorable="d" 
-             d:DesignHeight="26" d:DesignWidth="80">
+             d:DesignHeight="40" d:DesignWidth="80"
+             d:DataContext="{d:DesignInstance Type=local:CellBinder, IsDesignTimeCreatable=True}" >
     <UserControl.Resources>
         <Rows:IsNullConverter x:Key="IsNullConverter"/>
         <local:BrushToColorConverter x:Key="ColorConverter"/>
         <local:BorderTypeToStrokeDashArrayConverter x:Key="BorderTypeConverter" />
-        <Style TargetType="{x:Type Line}" x:Key="BottomBorder">
+        <local:HorizontalAlignmentConverter x:Key="HorizontalAlignmentConverter" />
+        <local:VerticalAlignmentConverter x:Key="VerticalAlignmentConverter" />
+        <local:FontWeightConverter x:Key="FontWeightConverter" />
+        <local:FontStyleConverter x:Key="FontStyleConverter" />
+        <local:UnderlineOrStriketroughConverter x:Key="UnderlineOrStriketroughConverter" />
+        <local:WrapTextConverter x:Key="WrapTextConverter" />
+        <local:NegativeValueConverter x:Key="Negate" />
+        <Style TargetType="{x:Type Line}" x:Key="BorderStyle">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Style, Converter={StaticResource IsNullConverter}}" Value="True">
+                <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="True">
                     <Setter Property="Stroke" Value="#FFD4D4D4" />
                     <Setter Property="StrokeDashArray" Value="1 0" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Style, Converter={StaticResource IsNullConverter}}" Value="False">
+                <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="False">
                     <Setter Property="Stroke" Value="{Binding Style.BorderStyleBottom.Color, Converter={StaticResource ColorConverter}}" />
-                    <Setter Property="StrokeDashArray" Value="{Binding Style.Value.BorderStyleBottom.Type, Converter={StaticResource BorderTypeConverter}}"/>
+                    <Setter Property="StrokeDashArray" Value="{Binding Style.BorderStyleBottom.Type, Converter={StaticResource BorderTypeConverter}}"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <local:CellBinder/>
-    </UserControl.DataContext>
-    <Grid Background="{Binding Style.Value.BackgroundColor, Converter={StaticResource ColorConverter}}" >
-        <Label x:Name="label2" Content="{Binding Value}" HorizontalAlignment="Center" Width="31" Height="26" VerticalAlignment="Center" />
-        <Line x:Name="Right" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="Auto" Margin="0" HorizontalAlignment="Right" />
-        <Line x:Name="Left" Stretch="Fill" Stroke="{Binding Style.Value.BorderStyleRight.Color, Converter={StaticResource ColorConverter}}"  X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="Auto" Margin="0" />
-        <Line x:Name="Top" Stretch="Fill" Stroke="{Binding Style.Value.BorderStyleRight.Color, Converter={StaticResource ColorConverter}}" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" VerticalAlignment="Top" Margin="0" />
-        <Line x:Name="Bottom" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" Margin="0" VerticalAlignment="Bottom" Style="{DynamicResource BottomBorder}" />
-        <Line x:Name="LR" Stretch="Fill" Stroke="{Binding Style.Value.BorderStyleRight.Color, Converter={StaticResource ColorConverter}}" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0" />
-        <Line x:Name="RL" Stretch="Fill" Stroke="{Binding Style.Value.BorderStyleRight.Color, Converter={StaticResource ColorConverter}}" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0" />
+    <Grid Background="{Binding Style.BackgroundColor, Converter={StaticResource ColorConverter}}" >
+        <Grid.Resources>
+            <Style TargetType="{x:Type Line}">
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="RenderOptions.EdgeMode" Value="Aliased" />
+            </Style>
+        </Grid.Resources>
+        <Label x:Name="label2" Margin="0,0,0,0">
+            <TextBlock Text="{Binding Value}"  Margin="0,0,0,0" RenderTransformOrigin="0,0.5"  TextWrapping="{Binding Style.WrapText, Converter={StaticResource WrapTextConverter}}" >
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="{Binding Style.Rotation, Converter={StaticResource Negate}}"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
+                <TextBlock.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Style.FontStyle, Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="False">
+                                <Setter Property="TextBlock.TextDecorations" Value="{Binding Style.FontStyle, Converter={StaticResource UnderlineOrStriketroughConverter}}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Setter Property="Content" Value="{Binding Value}" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="VerticalAlignment" Value="Bottom"/>
 
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Style, Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="False">
+                            <!--<Setter Property="HorizontalAlignment" Value="{Binding Path=Style.HorizontalAlignment, Converter={StaticResource HorizontalAlignmentConverter}}"/>
+                            <Setter Property="VerticalAlignment" Value="{Binding Path=Style.VerticalAlignment, Converter={StaticResource VerticalAlignmentConverter}}"/>-->
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Style.FontStyle, Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="False">
+                            <Setter Property="FontFamily" Value="{Binding Path=Style.FontStyle.FontName}"/>
+                            <Setter Property="Foreground" Value="{Binding Path=Style.FontStyle.Color, Converter={StaticResource ColorConverter}}" />
+                            <Setter Property="FontWeight" Value="{Binding Path=Style.FontStyle.IsBold, Converter={StaticResource FontWeightConverter}}"/>
+                            <Setter Property="FontStyle" Value="{Binding Path=Style.FontStyle.IsItalic, Converter={StaticResource FontStyleConverter}}" />
+                            <Setter Property="FontSize" Value="{Binding Path=Style.FontStyle.Size}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+
+                </Style>
+            </Label.Style>
+        </Label>
+        <Line x:Name="Right" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="Auto" Margin="0" HorizontalAlignment="Right" DataContext="{Binding Style.BorderStyleRight}">
+            <Line.Style>
+                <Style TargetType="{x:Type Line}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="True">
+                            <Setter Property="Stroke" Value="#FFD4D4D4" />
+                            <Setter Property="StrokeDashArray" Value="1 0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="False">
+                            <Setter Property="Stroke" Value="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                            <Setter Property="StrokeDashArray" Value="{Binding Type, Converter={StaticResource BorderTypeConverter}}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Line.Style>
+        </Line>
+        <Line x:Name="Left" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="Auto" Margin="0" DataContext="{Binding Style.BorderStyleLeft}" >
+            <Line.Style>
+                <Style TargetType="{x:Type Line}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="True">
+                            <Setter Property="Stroke" Value="#FFD4D4D4" />
+                            <Setter Property="StrokeDashArray" Value="1 0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="False">
+                            <Setter Property="Stroke" Value="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                            <Setter Property="StrokeDashArray" Value="{Binding Type, Converter={StaticResource BorderTypeConverter}}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Line.Style>
+        </Line>
+        <Line x:Name="Top" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" VerticalAlignment="Top" Margin="0" DataContext="{Binding Style.BorderStyleTop}" >
+            <Line.Style>
+                <Style TargetType="{x:Type Line}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="True">
+                            <Setter Property="Stroke" Value="#FFD4D4D4" />
+                            <Setter Property="StrokeDashArray" Value="1 0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="False">
+                            <Setter Property="Stroke" Value="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                            <Setter Property="StrokeDashArray" Value="{Binding Type, Converter={StaticResource BorderTypeConverter}}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Line.Style>
+        </Line>
+        <Line x:Name="Bottom" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" Margin="0" VerticalAlignment="Bottom"  DataContext="{Binding Style.BorderStyleBottom}">
+            <Line.Style>
+                <Style TargetType="{x:Type Line}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="True">
+                            <Setter Property="Stroke" Value="#FFD4D4D4" />
+                            <Setter Property="StrokeDashArray" Value="1 0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="False">
+                            <Setter Property="Stroke" Value="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                            <Setter Property="StrokeDashArray" Value="{Binding Type, Converter={StaticResource BorderTypeConverter}}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Line.Style>
+        </Line>
+        <Line x:Name="LR" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0">
+            <Line.Style>
+                <Style TargetType="{x:Type Line}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="True">
+                            <Setter Property="Stroke" Value="#FFD4D4D4" />
+                            <Setter Property="StrokeDashArray" Value="1 0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="False">
+                            <Setter Property="Stroke" Value="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                            <Setter Property="StrokeDashArray" Value="{Binding Type, Converter={StaticResource BorderTypeConverter}}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Line.Style>
+        </Line>
+        <Line x:Name="RL" Stretch="Fill" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0">
+            <Line.Style>
+                <Style TargetType="{x:Type Line}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="True">
+                            <Setter Property="Stroke" Value="#FFD4D4D4" />
+                            <Setter Property="StrokeDashArray" Value="1 0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="False">
+                            <Setter Property="Stroke" Value="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                            <Setter Property="StrokeDashArray" Value="{Binding Type, Converter={StaticResource BorderTypeConverter}}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Line.Style>
+        </Line>
     </Grid>
 </UserControl>

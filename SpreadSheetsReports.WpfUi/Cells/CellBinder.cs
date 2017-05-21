@@ -11,14 +11,35 @@
 
     public class CellBinder : INotifyPropertyChanged
     {
-        public CellBinder()
-        {
-        }
-
         private CellStyle? style;
         private string className;
         private object value;
         private CellType type;
+
+        public CellBinder()
+        {
+            this.Value = "TestingTestingTestingTesting";
+            this.Style = new CellStyle
+            {
+                HorizontalAlignment = HorizontalAlignment.Distributed,
+                VerticalAlignment = VerticalAlignment.Justify,
+                BackgroundColor = new Color(alpha:127, green:212,blue:212),
+                Rotation = 12,
+                ShrinkToFit = true,
+                WrapText = true,
+                FontStyle = new FontStyle
+                {
+                    FontName = "Comic Sans MS",
+                    Color = new Color(red:255),
+                    IsBold = true,
+                    IsItalic = true,
+                    IsStrikeout = true,
+                    Underline = UnderLineStyle.Single,
+                    Size = 12,
+                    ScriptStyle = FontScriptStyle.Superscript
+                }
+            };
+        }
 
         /// <inheritdoc/>
         public event PropertyChangedEventHandler PropertyChanged;

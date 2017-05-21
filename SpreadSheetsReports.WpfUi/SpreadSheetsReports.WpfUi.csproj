@@ -86,6 +86,7 @@
     </ApplicationDefinition>
     <Compile Include="Cells\BrushToColorConverter.cs" />
     <Compile Include="Cells\CellBinder.cs" />
+    <Compile Include="Cells\HorizontalAlignmentConverter.cs" />
     <Compile Include="DebuggerConverter.cs" />
     <Compile Include="Rows\GutterFiller.xaml.cs">
       <DependentUpon>GutterFiller.xaml</DependentUpon>
