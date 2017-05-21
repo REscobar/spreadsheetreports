@@ -57,7 +57,7 @@
             if (row.Style != null)
             {
                 var style = this.workbook.CreateCellStyle();
-                this.ApplyStyle(style, row.Style);
+                this.ApplyStyle(style, row.Style.Value);
                 sheetrow.RowStyle = style;
                 sheetrow.RowStyle = style;
             }
@@ -125,7 +125,12 @@
 
         private void ApplyStyle(ICell sheetCell, Cell cell)
         {
-            this.ApplyStyle(sheetCell.CellStyle, cell.Style);
+            if (cell.Style == null)
+            {
+                return;
+            }
+
+            this.ApplyStyle(sheetCell.CellStyle, cell.Style.Value);
         }
 
         private void ApplyStyle(ICellStyle cellStyle, CellStyle style)

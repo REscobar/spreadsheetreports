@@ -1,19 +1,40 @@
-﻿<UserControl x:Class="SpreadSheetsReports.WpfUi.Cells.Cell"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
+             xmlns:Rows="clr-namespace:SpreadSheetsReports.WpfUi.Rows" x:Class="SpreadSheetsReports.WpfUi.Cells.Cell"
              mc:Ignorable="d" 
              d:DesignHeight="26" d:DesignWidth="80">
-    <Grid>
-        <Label x:Name="label2" Content="Text" HorizontalAlignment="Center" Width="31" Height="26" VerticalAlignment="Center" />
-        <Line Name="Right" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="Auto" Margin="0" HorizontalAlignment="Right" />
-        <Line Name="Left" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="Auto" Margin="0" />
-        <Line Name="Top" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" VerticalAlignment="Top" Margin="0" />
-        <Line Name="Bottom" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" Margin="0" VerticalAlignment="Bottom" />
-        <Line Name="LR" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0" />
-        <Line Name="RL" Stretch="Fill" Stroke="Black" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0" />
+    <UserControl.Resources>
+        <Rows:IsNullConverter x:Key="IsNullConverter"/>
+        <local:BrushToColorConverter x:Key="ColorConverter"/>
+        <local:BorderTypeToStrokeDashArrayConverter x:Key="BorderTypeConverter" />
+        <Style TargetType="{x:Type Line}" x:Key="BottomBorder">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Style, Converter={StaticResource IsNullConverter}}" Value="True">
+                    <Setter Property="Stroke" Value="#FFD4D4D4" />
+                    <Setter Property="StrokeDashArray" Value="1 0" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Style, Converter={StaticResource IsNullConverter}}" Value="False">
+                    <Setter Property="Stroke" Value="{Binding Style.BorderStyleBottom.Color, Converter={StaticResource ColorConverter}}" />
+                    <Setter Property="StrokeDashArray" Value="{Binding Style.Value.BorderStyleBottom.Type, Converter={StaticResource BorderTypeConverter}}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <local:CellBinder/>
+    </UserControl.DataContext>
+    <Grid Background="{Binding Style.Value.BackgroundColor, Converter={StaticResource ColorConverter}}" >
+        <Label x:Name="label2" Content="{Binding Value}" HorizontalAlignment="Center" Width="31" Height="26" VerticalAlignment="Center" />
+        <Line x:Name="Right" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="Auto" Margin="0" HorizontalAlignment="Right" />
+        <Line x:Name="Left" Stretch="Fill" Stroke="{Binding Style.Value.BorderStyleRight.Color, Converter={StaticResource ColorConverter}}"  X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="Auto" Margin="0" />
+        <Line x:Name="Top" Stretch="Fill" Stroke="{Binding Style.Value.BorderStyleRight.Color, Converter={StaticResource ColorConverter}}" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" VerticalAlignment="Top" Margin="0" />
+        <Line x:Name="Bottom" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" Margin="0" VerticalAlignment="Bottom" Style="{DynamicResource BottomBorder}" />
+        <Line x:Name="LR" Stretch="Fill" Stroke="{Binding Style.Value.BorderStyleRight.Color, Converter={StaticResource ColorConverter}}" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0" />
+        <Line x:Name="RL" Stretch="Fill" Stroke="{Binding Style.Value.BorderStyleRight.Color, Converter={StaticResource ColorConverter}}" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0" />
 
     </Grid>
 </UserControl>

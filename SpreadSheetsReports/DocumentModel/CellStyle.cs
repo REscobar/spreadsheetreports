@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a cell style
     /// </summary>
-    public class CellStyle
+    public struct CellStyle
     {
         /// <summary>
         /// Gets or sets a value indicating whether the content of the cell should shrink to fill the area of the cell
@@ -41,7 +41,7 @@
         public byte Indent { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating wether the inner text in the cell is wraped.
+        /// Gets or sets a value indicating whether the inner text in the cell is wraped.
         /// </summary>
         public bool WrapText { get; set; }
 

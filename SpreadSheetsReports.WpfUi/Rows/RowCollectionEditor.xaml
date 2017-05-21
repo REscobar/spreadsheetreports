@@ -12,12 +12,29 @@
     <UserControl.Resources>
         <e:DebuggerConverter x:Key="Debugger"/>
     </UserControl.Resources>
-    <ListView Margin="0" ItemsSource="{Binding Rows}" BorderBrush="{x:Null}" Background="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+    <ItemsControl ItemsSource="{Binding Rows}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <local:RowEditor Margin="0,0">
+
+                </local:RowEditor>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                
+            <StackPanel IsItemsHost="True" CanVerticallyScroll="False">
+                    
+            </StackPanel>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+    </ItemsControl>
+    <!--<ListView Margin="0" ItemsSource="{Binding Rows}" BorderBrush="{x:Null}" Background="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Auto">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <local:RowEditor Margin="0,-4"/>
             </DataTemplate>
         </ListView.ItemTemplate>
-    </ListView>
+    </ListView>-->
 
 </UserControl>

@@ -84,6 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Cells\BrushToColorConverter.cs" />
     <Compile Include="Cells\CellBinder.cs" />
     <Compile Include="DebuggerConverter.cs" />
     <Compile Include="Rows\GutterFiller.xaml.cs">

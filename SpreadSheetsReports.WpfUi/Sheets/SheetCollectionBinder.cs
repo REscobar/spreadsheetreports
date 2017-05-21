@@ -11,11 +11,12 @@
     public class SheetCollectionBinder : INotifyPropertyChanged
     {
         private readonly ObservableCollection<SheetBinder> sheets;
+        private long sheetNumber = 1;
 
         public SheetCollectionBinder()
         {
             this.sheets = new ObservableCollection<SheetBinder>();
-            this.Sheets.Add(new SheetBinder());
+            this.Sheets.Add(new SheetBinder(sheetNumber++));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -30,7 +31,7 @@
 
         internal void AddSheet()
         {
-            this.Sheets.Add(new SheetBinder());
+            this.Sheets.Add(new SheetBinder(sheetNumber++));
         }
 
         internal void RemoveSheet(SheetBinder sheet)

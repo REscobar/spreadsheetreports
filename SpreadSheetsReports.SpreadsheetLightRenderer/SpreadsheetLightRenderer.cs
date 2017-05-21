@@ -90,8 +90,13 @@
 
         private void ApplyStyle(SLDocument document, DocumentModel.Cell cell, int rowCounter, int cellCounter)
         {
+            if (cell.Style == null)
+            {
+                return;
+            }
+
             SLStyle style = document.CreateStyle();
-            this.ApplyStyle(style, cell.Style);
+            this.ApplyStyle(style, cell.Style.Value);
             document.SetCellStyle(rowCounter, cellCounter, style);
         }
 

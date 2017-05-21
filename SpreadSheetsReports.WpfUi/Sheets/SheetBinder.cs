@@ -1,13 +1,13 @@
-﻿using SpreadSheetsReports.WpfUi.Rows;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-
-namespace SpreadSheetsReports.WpfUi.Sheets
+﻿namespace SpreadSheetsReports.WpfUi.Sheets
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Reflection.Emit;
+    using System.Text;
+    using SpreadSheetsReports.WpfUi.Rows;
+
     public class SheetBinder : INotifyPropertyChanged
     {
         private ReportSectionBinder content;
@@ -16,9 +16,14 @@ namespace SpreadSheetsReports.WpfUi.Sheets
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SheetBinder()
+            : this(0)
+        {
+        }
+
+        public SheetBinder(long sheetNumber)
         {
             this.Content = new ReportSectionBinder();
-            this.Name = "Sheet";
+            this.Name = $"Sheet{sheetNumber}";
         }
 
         public ReportSectionBinder Content
@@ -53,11 +58,11 @@ namespace SpreadSheetsReports.WpfUi.Sheets
                 {
                     return;
                 }
+
                 this.name = value;
                 this.NotifyPropertyChanged(nameof(this.Name));
             }
         }
-
 
         private void NotifyPropertyChanged(string propertyName)
         {
