@@ -3,22 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+            xmlns:Document="clr-namespace:SpreadSheetsReports.DocumentModel;assembly=SpreadSheetsReports"
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="SpreadSheetsReports.WpfUi.Cells.Aligment"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="700">
+             d:DesignHeight="700" d:DesignWidth="700"
+             d:DataContext="{d:DesignInstance Type=local:CellBinder, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <local:InvertBooleanConverter x:Key="invertBoolean" />
+        <ObjectDataProvider x:Key="horizontalAligmentValues" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Document:HorizontalAlignment"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="verticalAligmentValues" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Document:VerticalAlignment"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
     <Grid>
         <GroupBox x:Name="groupBox" Header="Text aligment" Margin="10,10,137,0" Height="163" MinWidth="40" VerticalAlignment="Top">
             <Grid>
                 <Label x:Name="label" Content="Horizonatal" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" VerticalAlignment="Top" Width="104"/>
-                <ComboBox x:Name="comboBox" Margin="10,38,119,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="comboBox" Margin="10,38,119,0" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource horizontalAligmentValues}}" SelectedItem="{Binding Style.HorizontalAlignment, Mode=TwoWay}"/>
                 <Label x:Name="label_Copy" Content="Vertical" HorizontalAlignment="Left" Height="23" Margin="10,65,0,0" VerticalAlignment="Top" Width="104"/>
-                <ComboBox x:Name="comboBox_Copy" Margin="10,93,119,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="comboBox_Copy" Margin="10,93,119,0" VerticalAlignment="Top" ItemsSource="{Binding Source={StaticResource verticalAligmentValues}}" SelectedItem="{Binding Style.VerticalAlignment, Mode=TwoWay}"/>
                 <Label x:Name="label_Copy1" Content="Indent:" HorizontalAlignment="Right" Height="23" Margin="0,38,10,0" VerticalAlignment="Top" Width="104" RenderTransformOrigin="1.396,1.465" Grid.ColumnSpan="2"/>
-                <xctk:IntegerUpDown HorizontalAlignment="Right" Margin="0,61,10,0" VerticalAlignment="Top" Width="89" Grid.ColumnSpan="2"/>
+                <xctk:IntegerUpDown HorizontalAlignment="Right" Margin="0,61,10,0" VerticalAlignment="Top" Width="89" Grid.ColumnSpan="2" Value="{Binding Style.Indent}"/>
             </Grid>
         </GroupBox>
         <GroupBox x:Name="groupBox1" Header="Text control" Margin="10,184,137,0" VerticalAlignment="Top" Height="78">
@@ -28,13 +43,13 @@
                         <Setter Property="Margin" Value="0,10,0,0"/>
                     </Style>
                 </StackPanel.Resources>
-                <CheckBox x:Name="wrapText" Content="Wrap Text"/>
-                <CheckBox x:Name="shrinkToFit" Content="Shrink to Fit" IsEnabled="{Binding IsChecked, ElementName=wrapText, Converter={StaticResource invertBoolean  }}"/>
+                <CheckBox x:Name="wrapText" Content="Wrap Text" IsChecked="{Binding Style.WrapText, Mode=TwoWay}"/>
+                <CheckBox x:Name="shrinkToFit" Content="Shrink to Fit" IsEnabled="{Binding IsChecked, ElementName=wrapText, Converter={StaticResource invertBoolean  }}" IsChecked="{Binding Style.ShrinkToFit}"/>
 
             </StackPanel>
         </GroupBox>
         <GroupBox x:Name="groupBox2" Header="GroupBox" Margin="0,10,10,0" VerticalAlignment="Top" Height="252" HorizontalAlignment="Right" Width="122">
-            <local:Rotation Margin="10,10,10,10"/>
+            <local:Rotation Margin="10,10,10,10" />
         </GroupBox>
 
     </Grid>

@@ -84,6 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Cells\BorderTypeToVisibilityConverter.cs" />
     <Compile Include="Cells\BrushToColorConverter.cs" />
     <Compile Include="Cells\CellBinder.cs" />
     <Compile Include="Cells\HorizontalAlignmentConverter.cs" />

@@ -11,7 +11,7 @@
 
     public class CellBinder : INotifyPropertyChanged
     {
-        private CellStyle? style;
+        private CellStyle style;
         private string className;
         private object value;
         private CellType type;
@@ -47,7 +47,7 @@
         /// <summary>
         /// Gets or sets the <see cref="CellStyle"/>
         /// </summary>
-        public CellStyle? Style
+        public CellStyle Style
         {
             get
             {
@@ -56,7 +56,7 @@
 
             set
             {
-                if (this.style.Equals(value))
+                if (this.style == value)
                 {
                     return;
                 }

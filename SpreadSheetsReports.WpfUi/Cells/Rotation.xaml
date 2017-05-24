@@ -309,13 +309,13 @@
       StrokeThickness="2" HorizontalAlignment="Left" Margin="0,79"/>
                 <StackPanel.RenderTransform>
                     <TransformGroup>
-                        <RotateTransform x:Name="LabelRotation" Angle="{Binding Value, ElementName=NUD}"/>
+                        <RotateTransform x:Name="LabelRotation" Angle="{Binding Value, ElementName=NUD, Converter={StaticResource Negate}}"/>
                     </TransformGroup>
                 </StackPanel.RenderTransform>
 
             </StackPanel>
         </ContentControl>
-        <xctk:IntegerUpDown Name="NUD" Margin="10,190,0,0" VerticalAlignment="Top" Value="{Binding Style.Rotation, Converter={StaticResource Negate}}" HorizontalAlignment="Left" Width="80" ValueChanged="IntegerUpDown_ValueChanged"/>
+        <xctk:IntegerUpDown Name="NUD" Margin="10,190,0,0" VerticalAlignment="Top" Value="{Binding Style.Rotation}" HorizontalAlignment="Left" Width="80" ValueChanged="IntegerUpDown_ValueChanged"/>
 
 
         <!--<StackPanel Orientation="Horizontal"  Margin="10,0,10,10" Height="27" VerticalAlignment="Bottom">
