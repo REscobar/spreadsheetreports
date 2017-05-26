@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
+             xmlns:Document="clr-namespace:SpreadSheetsReports.DocumentModel;assembly=SpreadSheetsReports"
              mc:Ignorable="d" 
              d:DesignHeight="376.5" d:DesignWidth="550.5"
              d:DataContext="{d:DesignInstance Type=local:CellBinder, IsDesignTimeCreatable=True}">
