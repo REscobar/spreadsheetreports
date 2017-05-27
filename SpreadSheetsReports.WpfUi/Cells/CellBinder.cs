@@ -1,12 +1,7 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Cells
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using SpreadSheetsReports.DocumentModel;
+    using DocumentModel;
     using SpreadSheetsReports.ReportModel;
 
     public class CellBinder : INotifyPropertyChanged

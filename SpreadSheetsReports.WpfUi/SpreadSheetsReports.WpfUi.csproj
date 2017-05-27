@@ -84,16 +84,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Cells\BorderTypeToVisibilityConverter.cs" />
-    <Compile Include="Cells\BrushToColorConverter.cs" />
+    <Compile Include="Converters\NegativeValueConverter.cs" />
+    <Compile Include="Converters\BorderTypeToStrokeDashArrayConverter.cs" />
+    <Compile Include="Converters\BorderTypeToVisibilityConverter.cs" />
+    <Compile Include="Converters\BrushToColorConverter.cs" />
     <Compile Include="Cells\CellBinder.cs" />
     <Compile Include="Cells\FontSizes.cs" />
-    <Compile Include="Cells\HorizontalAlignmentConverter.cs" />
-    <Compile Include="DebuggerConverter.cs" />
+    <Compile Include="Converters\DocumentColorToColorConverter.cs" />
+    <Compile Include="Converters\FontStyleConverter.cs" />
+    <Compile Include="Converters\FontWeightConverter.cs" />
+    <Compile Include="Converters\HorizontalAlignmentConverter.cs" />
+    <Compile Include="Converters\DebuggerConverter.cs" />
+    <Compile Include="Converters\UnderlineOrStriketroughConverter.cs" />
+    <Compile Include="Converters\VerticalAlignmentConverter.cs" />
+    <Compile Include="Converters\WrapTextConverter.cs" />
     <Compile Include="Rows\GutterFiller.xaml.cs">
       <DependentUpon>GutterFiller.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Rows\IsNullConverter.cs" />
+    <Compile Include="Converters\IsNullConverter.cs" />
     <Compile Include="Rows\ReportSectionBinder.cs" />
     <Compile Include="Rows\RowBinder.cs" />
     <Compile Include="Rows\RowCollectionBinder.cs" />

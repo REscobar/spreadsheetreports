@@ -5,20 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
              xmlns:Rows="clr-namespace:SpreadSheetsReports.WpfUi.Rows" x:Class="SpreadSheetsReports.WpfUi.Cells.Cell"
+             xmlns:converters="clr-namespace:SpreadSheetsReports.WpfUi.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="80"
              d:DataContext="{d:DesignInstance Type=local:CellBinder, IsDesignTimeCreatable=True}" >
     <UserControl.Resources>
-        <Rows:IsNullConverter x:Key="IsNullConverter"/>
-        <local:BrushToColorConverter x:Key="ColorConverter"/>
-        <local:BorderTypeToStrokeDashArrayConverter x:Key="BorderTypeConverter" />
-        <local:HorizontalAlignmentConverter x:Key="HorizontalAlignmentConverter" />
-        <local:VerticalAlignmentConverter x:Key="VerticalAlignmentConverter" />
-        <local:FontWeightConverter x:Key="FontWeightConverter" />
-        <local:FontStyleConverter x:Key="FontStyleConverter" />
-        <local:UnderlineOrStriketroughConverter x:Key="UnderlineOrStriketroughConverter" />
-        <local:WrapTextConverter x:Key="WrapTextConverter" />
-        <local:NegativeValueConverter x:Key="Negate" />
+        <converters:IsNullConverter x:Key="IsNullConverter"/>
+        <converters:BrushToColorConverter x:Key="ColorConverter"/>
+        <converters:BorderTypeToStrokeDashArrayConverter x:Key="BorderTypeConverter" />
+        <converters:HorizontalAlignmentConverter x:Key="HorizontalAlignmentConverter" />
+        <converters:VerticalAlignmentConverter x:Key="VerticalAlignmentConverter" />
+        <converters:FontWeightConverter x:Key="FontWeightConverter" />
+        <converters:FontStyleConverter x:Key="FontStyleConverter" />
+        <converters:UnderlineOrStriketroughConverter x:Key="UnderlineOrStriketroughConverter" />
+        <converters:WrapTextConverter x:Key="WrapTextConverter" />
+        <converters:NegativeValueConverter x:Key="Negate" />
         <Style TargetType="{x:Type Line}" x:Key="BorderStyle">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="True">

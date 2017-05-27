@@ -1,11 +1,6 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Sheets
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
-    using System.Reflection.Emit;
-    using System.Text;
     using SpreadSheetsReports.WpfUi.Rows;
 
     public class SheetBinder : INotifyPropertyChanged
