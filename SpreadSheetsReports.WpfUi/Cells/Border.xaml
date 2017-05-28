@@ -7,10 +7,10 @@
              xmlns:converters="clr-namespace:SpreadSheetsReports.WpfUi.Converters"
              xmlns:Document="clr-namespace:SpreadSheetsReports.DocumentModel;assembly=SpreadSheetsReports"
              mc:Ignorable="d" 
-             d:DesignHeight="376.5" d:DesignWidth="550.5"
+             d:DesignHeight="300" d:DesignWidth="640"
              d:DataContext="{d:DesignInstance Type=local:CellBinder, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
-        <local:VisibilityConverter x:Key="VisibilityConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <SolidColorBrush x:Key="LineBrush" Color="{Binding SelectedColor, Mode=OneWay, Source={x:Reference Name=colorPicker}}" />
         <converters:BorderTypeToVisibilityConverter x:Key="borderVisibilityConverter"/>
     </UserControl.Resources>
@@ -100,7 +100,7 @@
 
             </Grid>
         </GroupBox>
-        <GroupBox x:Name="groupBox1" Header="Border" Margin="184,10,16,163">
+        <GroupBox x:Name="groupBox1" Header="Border" Margin="184,10,16,90">
             <Grid Margin="0">
                 <Grid.Resources>
                     <Style TargetType="{x:Type Line}">
@@ -118,10 +118,10 @@
                 <Border BorderBrush="Black" BorderThickness="1" Margin="41,10,41,41">
                     <Grid>
                         <Label x:Name="label2" Content="Text" HorizontalAlignment="Center" Width="31" Height="26" VerticalAlignment="Center" />
-                        <Line Name="Right" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="Auto" Margin="0,10,10,10" HorizontalAlignment="Right"  Visibility="{Binding ElementName=button_R, Converter={StaticResource VisibilityConverter}, Path=IsChecked}"/>
-                        <Line Name="Left" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="Auto" Margin="10,10,0,10" Visibility="{Binding ElementName=button_L, Converter={StaticResource VisibilityConverter}, Path=IsChecked}"/>
-                        <Line Name="Top" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" VerticalAlignment="Top" Margin="10,10,10,0" Visibility="{Binding ElementName=button_T, Converter={StaticResource VisibilityConverter}, Path=IsChecked}"/>
-                        <Line Name="Bottom" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" Margin="10,0,10,10" VerticalAlignment="Bottom" Visibility="{Binding ElementName=button_B, Converter={StaticResource VisibilityConverter}, Path=IsChecked}"/>
+                        <Line Name="Right" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="Auto" Margin="0,10,10,10" HorizontalAlignment="Right"  Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=button_R}"/>
+                        <Line Name="Left" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="Auto" Margin="10,10,0,10" Visibility="{Binding ElementName=button_L, Converter={StaticResource BooleanToVisibilityConverter}, Path=IsChecked}"/>
+                        <Line Name="Top" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" VerticalAlignment="Top" Margin="10,10,10,0" Visibility="{Binding ElementName=button_T, Converter={StaticResource BooleanToVisibilityConverter}, Path=IsChecked}"/>
+                        <Line Name="Bottom" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" Margin="10,0,10,10" VerticalAlignment="Bottom" Visibility="{Binding ElementName=button_B, Converter={StaticResource BooleanToVisibilityConverter}, Path=IsChecked}"/>
                         <Line Name="LR" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="10" />
                         <Line Name="RL" Stretch="Fill" Stroke="Black" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="10" />
 

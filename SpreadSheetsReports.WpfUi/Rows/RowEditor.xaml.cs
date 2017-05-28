@@ -1,5 +1,8 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Rows
 {
+    using Cells;
+    using Documents;
+    using System.Windows;
     using System.Windows.Controls;
 
     /// <summary>

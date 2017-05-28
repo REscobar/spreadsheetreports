@@ -5,10 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Sheets"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="300">
-    <UserControl.DataContext>
-        <local:SheetCollectionBinder/>
-    </UserControl.DataContext>
+             d:DesignHeight="500" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance Type=local:SheetCollectionBinder, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <ContextMenu x:Key="sheetMenu">
             <MenuItem Header="Remove" Click="MenuItem_Click" DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">

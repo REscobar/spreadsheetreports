@@ -1,10 +1,7 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Cells
 {
-    using System;
-    using System.Globalization;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Data;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Shapes;
@@ -32,20 +29,6 @@
             {
                 border.Stroke = new SolidColorBrush(color.GetValueOrDefault());
             }
-        }
-    }
-
-    [ValueConversion(typeof(Visibility),typeof(bool))]
-    public class VisibilityConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return System.Convert.ToBoolean(value) ? Visibility.Visible : Visibility.Hidden;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return ((Visibility)value) == Visibility.Visible ? true : false;
         }
     }
 }

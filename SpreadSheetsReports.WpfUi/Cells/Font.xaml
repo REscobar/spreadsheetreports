@@ -11,6 +11,7 @@
              d:DesignHeight="300" d:DesignWidth="640"
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type local:CellBinder}}">
     <UserControl.Resources>
+        <converters:DocumentColorToColorConverter x:Key="DocumentColorToColorConverter"/>
         <converters:DebuggerConverter x:Key="DebuggerConverter"/>
         <DataTemplate x:Key="fontFamilyData">
             <TextBlock Text="{Binding Source}" FontFamily="{Binding Source}" FontSize="16"/>
@@ -38,7 +39,7 @@
         <Label x:Name="label2" Content="Font style:" Margin="280,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="64"/>
         <TextBox x:Name="textBox1" Height="23" Margin="280,36,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154"/>
         <Label x:Name="label2_Copy" Content="Color:" Margin="280,0,0,37" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="41"/>
-        <xctk:ColorPicker x:Name="colorPicker" Margin="280,0,0,10" ColorMode="ColorCanvas" ShowAdvancedButton="False" ShowStandardColors="False" UsingAlphaChannel="False" HorizontalAlignment="Left" Width="154" Height="22" VerticalAlignment="Bottom" />
+        <xctk:ColorPicker x:Name="colorPicker" Margin="280,0,0,10" ColorMode="ColorCanvas" ShowAdvancedButton="False" ShowStandardColors="False" UsingAlphaChannel="False" HorizontalAlignment="Left" Width="154" Height="22" VerticalAlignment="Bottom" SelectedColor="{Binding Style.FontStyle.Color, Converter={StaticResource DocumentColorToColorConverter}}" />
         <Label x:Name="label2_Copy1" Content="Font size" Margin="439,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="64"/>
         <TextBox x:Name="textBox1_Copy" Height="23" Margin="439,36,10,0" TextWrapping="Wrap" Text="{Binding Style.FontStyle.Size, Mode=TwoWay}" VerticalAlignment="Top"/>
         <ListBox x:Name="listBox2" Margin="439,64,10,68" ItemsSource="{Binding Mode=OneWay, Source={StaticResource fontSizes}}" SelectedValue="{Binding Style.FontStyle.Size, Converter={StaticResource DebuggerConverter}, Mode=TwoWay}"/>

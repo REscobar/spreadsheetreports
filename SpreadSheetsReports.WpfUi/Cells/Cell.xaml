@@ -8,7 +8,9 @@
              xmlns:converters="clr-namespace:SpreadSheetsReports.WpfUi.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="80"
-             d:DataContext="{d:DesignInstance Type=local:CellBinder, IsDesignTimeCreatable=True}" >
+             d:DataContext="{d:DesignInstance Type=local:CellBinder, IsDesignTimeCreatable=True}" 
+            Focusable="True"
+            IsTabStop="True">
     <UserControl.Resources>
         <converters:IsNullConverter x:Key="IsNullConverter"/>
         <converters:BrushToColorConverter x:Key="ColorConverter"/>
@@ -32,8 +34,12 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <ContextMenu x:Key="cellMenu">
+            <MenuItem Header="Format Cells" DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" Click="FormatCells_Click">
+            </MenuItem>
+        </ContextMenu>
     </UserControl.Resources>
-    <Grid Background="{Binding Style.BackgroundColor, Converter={StaticResource ColorConverter}}" >
+    <Grid Background="{Binding Style.BackgroundColor, Converter={StaticResource ColorConverter}}" ContextMenu="{StaticResource cellMenu}" >
         <Grid.Resources>
             <Style TargetType="{x:Type Line}">
                 <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -147,7 +153,7 @@
                 </Style>
             </Line.Style>
         </Line>
-        <Line x:Name="LR" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0">
+        <Line x:Name="LR" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0" DataContext="{Binding Style.BorderStyleDiagonalUpLeftToBottomRight}">
             <Line.Style>
                 <Style TargetType="{x:Type Line}">
                     <Style.Triggers>
@@ -163,7 +169,7 @@
                 </Style>
             </Line.Style>
         </Line>
-        <Line x:Name="RL" Stretch="Fill" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0">
+        <Line x:Name="RL" Stretch="Fill" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0" DataContext="{Binding Style.BorderStyleDiagonalUpRightToBottomLeft}">
             <Line.Style>
                 <Style TargetType="{x:Type Line}">
                     <Style.Triggers>

@@ -2,12 +2,7 @@
 {
     using System;
     using System.Globalization;
-    using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Data;
-    using System.Windows.Input;
-    using System.Windows.Shapes;
-    using Xceed.Wpf.Toolkit;
 
     public class NegativeValueConverter : IValueConverter
     {
