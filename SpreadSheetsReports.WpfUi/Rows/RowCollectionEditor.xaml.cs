@@ -11,5 +11,11 @@
         {
             InitializeComponent();
         }
+
+        private void NewRow_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var binder = this.DataContext as RowCollectionBinder;
+            binder.AddNewRow();
+        }
     }
 }

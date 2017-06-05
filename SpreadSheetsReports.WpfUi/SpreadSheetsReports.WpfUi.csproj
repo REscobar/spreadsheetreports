@@ -108,6 +108,9 @@
       <DependentUpon>GutterFiller.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\IsNullConverter.cs" />
+    <Compile Include="Rows\NewRow.xaml.cs">
+      <DependentUpon>NewRow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Rows\ReportSectionBinder.cs" />
     <Compile Include="Rows\RowBinder.cs" />
     <Compile Include="Rows\RowCollectionBinder.cs" />
@@ -192,6 +195,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Rows\GutterFiller.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Rows\NewRow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

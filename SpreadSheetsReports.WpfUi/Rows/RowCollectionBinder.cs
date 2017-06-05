@@ -8,10 +8,8 @@
         public RowCollectionBinder()
         {
             this.rows = new ObservableCollection<RowBinder>();
-            this.Rows.Add(new RowBinder());
-            this.Rows.Add(new RowBinder());
-            this.Rows.Add(new RowBinder());
-            this.Rows.Add(new RowBinder());
+            this.AddNewRow();
+            this.AddNewRow();
         }
 
         private readonly ObservableCollection<RowBinder> rows;
@@ -28,7 +26,11 @@
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-       
+
+        public void AddNewRow()
+        {
+            this.Rows.Add(new RowBinder());
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

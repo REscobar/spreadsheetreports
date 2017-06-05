@@ -1,0 +1,37 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Rows"
+             xmlns:Cells="clr-namespace:SpreadSheetsReports.WpfUi.Cells" x:Class="SpreadSheetsReports.WpfUi.Rows.NewRow"
+             mc:Ignorable="d" 
+             d:DesignHeight="9" d:DesignWidth="300">
+    <Grid Height="9" Margin="0" Width="Auto" RenderTransformOrigin="0.5,0.5">
+        <Grid.LayoutTransform>
+            <TransformGroup>
+                <ScaleTransform ScaleY="1"/>
+                <SkewTransform/>
+                <RotateTransform/>
+                <TranslateTransform/>
+            </TransformGroup>
+        </Grid.LayoutTransform>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="9"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Ellipse Stroke="Black" Grid.Column="0"  />
+        <Line Stroke="Black" Stretch="Fill" X1="1" Margin="2,0" Grid.Column="0"/>
+        <Line Stroke="Black" Stretch="Fill" Y1="1" Margin="0,2" Grid.Column="0"/>
+        <Line Stroke="Black" Stretch="Fill" Grid.Column="1" RenderTransformOrigin="0.5,0.5" X1="1" StrokeThickness="3" StrokeEndLineCap="Square" StrokeStartLineCap="Square"  >
+            <Line.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                </TransformGroup>
+            </Line.RenderTransform>
+        </Line>
+
+    </Grid>
+</UserControl>
