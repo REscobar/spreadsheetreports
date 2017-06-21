@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadSheetsReports", "SpreadSheetsReports\SpreadSheetsReports.csproj", "{83A56F6B-AEAA-407D-9846-AE04F29182FF}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadSheetsReports.SpreadsheetLightRenderer", "SpreadSheetsReports.SpreadsheetLightRenderer\SpreadSheetsReports.SpreadsheetLightRenderer.csproj", "{5BC16EC3-E8F0-48EB-9E6B-AA2F6E806890}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadSheetsReports.Sandbox", "SpreadSheetReports.Sandbox\SpreadSheetsReports.Sandbox.csproj", "{C114138F-AEC2-4692-9E9C-2693F0FFC502}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadSheetsReports.Evaluator", "SpreadSheetsReports.Evaluator\SpreadSheetsReports.Evaluator.csproj", "{16D7372F-6B92-4AC6-82B4-853A94E01882}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{C114138F-AEC2-4692-9E9C-2693F0FFC502}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C114138F-AEC2-4692-9E9C-2693F0FFC502}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C114138F-AEC2-4692-9E9C-2693F0FFC502}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16D7372F-6B92-4AC6-82B4-853A94E01882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16D7372F-6B92-4AC6-82B4-853A94E01882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16D7372F-6B92-4AC6-82B4-853A94E01882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16D7372F-6B92-4AC6-82B4-853A94E01882}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

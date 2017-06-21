@@ -4,14 +4,14 @@
     using System.Collections;
     using System.Collections.Generic;
 
-    public class PropertyBindingCollection : ICollection<PropertyBinding>
+    public class PropertyBindingCollection : ICollection<PropertyBindingBase>
     {
         private readonly ReportControl owner;
-        private readonly List<PropertyBinding> bindings;
+        private readonly List<PropertyBindingBase> bindings;
 
         public PropertyBindingCollection()
         {
-            this.bindings = new List<PropertyBinding>();
+            this.bindings = new List<PropertyBindingBase>();
         }
 
         public PropertyBindingCollection(ReportControl owner)
@@ -36,7 +36,7 @@
             }
         }
 
-        public void Add(PropertyBinding item)
+        public void Add(PropertyBindingBase item)
         {
             item.Owner = this;
             this.bindings.Add(item);
@@ -62,22 +62,22 @@
             this.bindings.Clear();
         }
 
-        public bool Contains(PropertyBinding item)
+        public bool Contains(PropertyBindingBase item)
         {
             return this.bindings.Contains(item);
         }
 
-        public void CopyTo(PropertyBinding[] array, int arrayIndex)
+        public void CopyTo(PropertyBindingBase[] array, int arrayIndex)
         {
             this.bindings.CopyTo(array, arrayIndex);
         }
 
-        public IEnumerator<PropertyBinding> GetEnumerator()
+        public IEnumerator<PropertyBindingBase> GetEnumerator()
         {
             return this.bindings.GetEnumerator();
         }
 
-        public bool Remove(PropertyBinding item)
+        public bool Remove(PropertyBindingBase item)
         {
             return this.bindings.Remove(item);
         }

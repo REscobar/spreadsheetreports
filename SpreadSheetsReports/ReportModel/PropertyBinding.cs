@@ -7,7 +7,7 @@
     using System.Xml.Serialization;
 
     [Serializable]
-    public class PropertyBinding : IPropertyBinding
+    public class PropertyBinding : PropertyBindingBase
     {
         private static readonly ConcurrentDictionary<Type, Action<object, string, object>> WriterCache;
         private static readonly ConcurrentDictionary<Type, Func<object, string, object>> ReaderCache;
@@ -33,26 +33,26 @@
             }
 
             this.DataSource = dataBrowser;
-            this.DataMember = dataMember;
+            this.Expression = dataMember;
         }
 
         public string PropertyName { get; set; }
 
-        public string DataMember { get; set; }
+        public string Expression { get; set; }
 
         [XmlIgnore]
         public DataSourceBrowser DataSource { get; set; }
 
-        internal PropertyBindingCollection Owner { get; set; }
+        public virtual PropertyBindingCollection Owner { get; set; }
 
-        internal void PerformBind(ReportControl obj)
+        protected void PerformBind(ReportControl obj)
         {
             if (obj == null)
             {
                 throw new ArgumentNullException(nameof(obj));
             }
 
-            object value = this.DataSource.GetValue(this.DataMember);
+            object value = this.DataSource.GetValue(this.Expression);
             var objectType = obj.GetType();
             var setter = GetWriter(objectType);
 
@@ -66,28 +66,28 @@
                 Type objectType = typeof(object);
                 Type voidType = typeof(void);
 
-                ParameterExpression obj = Expression.Parameter(objectType, "obj");
-                ParameterExpression property = Expression.Parameter(typeof(string), "property");
+                ParameterExpression obj = System.Linq.Expressions.Expression.Parameter(objectType, "obj");
+                ParameterExpression property = System.Linq.Expressions.Expression.Parameter(typeof(string), "property");
 
-                ParameterExpression item = Expression.Parameter(parameterType, "item");
-                ParameterExpression value = Expression.Parameter(objectType, "value");
+                ParameterExpression item = System.Linq.Expressions.Expression.Parameter(parameterType, "item");
+                ParameterExpression value = System.Linq.Expressions.Expression.Parameter(objectType, "value");
 
-                BinaryExpression cast = Expression.Assign(item, Expression.TypeAs(obj, parameterType));
+                BinaryExpression cast = System.Linq.Expressions.Expression.Assign(item, System.Linq.Expressions.Expression.TypeAs(obj, parameterType));
 
                 List<SwitchCase> cases = new List<SwitchCase>();
                 foreach (var prop in parameterType.GetProperties())
                 {
-                    var targetProperty = Expression.Property(item, prop.Name);
-                    BinaryExpression caseExpression = Expression.Assign(targetProperty, Expression.Convert(value, targetProperty.Type));
-                    SwitchCase caseStatement = Expression.SwitchCase(caseExpression, Expression.Constant(prop.Name, typeof(string)));
+                    var targetProperty = System.Linq.Expressions.Expression.Property(item, prop.Name);
+                    BinaryExpression caseExpression = System.Linq.Expressions.Expression.Assign(targetProperty, System.Linq.Expressions.Expression.Convert(value, targetProperty.Type));
+                    SwitchCase caseStatement = System.Linq.Expressions.Expression.SwitchCase(caseExpression, System.Linq.Expressions.Expression.Constant(prop.Name, typeof(string)));
                     cases.Add(caseStatement);
                 }
 
-                SwitchExpression switchStatment = Expression.Switch(voidType, property, null, null, cases.ToArray());
+                SwitchExpression switchStatment = System.Linq.Expressions.Expression.Switch(voidType, property, null, null, cases.ToArray());
 
-                BlockExpression block = Expression.Block(voidType, new[] { item }, cast, switchStatment);
+                BlockExpression block = System.Linq.Expressions.Expression.Block(voidType, new[] { item }, cast, switchStatment);
 
-                var lambda = Expression.Lambda<Action<object, string, object>>(block, obj, property, value);
+                var lambda = System.Linq.Expressions.Expression.Lambda<Action<object, string, object>>(block, obj, property, value);
                 return lambda.Compile();
             });
         }

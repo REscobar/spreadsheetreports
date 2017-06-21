@@ -5830,7 +5830,7 @@ namespace SpreadSheetsReports.Sandbox
                             new PropertyBinding
                             {
                                 DataSource = datasource,
-                                DataMember = "Name",
+                                Expression = "Name",
                                 PropertyName = nameof(Sheet.Name)
                             }
                         },
@@ -6015,7 +6015,7 @@ namespace SpreadSheetsReports.Sandbox
                             new PropertyBinding
                             {
                                 DataSource = datasource,
-                                DataMember = "Name",
+                                Expression = "Name",
                                 PropertyName = nameof(Sheet.Name)
                             }
                         },

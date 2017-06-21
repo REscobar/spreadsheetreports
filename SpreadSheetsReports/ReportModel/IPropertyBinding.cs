@@ -4,7 +4,7 @@
     {
         string PropertyName { get; set; }
 
-        string DataMember { get; set; }
+        string Expression { get; set; }
 
         DataSourceBrowser DataSource { get; set; }
     }
