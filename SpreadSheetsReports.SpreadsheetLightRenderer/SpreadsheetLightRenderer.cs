@@ -96,7 +96,7 @@
             }
 
             SLStyle style = document.CreateStyle();
-            this.ApplyStyle(style, cell.Style.Value);
+            this.ApplyStyle(style, cell.Style);
             document.SetCellStyle(rowCounter, cellCounter, style);
         }
 

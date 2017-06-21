@@ -1,17 +1,14 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Sheets
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
-    using System.Reflection.Emit;
-    using System.Text;
     using SpreadSheetsReports.WpfUi.Rows;
+    using Cells;
 
     public class SheetBinder : INotifyPropertyChanged
     {
         private ReportSectionBinder content;
         private string name;
+        private CellBinder current;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -42,6 +39,25 @@
 
                 this.content = value;
                 this.NotifyPropertyChanged(nameof(this.Content));
+            }
+        }
+
+        public CellBinder CurrentCell
+        {
+            get
+            {
+                return this.current;
+            }
+
+            set
+            {
+                if (this.current == value)
+                {
+                    return;
+                }
+
+                this.current = value;
+                this.NotifyPropertyChanged(nameof(this.CurrentCell));
             }
         }
 

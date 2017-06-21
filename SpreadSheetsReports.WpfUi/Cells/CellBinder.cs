@@ -1,17 +1,12 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Cells
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using SpreadSheetsReports.DocumentModel;
+    using DocumentModel;
     using SpreadSheetsReports.ReportModel;
 
     public class CellBinder : INotifyPropertyChanged
     {
-        private CellStyle? style;
+        private CellStyle style;
         private string className;
         private object value;
         private CellType type;
@@ -19,26 +14,6 @@
         public CellBinder()
         {
             this.Value = "TestingTestingTestingTesting";
-            this.Style = new CellStyle
-            {
-                HorizontalAlignment = HorizontalAlignment.Distributed,
-                VerticalAlignment = VerticalAlignment.Justify,
-                BackgroundColor = new Color(alpha:127, green:212,blue:212),
-                Rotation = 12,
-                ShrinkToFit = true,
-                WrapText = true,
-                FontStyle = new FontStyle
-                {
-                    FontName = "Comic Sans MS",
-                    Color = new Color(red:255),
-                    IsBold = true,
-                    IsItalic = true,
-                    IsStrikeout = true,
-                    Underline = UnderLineStyle.Single,
-                    Size = 12,
-                    ScriptStyle = FontScriptStyle.Superscript
-                }
-            };
         }
 
         /// <inheritdoc/>
@@ -47,7 +22,7 @@
         /// <summary>
         /// Gets or sets the <see cref="CellStyle"/>
         /// </summary>
-        public CellStyle? Style
+        public CellStyle Style
         {
             get
             {
@@ -56,7 +31,7 @@
 
             set
             {
-                if (this.style.Equals(value))
+                if (this.style == value)
                 {
                     return;
                 }

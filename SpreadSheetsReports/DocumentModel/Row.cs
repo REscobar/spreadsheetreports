@@ -13,6 +13,6 @@
 
         public float? Height { get; set; }
 
-        public CellStyle? Style { get; set; }
+        public CellStyle Style { get; set; }
     }
 }

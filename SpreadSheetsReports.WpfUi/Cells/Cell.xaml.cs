@@ -1,20 +1,8 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Cells
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using Documents;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Documents;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Navigation;
-    using System.Windows.Shapes;
 
     /// <summary>
     /// Interaction logic for Cell.xaml
@@ -24,7 +12,25 @@
         public Cell()
         {
             InitializeComponent();
+            this.MouseLeftButtonUp += Cell_MouseLeftButtonUp;
+            this.GotFocus += Cell_GotFocus;
         }
 
+        private void Cell_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            this.Focus();
+        }
+
+        private void Cell_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+            DocumentEditor.Current.CurrentCell = this.DataContext as CellBinder;
+        }
+
+        private void FormatCells_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var cellStyleEditor = new CellStyleWindow();
+            cellStyleEditor.DataContext = this.DataContext;
+            cellStyleEditor.ShowDialog();
+        }
     }
 }

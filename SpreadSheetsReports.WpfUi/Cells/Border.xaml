@@ -4,11 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
+             xmlns:converters="clr-namespace:SpreadSheetsReports.WpfUi.Converters"
+             xmlns:Document="clr-namespace:SpreadSheetsReports.DocumentModel;assembly=SpreadSheetsReports"
              mc:Ignorable="d" 
-             d:DesignHeight="376.5" d:DesignWidth="550.5">
+             d:DesignHeight="300" d:DesignWidth="640"
+             d:DataContext="{d:DesignInstance Type=local:CellBinder, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
-        <local:VisibilityConverter x:Key="VisibilityConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <SolidColorBrush x:Key="LineBrush" Color="{Binding SelectedColor, Mode=OneWay, Source={x:Reference Name=colorPicker}}" />
+        <converters:BorderTypeToVisibilityConverter x:Key="borderVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
         <GroupBox x:Name="groupBox" Header="Line" Margin="10,10,0,17" HorizontalAlignment="Left" Width="169">
@@ -96,7 +100,7 @@
 
             </Grid>
         </GroupBox>
-        <GroupBox x:Name="groupBox1" Header="Border" Margin="184,10,16,163">
+        <GroupBox x:Name="groupBox1" Header="Border" Margin="184,10,16,90">
             <Grid Margin="0">
                 <Grid.Resources>
                     <Style TargetType="{x:Type Line}">
@@ -114,10 +118,10 @@
                 <Border BorderBrush="Black" BorderThickness="1" Margin="41,10,41,41">
                     <Grid>
                         <Label x:Name="label2" Content="Text" HorizontalAlignment="Center" Width="31" Height="26" VerticalAlignment="Center" />
-                        <Line Name="Right" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="Auto" Margin="0,10,10,10" HorizontalAlignment="Right" />
-                        <Line Name="Left" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="Auto" Margin="10,10,0,10" />
-                        <Line Name="Top" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" VerticalAlignment="Top" Margin="10,10,10,0" />
-                        <Line Name="Bottom" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" Margin="10,0,10,10" VerticalAlignment="Bottom" />
+                        <Line Name="Right" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="Auto" Margin="0,10,10,10" HorizontalAlignment="Right"  Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=button_R}"/>
+                        <Line Name="Left" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="Auto" Margin="10,10,0,10" Visibility="{Binding ElementName=button_L, Converter={StaticResource BooleanToVisibilityConverter}, Path=IsChecked}"/>
+                        <Line Name="Top" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" VerticalAlignment="Top" Margin="10,10,10,0" Visibility="{Binding ElementName=button_T, Converter={StaticResource BooleanToVisibilityConverter}, Path=IsChecked}"/>
+                        <Line Name="Bottom" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" Margin="10,0,10,10" VerticalAlignment="Bottom" Visibility="{Binding ElementName=button_B, Converter={StaticResource BooleanToVisibilityConverter}, Path=IsChecked}"/>
                         <Line Name="LR" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="10" />
                         <Line Name="RL" Stretch="Fill" Stroke="Black" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="10" />
 
@@ -139,12 +143,12 @@
 
                     </Grid>
                 </Border>
-                <ToggleButton x:Name="button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding Visibility, Converter={StaticResource VisibilityConverter}, ElementName=Top, Mode=TwoWay}"/>
-                <ToggleButton x:Name="button_Copy1" HorizontalAlignment="Left" Margin="10,0,0,41" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Visibility, Converter={StaticResource VisibilityConverter}, ElementName=Bottom, Mode=TwoWay}"/>
-                <ToggleButton x:Name="button_Copy2" HorizontalAlignment="Left" Margin="10,0,0,10" RenderTransformOrigin="0.487,1.269" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Visibility, Converter={StaticResource VisibilityConverter}, ElementName=RL, Mode=TwoWay}"/>
-                <ToggleButton x:Name="button_Copy3" HorizontalAlignment="Left" Margin="41,0,0,10" RenderTransformOrigin="0.487,1.269" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Visibility, Converter={StaticResource VisibilityConverter}, ElementName=Left, Mode=TwoWay}"/>
-                <ToggleButton x:Name="button_Copy5" Margin="0,0,41,10" RenderTransformOrigin="0.487,1.269" Width="26" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Visibility, Converter={StaticResource VisibilityConverter}, ElementName=Right, Mode=TwoWay}"/>
-                <ToggleButton x:Name="button_Copy4" Margin="0,0,10,10" RenderTransformOrigin="0.487,1.269" Width="26" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Visibility, Converter={StaticResource VisibilityConverter}, ElementName=LR, Mode=TwoWay}"/>
+                <ToggleButton x:Name="button_T" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding Style.BorderStyleTop.Type, Converter={StaticResource borderVisibilityConverter}, Mode=TwoWay}"/>
+                <ToggleButton x:Name="button_B" HorizontalAlignment="Left" Margin="10,0,0,41" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Style.BorderStyleBottom.Type, Converter={StaticResource borderVisibilityConverter}, Mode=TwoWay}"/>
+                <ToggleButton x:Name="button_RL" HorizontalAlignment="Left" Margin="10,0,0,10" RenderTransformOrigin="0.487,1.269" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Style.BorderStyleDiagonalUpRightToBottomLeft.Type, Converter={StaticResource borderVisibilityConverter}, Mode=TwoWay}"/>
+                <ToggleButton x:Name="button_L" HorizontalAlignment="Left" Margin="41,0,0,10" RenderTransformOrigin="0.487,1.269" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Style.BorderStyleLeft.Type, Converter={StaticResource borderVisibilityConverter}, Mode=TwoWay}"/>
+                <ToggleButton x:Name="button_R" Margin="0,0,41,10" RenderTransformOrigin="0.487,1.269" Width="26" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Style.BorderStyleRight.Type, Converter={StaticResource borderVisibilityConverter}, Mode=TwoWay}"/>
+                <ToggleButton x:Name="button_LR" Margin="0,0,10,10" RenderTransformOrigin="0.487,1.269" Width="26" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Style.BorderStyleDiagonalUpLeftToBottomRight.Type, Converter={StaticResource borderVisibilityConverter}, Mode=TwoWay}"/>
             </Grid>
         </GroupBox>
 

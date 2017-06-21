@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a cell style
     /// </summary>
-    public struct CellStyle
+    public class CellStyle
     {
         /// <summary>
         /// Gets or sets a value indicating whether the content of the cell should shrink to fill the area of the cell

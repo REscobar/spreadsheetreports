@@ -1,22 +1,48 @@
-﻿<UserControl x:Class="SpreadSheetsReports.WpfUi.Cells.Font"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
+             x:Class="SpreadSheetsReports.WpfUi.Cells.Font"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+             xmlns:converters="clr-namespace:SpreadSheetsReports.WpfUi.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600">
-    <Grid >
+             d:DesignHeight="300" d:DesignWidth="640"
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type local:CellBinder}}">
+    <UserControl.Resources>
+        <converters:DocumentColorToColorConverter x:Key="DocumentColorToColorConverter"/>
+        <converters:DebuggerConverter x:Key="DebuggerConverter"/>
+        <DataTemplate x:Key="fontFamilyData">
+            <TextBlock Text="{Binding Source}" FontFamily="{Binding Source}" FontSize="16"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type FamilyTypeface}">
+            <WrapPanel>
+                <TextBlock Text="{Binding Style}"/>
+                <TextBlock Text=" "/>
+                <TextBlock Text="{Binding Weight}" />
+                <TextBlock Text=" "/>
+                <TextBlock Text="{Binding Stretch}" />
+            </WrapPanel>
+        </DataTemplate>
+        <CollectionViewSource Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" x:Key="familyCollection"/>
+        <ObjectDataProvider x:Key="fontSizes" MethodName="GetFontSizes"
+                          ObjectType="{x:Type local:FontSizesList}"/>
+    </UserControl.Resources>
+    <Grid Margin="0,0,0,0" >
         <Label x:Name="label" Content="Font:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="42"/>
-        <TextBox x:Name="textBox" Height="23" Margin="10,36,392,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
-        <ListBox x:Name="listBox" Margin="10,64,392,136"/>
-        <Label x:Name="label1" Content="Underline" HorizontalAlignment="Left" Margin="14,0,0,105" VerticalAlignment="Bottom" Width="66"/>
-        <ComboBox x:Name="comboBox" Margin="14,0,392,78" VerticalAlignment="Bottom"/>
-        <ListBox x:Name="listBox1" Margin="0,64,233,136" HorizontalAlignment="Right" Width="154"/>
-        <Label x:Name="label2" Content="Font style:" Margin="0,10,323,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="64"/>
-        <TextBox x:Name="textBox1" Height="23" Margin="0,36,233,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" HorizontalAlignment="Right" Width="154"/>
-        <Label x:Name="label2_Copy" Content="Color:" Margin="0,0,346,105" HorizontalAlignment="Right" Width="41" Height="26" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="textBox2" Margin="0,0,233,77" TextWrapping="Wrap" Text="TextBox" HorizontalAlignment="Right" Width="154" Height="23" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="fontNameText" Height="23" Margin="10,36,0,0" TextWrapping="Wrap" Text="{Binding SelectedValue, ElementName=fontName}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="265"/>
+        <ListBox x:Name="fontName" Margin="10,64,0,68" HorizontalAlignment="Left" Width="265" ItemsSource="{Binding Mode=OneWay, Source={StaticResource familyCollection}}" ItemTemplate="{StaticResource fontFamilyData}"/>
+        <Label x:Name="label1" Content="Underline" HorizontalAlignment="Left" Margin="14,0,0,37" VerticalAlignment="Bottom" Width="66"/>
+        <ComboBox x:Name="comboBox" Margin="14,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="261"/>
+        <ListBox x:Name="listBox1" Margin="280,64,0,68" HorizontalAlignment="Left" Width="154"/>
+        <Label x:Name="label2" Content="Font style:" Margin="280,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="64"/>
+        <TextBox x:Name="textBox1" Height="23" Margin="280,36,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154"/>
+        <Label x:Name="label2_Copy" Content="Color:" Margin="280,0,0,37" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="41"/>
+        <xctk:ColorPicker x:Name="colorPicker" Margin="280,0,0,10" ColorMode="ColorCanvas" ShowAdvancedButton="False" ShowStandardColors="False" UsingAlphaChannel="False" HorizontalAlignment="Left" Width="154" Height="22" VerticalAlignment="Bottom" SelectedColor="{Binding Style.FontStyle.Color, Converter={StaticResource DocumentColorToColorConverter}}" />
+        <Label x:Name="label2_Copy1" Content="Font size" Margin="439,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="64"/>
+        <TextBox x:Name="textBox1_Copy" Height="23" Margin="439,36,10,0" TextWrapping="Wrap" Text="{Binding Style.FontStyle.Size, Mode=TwoWay}" VerticalAlignment="Top"/>
+        <ListBox x:Name="listBox2" Margin="439,64,10,68" ItemsSource="{Binding Mode=OneWay, Source={StaticResource fontSizes}}" SelectedValue="{Binding Style.FontStyle.Size, Converter={StaticResource DebuggerConverter}, Mode=TwoWay}"/>
 
     </Grid>
 </UserControl>

@@ -84,14 +84,33 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Cells\BrushToColorConverter.cs" />
+    <Compile Include="Cells\CellStyleWindow.xaml.cs">
+      <DependentUpon>CellStyleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\NegativeValueConverter.cs" />
+    <Compile Include="Converters\BorderTypeToStrokeDashArrayConverter.cs" />
+    <Compile Include="Converters\BorderTypeToVisibilityConverter.cs" />
+    <Compile Include="Converters\BrushToColorConverter.cs" />
     <Compile Include="Cells\CellBinder.cs" />
-    <Compile Include="Cells\HorizontalAlignmentConverter.cs" />
-    <Compile Include="DebuggerConverter.cs" />
+    <Compile Include="Cells\FontSizes.cs" />
+    <Compile Include="Converters\DocumentColorToColorConverter.cs" />
+    <Compile Include="Converters\FontStyleConverter.cs" />
+    <Compile Include="Converters\FontWeightConverter.cs" />
+    <Compile Include="Converters\HorizontalAlignmentConverter.cs" />
+    <Compile Include="Converters\DebuggerConverter.cs" />
+    <Compile Include="Converters\UnderlineOrStriketroughConverter.cs" />
+    <Compile Include="Converters\VerticalAlignmentConverter.cs" />
+    <Compile Include="Converters\WrapTextConverter.cs" />
+    <Compile Include="Documents\DocumentEditor.xaml.cs">
+      <DependentUpon>DocumentEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Rows\GutterFiller.xaml.cs">
       <DependentUpon>GutterFiller.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Rows\IsNullConverter.cs" />
+    <Compile Include="Converters\IsNullConverter.cs" />
+    <Compile Include="Rows\NewRow.xaml.cs">
+      <DependentUpon>NewRow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Rows\ReportSectionBinder.cs" />
     <Compile Include="Rows\RowBinder.cs" />
     <Compile Include="Rows\RowCollectionBinder.cs" />
@@ -112,6 +131,7 @@
       <DependentUpon>SheetCollectionEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sheets\SheetCollectionBinder.cs" />
+    <Compile Include="Utils\TrulyObservableCollection.cs" />
     <Page Include="Cells\Border.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -128,11 +148,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Cells\CellStyleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Cells\Font.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Cells\Rotation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Documents\DocumentEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,6 +195,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Rows\GutterFiller.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Rows\NewRow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

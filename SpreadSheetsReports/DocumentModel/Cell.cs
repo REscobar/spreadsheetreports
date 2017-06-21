@@ -10,7 +10,7 @@
         /// <summary>
         /// Gets or sets the <see cref="CellStyle"/>
         /// </summary>
-        public CellStyle? Style { get; set; }
+        public CellStyle Style { get; set; }
 
         /// <summary>
         /// Gets or sets style class name

@@ -1,12 +1,9 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Sheets
 {
-    using System;
-    using System.Collections.Generic;
+    using Cells;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.Windows;
 
     public class SheetCollectionBinder : INotifyPropertyChanged
     {
@@ -16,9 +13,10 @@
         public SheetCollectionBinder()
         {
             this.sheets = new ObservableCollection<SheetBinder>();
-            this.Sheets.Add(new SheetBinder(sheetNumber++));
+            this.AddSheet();
         }
 
+        /// <inheritdoc/>
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<SheetBinder> Sheets
@@ -29,9 +27,15 @@
             }
         }
 
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         internal void AddSheet()
         {
-            this.Sheets.Add(new SheetBinder(sheetNumber++));
+            var sheet = new SheetBinder(this.sheetNumber++);
+            this.Sheets.Add(sheet);
         }
 
         internal void RemoveSheet(SheetBinder sheet)

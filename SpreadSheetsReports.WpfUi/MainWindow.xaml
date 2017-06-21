@@ -4,16 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi"
-        xmlns:cells="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
-        xmlns:rows="clr-namespace:SpreadSheetsReports.WpfUi.Rows"
-        xmlns:sheets="clr-namespace:SpreadSheetsReports.WpfUi.Sheets"
+        xmlns:document="clr-namespace:SpreadSheetsReports.WpfUi.Documents"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="525">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <cells:CellBinder/>
-    </Window.DataContext>
+    </Window.DataContext>-->
 
     <Grid>
-        <cells:CellStyleEditor/>
+        <document:DocumentEditor/>
     </Grid>
 </Window>
