@@ -45,7 +45,7 @@
 
         public virtual PropertyBindingCollection Owner { get; set; }
 
-        protected void PerformBind(ReportControl obj)
+        protected internal override void PerformBind(ReportControl obj)
         {
             if (obj == null)
             {

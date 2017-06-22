@@ -14,6 +14,8 @@
 
         public DataSourceBrowser DataSource { get; set; }
 
+        protected internal abstract void PerformBind(ReportControl reportControl);
+
         public virtual PropertyBindingCollection Owner { get; set; }
     }
 }

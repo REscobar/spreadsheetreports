@@ -6,7 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class FormulaBinding : PropertyBindingBase
+    public class ExpressionBinding : PropertyBindingBase
     {
         public string PropertyName { get; set; }
 
@@ -15,5 +15,10 @@
         public DataSourceBrowser DataSource { get; set; }
 
         public PropertyBindingCollection Owner { get; set; }
+
+        protected internal override void PerformBind(ReportControl reportControl)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
