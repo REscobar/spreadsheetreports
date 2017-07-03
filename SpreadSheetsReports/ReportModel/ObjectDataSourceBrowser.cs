@@ -39,6 +39,12 @@
         {
             get
             {
+                if (this.enumerator == null)
+                {
+                    this.CreateEnumerator();
+                    this.MoveNext();
+                }
+
                 return this.currentValue;
             }
         }
@@ -140,11 +146,6 @@
                 this.currentReader = GetReader(this.datasource.GetType());
                 this.enumerator = this.DummyIterator(this.datasource).GetEnumerator();
             }
-        }
-
-        private void CreateReader()
-        {
-
         }
 
         private IEnumerable DummyIterator(object value)

@@ -3,7 +3,9 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
 
+    [CollectionDataContract]
     public class PropertyBindingCollection : ICollection<PropertyBindingBase>
     {
         private readonly ReportControl owner;

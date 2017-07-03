@@ -154,7 +154,7 @@
             </Line.Style>
         </Line>
         <Line x:Name="LR" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0" DataContext="{Binding Style.BorderStyleDiagonalUpLeftToBottomRight}">
-            <Line.Style>
+            <!--<Line.Style>
                 <Style TargetType="{x:Type Line}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="True">
@@ -167,10 +167,10 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Line.Style>
+            </Line.Style>-->
         </Line>
         <Line x:Name="RL" Stretch="Fill" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="0" DataContext="{Binding Style.BorderStyleDiagonalUpRightToBottomLeft}">
-            <Line.Style>
+            <!--<Line.Style>
                 <Style TargetType="{x:Type Line}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Converter={StaticResource IsNullConverter}, Mode=OneWay}" Value="True">
@@ -183,7 +183,7 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Line.Style>
+            </Line.Style>-->
         </Line>
     </Grid>
 </UserControl>

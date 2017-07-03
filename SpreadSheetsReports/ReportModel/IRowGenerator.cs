@@ -1,6 +1,6 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
-    internal interface IRowGenerator : IGenerator<DocumentModel.Row>
+    public interface IRowGenerator : IGenerator<DocumentModel.Row>
     {
     }
 }

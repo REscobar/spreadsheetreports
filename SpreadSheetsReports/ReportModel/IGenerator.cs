@@ -1,6 +1,6 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
-    internal interface IGenerator<T>
+    public interface IGenerator<T>
     {
         T Generate();
     }

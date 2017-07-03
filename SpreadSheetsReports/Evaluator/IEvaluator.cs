@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpreadSheetsReports.Evaluator
+﻿namespace SpreadSheetsReports.Evaluator
 {
     public interface IEvaluator
     {
-        void Evaluate();
+        void Evaluate(EvaluationContext context);
     }
 }

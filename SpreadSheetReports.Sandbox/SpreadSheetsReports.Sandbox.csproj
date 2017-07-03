@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,9 +46,11 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReverseRowCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestData.xml">
@@ -55,6 +58,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SpreadSheetsReports.Evaluator.Antlr\SpreadSheetsReports.Evaluator.Antlr.csproj">
+      <Project>{16d7372f-6b92-4ac6-82b4-853a94e01882}</Project>
+      <Name>SpreadSheetsReports.Evaluator.Antlr</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SpreadSheetsReports.NPOIRenderer\SpreadSheetsReports.NPOIRenderer.csproj">
       <Project>{3c83b237-ad64-474b-b674-922840d6ccb5}</Project>
       <Name>SpreadSheetsReports.NPOIRenderer</Name>

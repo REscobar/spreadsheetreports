@@ -2,11 +2,14 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Serialization;
     using DocumentModel;
 
+    [DataContract]
     public class ReportDefinition : DataSourceBoundReportControl, IDocumentGenerator
     {
-        public List<Sheet> Sheets { get; set; }
+        [DataMember]
+        public List<ISheetGenerator> Sheets { get; set; }
 
         public Document Generate()
         {

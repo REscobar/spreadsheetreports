@@ -4,9 +4,10 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using System.Runtime.Serialization;
     using System.Xml.Serialization;
 
-    [Serializable]
+    [DataContract]
     public class PropertyBinding : PropertyBindingBase
     {
         private static readonly ConcurrentDictionary<Type, Action<object, string, object>> WriterCache;
@@ -40,7 +41,7 @@
 
         public string Expression { get; set; }
 
-        [XmlIgnore]
+        [IgnoreDataMember]
         public DataSourceBrowser DataSource { get; set; }
 
         public virtual PropertyBindingCollection Owner { get; set; }

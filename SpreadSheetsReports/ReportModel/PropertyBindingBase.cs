@@ -1,17 +1,16 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.Runtime.Serialization;
 
+    [DataContract]
     public abstract class PropertyBindingBase : IPropertyBinding
     {
         public string PropertyName { get; set; }
 
         public string Expression { get; set; }
 
+        [IgnoreDataMember]
         public DataSourceBrowser DataSource { get; set; }
 
         protected internal abstract void PerformBind(ReportControl reportControl);

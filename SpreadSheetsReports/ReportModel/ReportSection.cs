@@ -4,11 +4,11 @@
 
     public class ReportSection : DataSourceBoundReportControl, IRowCollectionGenerator
     {
-        public RowCollectionSection Header { get; set; }
+        public IRowCollectionGenerator Header { get; set; }
 
-        public ReportSection SubSection { get; set; }
+        public IRowCollectionGenerator SubSection { get; set; }
 
-        public RowCollectionSection Footer { get; set; }
+        public IRowCollectionGenerator Footer { get; set; }
 
         public IEnumerable<DocumentModel.Row> Generate()
         {

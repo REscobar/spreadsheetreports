@@ -2,7 +2,7 @@
 {
     public class Sheet : DataSourceBoundReportControl, ISheetGenerator, IDataSourceBound
     {
-        public ReportSection Content { get; set; }
+        public IRowCollectionGenerator Content { get; set; }
 
         public string Name { get; set; }
 

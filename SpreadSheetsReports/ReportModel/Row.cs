@@ -6,7 +6,7 @@
 
     public class Row : ReportControl, IRowGenerator
     {
-        public List<Cell> Cells { get; set; }
+        public List<ICellGenerator> Cells { get; set; }
 
         public float? Height { get; set; }
 

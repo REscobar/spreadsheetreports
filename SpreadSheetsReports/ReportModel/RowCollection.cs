@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class RowCollection : List<Row>, IList<Row>
+    public class RowCollection : List<IRowGenerator>, IList<IRowGenerator>
     {
     }
 }

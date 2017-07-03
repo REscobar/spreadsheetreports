@@ -10,17 +10,99 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.CodeDom;
+using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace SpreadSheetsReports.Sandbox
 {
+    public class Surrogate : System.Runtime.Serialization.IDataContractSurrogate
+    {
+        public object GetCustomDataToExport(Type clrType, Type dataContractType)
+        {
+            return null;
+        }
+
+        public object GetCustomDataToExport(MemberInfo memberInfo, Type dataContractType)
+        {
+            return null;
+        }
+
+        public Type GetDataContractType(Type type)
+        {
+            return type;
+        }
+
+        public object GetDeserializedObject(object obj, Type targetType)
+        {
+            return obj;
+        }
+
+        public void GetKnownCustomDataTypes(Collection<Type> customDataTypes)
+        {
+        }
+
+        public object GetObjectToSerialize(object obj, Type targetType)
+        {
+            return obj;
+        }
+
+        public Type GetReferencedTypeOnImport(string typeName, string typeNamespace, object customData)
+        {
+            return null;
+        }
+
+        public CodeTypeDeclaration ProcessImportedType(CodeTypeDeclaration typeDeclaration, CodeCompileUnit compileUnit)
+        {
+            return typeDeclaration;
+        }
+    }
     class Program
     {
         static void Main(string[] args)
         {
-            //System.Xml.Serialization.XmlSerializer reader = new System.Xml.Serialization.XmlSerializer(typeof(ReportDefinition));
-            //var definition = reader.Deserialize(File.OpenRead("TestData.xml")) as ReportDefinition;
+            var val = new Evaluator.Antlr.AntlrEvaluator();
+            val.Evaluate(new Evaluator.EvaluationContext
+            {
+                Target = new Cell(),
+                Expression = @"if(2 < 3)if(1<2)
+{
+    this.Style.Indent = 1 * (4 + - 3);
+    this.Value = -10 * -20 + - param.Value;
+}",
+                Source = new
+                {
+                    Value = 25m
+                }
+            });
+            //return;
+
+            var type = typeof(ISheetGenerator);
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface).ToList().AsEnumerable();
+            type = typeof(PropertyBindingBase);
+            types = types.Concat(AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface).ToList().AsEnumerable());
+            type = typeof(IRowCollectionGenerator);
+            types = types.Concat(AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface).ToList().AsEnumerable());
+            type = typeof(Row);
+            types = types.Concat(AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface).ToList().AsEnumerable());
+            type = typeof(Cell);
+            types = types.Concat(AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface).ToList().AsEnumerable());
+            System.Runtime.Serialization.DataContractSerializer reader = new System.Runtime.Serialization.DataContractSerializer(typeof(ReportDefinition), types, int.MaxValue,false,true, new Surrogate());
+           // var definition = reader.ReadObject(File.OpenRead("TestData.xml")) as ReportDefinition;
 
             var definition = TestReport();
+
+            reader.WriteObject(File.OpenWrite("Test.xml"), definition);
 
             IReportRenderer renderer = new NPOIRenderer.NPOIRenderer();
             var stream = File.Create("Workbook1.xlsx");
@@ -70,7 +152,7 @@ namespace SpreadSheetsReports.Sandbox
         {
             var testing = new ReportDefinition
             {
-                Sheets = new List<Sheet>
+                Sheets = new List<ISheetGenerator>
                 {
                     new Sheet
                     {
@@ -84,7 +166,7 @@ namespace SpreadSheetsReports.Sandbox
                                     new Row
                                     {
                                         Height = 125,
-                                        Cells = new List<Cell>
+                                        Cells = new List<ICellGenerator>
                                         {
                                             new Cell
                                             {
@@ -115,7 +197,7 @@ namespace SpreadSheetsReports.Sandbox
                                     },
                                     new Row
                                     {
-                                        Cells = new List<Cell>
+                                        Cells = new List<ICellGenerator>
                                         {
                                             null,
                                             new Cell
@@ -211,7 +293,7 @@ namespace SpreadSheetsReports.Sandbox
                                                 FontName = "Algerian"
                                             }
                                         },
-                                        Cells = new List<Cell>
+                                        Cells = new List<ICellGenerator>
                                         {
                                             new Cell
                                             {
@@ -2809,7 +2891,7 @@ namespace SpreadSheetsReports.Sandbox
                                     },
                                     new Row
                                     {
-                                        Cells = new List<Cell>
+                                        Cells = new List<ICellGenerator>
                                         {
                                             new Cell
                                             {
@@ -3065,7 +3147,7 @@ namespace SpreadSheetsReports.Sandbox
                                     new Row
                                     {
                                         Height = 125,
-                                        Cells = new List<Cell>
+                                        Cells = new List<ICellGenerator>
                                         {
                                             new Cell
                                             {
@@ -3105,7 +3187,7 @@ namespace SpreadSheetsReports.Sandbox
                                     },
                                     new Row
                                     {
-                                        Cells = new List<Cell>
+                                        Cells = new List<ICellGenerator>
                                         {
                                             null,
                                             new Cell
@@ -3168,7 +3250,7 @@ namespace SpreadSheetsReports.Sandbox
                                     },
                                     new Row
                                     {
-                                        Cells = new List<Cell>
+                                        Cells = new List<ICellGenerator>
                                         {
                                             new Cell
                                             {
@@ -5779,12 +5861,12 @@ namespace SpreadSheetsReports.Sandbox
             };
 
 
-            testing.Sheets.First().Content.Header.Rows.First().Bindings.Add(nameof(Row.Height), data, nameof(data.Height));
-            testing.Sheets.First().Content.Header.Rows.First().Cells.First().Bindings.Add(nameof(Cell.Value), data, nameof(data.Str1));
-            testing.Sheets.First().Content.Header.Rows.First().Cells.Skip(1).First().Bindings.Add(nameof(Cell.Value), data, nameof(data.Str2));
+            ((testing.Sheets.Cast<Sheet>().First().Content as ReportSection).Header as RowCollectionSection).Rows.OfType<Row>().First().Bindings.Add(nameof(Row.Height), data, nameof(data.Height));
+            ((testing.Sheets.Cast<Sheet>().First().Content as ReportSection).Header as RowCollectionSection).Rows.OfType<Row>().First().Cells.OfType<Cell>().First().Bindings.Add(nameof(Cell.Value), data, nameof(data.Str1));
+            ((testing.Sheets.Cast<Sheet>().First().Content as ReportSection).Header as RowCollectionSection).Rows.OfType<Row>().First().Cells.OfType<Cell>().Skip(1).First().Bindings.Add(nameof(Cell.Value), data, nameof(data.Str2));
 
-            testing.Sheets.First().Content.Header.Rows.Skip(1).First().Bindings.Add(nameof(Row.Height), data, nameof(data.Height));
-            foreach (var cell in testing.Sheets.First().Content.Header.Rows.Skip(2).First().Cells)
+            ((testing.Sheets.Cast<Sheet>().First().Content as ReportSection).Header as RowCollectionSection).Rows.Skip(1).OfType<Row>().First().Bindings.Add(nameof(Row.Height), data, nameof(data.Height));
+            foreach (var cell in ((testing.Sheets.Cast<Sheet>().First().Content as ReportSection).Header as RowCollectionSection).Rows.Skip(2).OfType<Row>().First().Cells.OfType<Cell>())
             {
                 cell.Bindings.Add(nameof(Cell.Value), data, nameof(data.Str2));
             }
@@ -5821,7 +5903,7 @@ namespace SpreadSheetsReports.Sandbox
 
             var report = new ReportDefinition
             {
-                Sheets = new List<Sheet>
+                Sheets = new List<ISheetGenerator>
                 {
                     new Sheet
                     {
@@ -5843,7 +5925,7 @@ namespace SpreadSheetsReports.Sandbox
                                 {
                                     new Row
                                     {
-                                        Cells = new List<Cell>
+                                        Cells = new List<ICellGenerator>
                                         {
                                             new Cell
                                             {
@@ -5877,7 +5959,7 @@ namespace SpreadSheetsReports.Sandbox
                                     {
                                         new Row
                                         {
-                                            Cells = new List<Cell>
+                                            Cells = new List<ICellGenerator>
                                             {
                                                 new Cell
                                                 {
@@ -6006,17 +6088,18 @@ namespace SpreadSheetsReports.Sandbox
 
             var report = new ReportDefinition
             {
-                Sheets = new List<Sheet>
+                Sheets = new List<ISheetGenerator>
                 {
                     new Sheet
                     {
                         Bindings = new PropertyBindingCollection
                         {
-                            new PropertyBinding
+                            new ExpressionBinding
                             {
                                 DataSource = datasource,
-                                Expression = "Name",
-                                PropertyName = nameof(Sheet.Name)
+                                Expression = "this.Name = param.Name",
+                                PropertyName = nameof(Sheet.Name),
+                                ExpressionEvaluator = new Evaluator.Antlr.AntlrEvaluator()
                             }
                         },
                         Content = new ReportSection
@@ -6028,7 +6111,7 @@ namespace SpreadSheetsReports.Sandbox
                                 {
                                     new Row
                                     {
-                                        Cells = new List<Cell>
+                                        Cells = new List<ICellGenerator>
                                         {
                                             new Cell
                                             {
@@ -6051,7 +6134,7 @@ namespace SpreadSheetsReports.Sandbox
                                     {
                                         new Row
                                         {
-                                            Cells = new List<Cell>
+                                            Cells = new List<ICellGenerator>
                                             {
                                                 new Cell
                                                 {
@@ -6073,7 +6156,7 @@ namespace SpreadSheetsReports.Sandbox
                                         },
                                         new Row
                                         {
-                                            Cells = new List<Cell>
+                                            Cells = new List<ICellGenerator>
                                             {
                                                 new Cell
                                                 {
@@ -6107,7 +6190,7 @@ namespace SpreadSheetsReports.Sandbox
                                         {
                                             new Row
                                             {
-                                                Cells = new List<Cell>
+                                                Cells = new List<ICellGenerator>
                                                 {
                                                     new Cell
                                                     {

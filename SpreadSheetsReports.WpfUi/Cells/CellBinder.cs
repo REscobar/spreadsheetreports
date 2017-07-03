@@ -13,7 +13,7 @@
 
         public CellBinder()
         {
-            this.Value = "TestingTestingTestingTesting";
+            this.Value = "Sample";
         }
 
         /// <inheritdoc/>

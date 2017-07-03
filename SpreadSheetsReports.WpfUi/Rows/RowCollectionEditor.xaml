@@ -21,11 +21,10 @@
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <Grid>
-                    <local:RowEditor Margin="0,0" x:Name="Editor"/>
-                    <local:NewRow RenderTransformOrigin="0.5,0.5" MouseUp="NewRow_MouseUp" Panel.ZIndex="100">
-                        <!--<local:NewRow.Visibility>
+                    <!--<local:NewRow RenderTransformOrigin="0.5,0.5" MouseUp="NewRow_MouseUp" Grid.ZIndex="10000">
+                        --><!--<local:NewRow.Visibility>
                             <Binding Converter="{StaticResource BooleanToVisibilityConverter}" Mode="OneWay" Path="IsMouseOver" RelativeSource="{RelativeSource Self}"/>
-                        </local:NewRow.Visibility>-->
+                        </local:NewRow.Visibility>--><!--
                         <local:NewRow.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -34,7 +33,9 @@
                                 <TranslateTransform X="-9" Y="{Binding ElementName=Editor, Path=ActualHeight, Converter={StaticResource Debugger}}"/>
                             </TransformGroup>
                         </local:NewRow.RenderTransform>
-                    </local:NewRow>
+                    </local:NewRow>-->
+
+                    <local:RowEditor Margin="0,0" x:Name="Editor" Grid.ZIndex="0"/>
                     <!--<Grid Height="9" Margin="0" Width="Auto">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="9"/>

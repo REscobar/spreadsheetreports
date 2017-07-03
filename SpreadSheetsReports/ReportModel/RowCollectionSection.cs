@@ -9,7 +9,7 @@
     {
         public RowCollection Rows { get; set; }
 
-        public IEnumerable<DocumentModel.Row> Generate()
+        public virtual IEnumerable<DocumentModel.Row> Generate()
         {
             this.Databind();
             return this.Rows.Select(r => r?.Generate()).ToList();

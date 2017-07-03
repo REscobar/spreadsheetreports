@@ -12,7 +12,14 @@
         <converters:IsNullConverter x:Key="nullConverter"/>
         <Style x:Key="GutterStyle" TargetType="Label">
             <Setter Property="Width" Value="25"/>
-            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"/>
+            <Setter Property="Background" >
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#FF3399FF" Offset="1"/>
+                        <GradientStop Color="#FF9ACDFF"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch" />
             <Setter Property="BorderThickness" Value="1,0"/>
@@ -75,6 +82,12 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Style="{StaticResource GutterStyleDetail}" RenderTransformOrigin="0.5,0.5" Margin="0" Width="{Binding Height, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}">
+                <Label.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Gainsboro" Offset="0"/>
+                        <GradientStop Color="#FFC5C5C5" Offset="1"/>
+                    </LinearGradientBrush>
+                </Label.Background>
                 Detail
             </Label>
             <ContentControl>

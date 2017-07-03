@@ -1,6 +1,6 @@
 ﻿namespace SpreadSheetsReports.ReportModel
 {
-    internal interface ISheetGenerator : IGenerator<DocumentModel.Sheet>
+    public interface ISheetGenerator : IGenerator<DocumentModel.Sheet>
     {
     }
 }
