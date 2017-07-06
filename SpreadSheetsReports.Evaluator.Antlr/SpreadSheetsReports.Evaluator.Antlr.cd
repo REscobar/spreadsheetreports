@@ -8,6 +8,16 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="SpreadSheetsReports.Evaluator.Antlr.SpreadSheetGrammarVisitor">
+    <Position X="5.25" Y="0.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAIKASQAQAgAAQAIcAAgAAAAAAAAAAQAAAAADABACAA=</HashCode>
+      <FileName>SpreadSheetGrammarVisitor.g4.Visitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="SpreadSheetsReports.Evaluator.IEvaluator">
     <Position X="3.25" Y="0.5" Width="1.5" />
     <TypeIdentifier />

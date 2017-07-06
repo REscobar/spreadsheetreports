@@ -26,7 +26,7 @@
             var brush = value as SolidColorBrush;
             if (brush != null)
             {
-                return new DocumentModel.Color(brush.Color.A, brush.Color.R, brush.Color.G, brush.Color.B);
+                return new DocumentModel.Color(brush.Color.R, brush.Color.G, brush.Color.B, brush.Color.A);
             }
 
             return null;

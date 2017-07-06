@@ -7,6 +7,11 @@ namespace SpreadSheetsReports.DocumentModel
     /// </summary>
     public class BorderStyle
     {
+        public BorderStyle()
+        {
+            this.Color = DocumentModel.Color.BlackColor;
+        }
+
         /// <summary>
         /// Gets or sets the <see cref="BorderType"/>
         /// </summary>

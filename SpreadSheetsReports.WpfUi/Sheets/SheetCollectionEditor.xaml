@@ -14,7 +14,7 @@
         </ContextMenu>
     </UserControl.Resources>
     <Grid Margin="0,0,0,0">
-        <TabControl Margin="0,0,0,35" ItemsSource="{Binding Sheets}" TabStripPlacement="Bottom">
+        <TabControl Margin="0,0,0,35" ItemsSource="{Binding Sheets}" TabStripPlacement="Bottom" x:Name="SheetsTabPanel">
             <TabControl.Resources>
                 <Style TargetType="TabPanel">
                 </Style>

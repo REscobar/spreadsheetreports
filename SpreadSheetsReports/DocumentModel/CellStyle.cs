@@ -5,6 +5,17 @@
     /// </summary>
     public class CellStyle
     {
+        public CellStyle()
+        {
+            this.FontStyle = new FontStyle();
+            this.BorderStyleBottom = new BorderStyle();
+            this.BorderStyleDiagonalUpLeftToBottomRight = new BorderStyle();
+            this.BorderStyleDiagonalUpRightToBottomLeft = new BorderStyle();
+            this.BorderStyleLeft = new BorderStyle();
+            this.BorderStyleRight = new BorderStyle();
+            this.BorderStyleTop = new BorderStyle();
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether the content of the cell should shrink to fill the area of the cell
         /// </summary>

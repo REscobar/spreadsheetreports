@@ -2,6 +2,11 @@
 {
     public class FontStyle
     {
+        public FontStyle()
+        {
+            this.Color = DocumentModel.Color.BlackColor;
+        }
+
         public string FontName { get; set; }
 
         public bool IsItalic { get; set; }

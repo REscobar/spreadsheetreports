@@ -6,6 +6,11 @@
     public struct Color
     {
         /// <summary>
+        /// The black color
+        /// </summary>
+        public static readonly Color BlackColor = new Color(0, 0, 0);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Color"/> struct.
         /// </summary>
         /// <param name="red">The red channel value.</param>
@@ -22,11 +27,11 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Color"/> struct.
         /// </summary>
-        /// <param name="alpha">The alpha channel value.</param>
         /// <param name="red">The red channel value.</param>
         /// <param name="green">The green channel value.</param>
         /// <param name="blue">The blue channel value.</param>
-        public Color(byte alpha = 255, byte red = 0, byte green = 0, byte blue = 0)
+        /// <param name="alpha">The alpha channel value.</param>
+        public Color(byte red = 0, byte green = 0, byte blue = 0, byte alpha = 255)
         {
             this.Alpha = alpha;
             this.Red = red;

@@ -39,10 +39,11 @@
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var hasBorder = value as bool?;
-            if (hasBorder.HasValue)
+            if (hasBorder.HasValue &&  hasBorder.Value)
             {
                 return BorderType.Thin;
             }
+
             return BorderType.None;
         }
     }

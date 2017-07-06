@@ -107,6 +107,14 @@
             }
         }
 
+        public void EnsureStyleIsCreated()
+        {
+            if (this.Style == null)
+            {
+                this.Style = new CellStyle();
+            }
+        }
+
         private void NotifyPropertyChanged(string propertyName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

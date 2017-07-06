@@ -26,7 +26,7 @@
             if (color != null)
             {
                 var colorValue = color.Value;
-                return new DocumentModel.Color(colorValue.A, colorValue.R, colorValue.G, colorValue.B);
+                return new DocumentModel.Color(colorValue.R, colorValue.G, colorValue.B, colorValue.A);
             }
 
             return null;

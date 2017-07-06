@@ -23,5 +23,14 @@ namespace SpreadSheetsReports.WpfUi.Cells
         {
             InitializeComponent();
         }
+
+        private void Window_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var cell = e.NewValue as CellBinder;
+            if (cell != null)
+            {
+                cell.EnsureStyleIsCreated();
+            }
+        }
     }
 }
