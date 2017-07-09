@@ -7,7 +7,15 @@
              xmlns:rows="clr-namespace:SpreadSheetsReports.WpfUi.Rows"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <ScrollViewer>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ItemsControl Grid.Row="0">
+        </ItemsControl>
+    <ScrollViewer Grid.Row="1">
         <rows:ReportSectionEditor DataContext="{Binding Content}"></rows:ReportSectionEditor>
     </ScrollViewer>
+    </Grid>
 </UserControl>

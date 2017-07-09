@@ -11,6 +11,8 @@
              d:DesignHeight="300" d:DesignWidth="640"
              d:DataContext="{d:DesignInstance Type=local:CellBinder, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
+        <converters:BorderTypeToThicknessConverter x:Key="BorderTypeToThicknessConverter"/>
+        <converters:BorderTypeToAngleConverter x:Key="BorderTypeToAngleConverter"/>
         <!--<ObjectDataProvider x:Key="horizontalAligmentValues" MethodName="GetValues"
                             ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -38,6 +40,7 @@
                             <Setter Property="HorizontalAlignment" Value="Stretch" />
                         </Style>
                         <Style TargetType="{x:Type Line}">
+                            <!--<Setter Property="Stroke" Value="{DynamicResource LineBrush}" />-->
                             <Setter Property="Stroke" Value="{DynamicResource LineBrush}" />
                             <Setter Property="SnapsToDevicePixels" Value="True" />
                             <Setter Property="RenderOptions.EdgeMode" Value="Aliased" />
@@ -126,12 +129,36 @@
                 <Border BorderBrush="Black" BorderThickness="1" Margin="41,10,41,41">
                     <Grid>
                         <Label x:Name="label2" Content="Text" HorizontalAlignment="Center" Width="31" Height="26" VerticalAlignment="Center" />
-                        <Line Name="Right" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="1" Height="Auto" Margin="0,10,10,10" HorizontalAlignment="Right" Tag="{Binding Style.BorderStyleRight}"  Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=button_R, Mode=TwoWay}" IsVisibleChanged="Right_IsVisibleChanged" Stroke="{Binding Style.BorderStyleRight.Color, Converter={StaticResource BrushToColorConverter}}" StrokeDashArray="{Binding Style.BorderStyleRight.Type, Converter={StaticResource BorderTypeToStrokeDashArrayConverter}}" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased"/>
-                        <Line Name="Left" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="1" Height="Auto" Margin="10,10,0,10" Visibility="{Binding ElementName=button_L, Converter={StaticResource BooleanToVisibilityConverter}, Path=IsChecked, Mode=TwoWay}" Stroke="{Binding Style.BorderStyleLeft.Color, Converter={StaticResource BrushToColorConverter}, Mode=TwoWay}"/>
-                        <Line Name="Top" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" VerticalAlignment="Top" Margin="10,10,10,0" Visibility="{Binding ElementName=button_T, Converter={StaticResource BooleanToVisibilityConverter}, Path=IsChecked, Mode=TwoWay}" Stroke="{Binding Style.BorderStyleTop.Color, Converter={StaticResource BrushToColorConverter}, Mode=TwoWay}"/>
-                        <Line Name="Bottom" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="1" Margin="10,0,10,10" VerticalAlignment="Bottom" Visibility="{Binding ElementName=button_B, Converter={StaticResource BooleanToVisibilityConverter}, Path=IsChecked, Mode=TwoWay}" Stroke="{Binding Style.BorderStyleBottom.Color, Converter={StaticResource BrushToColorConverter}, Mode=TwoWay}"/>
-                        <Line Name="LR" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="10" />
-                        <Line Name="RL" Stretch="Fill" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="10" />
+                        <Line Name="Right" DataContext="{Binding Path=Style.BorderStyleRight}" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="{Binding Type, Converter={StaticResource BorderTypeToThicknessConverter}}" Height="Auto" Margin="0,10,10,10" HorizontalAlignment="Right" Tag="{Binding DataContext, RelativeSource={RelativeSource Self}}"  Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=button_R, Mode=TwoWay}" Stroke="{Binding Path=Color, Converter={StaticResource BrushToColorConverter}}" StrokeDashArray="{Binding Path=Type, Converter={StaticResource BorderTypeToStrokeDashArrayConverter}}" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased" StrokeThickness="{Binding Type, Converter={StaticResource BorderTypeToThicknessConverter}}">
+                            <Line.RenderTransform>
+                                <TransformGroup>
+                                    <SkewTransform AngleY="{Binding Type, Converter={StaticResource BorderTypeToAngleConverter}, Mode=OneWay}"/>
+                                </TransformGroup>
+                            </Line.RenderTransform>
+                        </Line>
+                        <Line Name="Left" DataContext="{Binding Path=Style.BorderStyleLeft}" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" HorizontalAlignment="Left" Width="{Binding Type, Converter={StaticResource BorderTypeToThicknessConverter}}" Height="Auto" Margin="10,10,0,10" Tag="{Binding DataContext, RelativeSource={RelativeSource Self}}"  Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=button_L, Mode=TwoWay}" Stroke="{Binding Path=Color, Converter={StaticResource BrushToColorConverter}}" StrokeDashArray="{Binding Path=Type, Converter={StaticResource BorderTypeToStrokeDashArrayConverter}}" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased" StrokeThickness="{Binding Type, Converter={StaticResource BorderTypeToThicknessConverter}}">
+                            <Line.RenderTransform>
+                                <TransformGroup>
+                                    <SkewTransform AngleY="{Binding Type, Converter={StaticResource BorderTypeToAngleConverter}, Mode=OneWay}"/>
+                                </TransformGroup>
+                            </Line.RenderTransform>
+                        </Line>
+                        <Line Name="Top" DataContext="{Binding Path=Style.BorderStyleTop}" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="{Binding Type, Converter={StaticResource BorderTypeToThicknessConverter}}" VerticalAlignment="Top" Margin="10,10,10,0" Tag="{Binding DataContext, RelativeSource={RelativeSource Self}}"  Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=button_T, Mode=TwoWay}" Stroke="{Binding Path=Color, Converter={StaticResource BrushToColorConverter}}" StrokeDashArray="{Binding Path=Type, Converter={StaticResource BorderTypeToStrokeDashArrayConverter}}" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased" StrokeThickness="{Binding Type, Converter={StaticResource BorderTypeToThicknessConverter}}">
+                            <Line.RenderTransform>
+                                <TransformGroup>
+                                    <SkewTransform AngleX="{Binding Type, Converter={StaticResource BorderTypeToAngleConverter}, Mode=OneWay}"/>
+                                </TransformGroup>
+                            </Line.RenderTransform>
+                        </Line>
+                        <Line Name="Bottom" DataContext="{Binding Path=Style.BorderStyleBottom}" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="{Binding Type, Converter={StaticResource BorderTypeToThicknessConverter}}" Margin="10,0,10,10" VerticalAlignment="Bottom" Tag="{Binding DataContext, RelativeSource={RelativeSource Self}}"  Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=button_B, Mode=TwoWay}" Stroke="{Binding Path=Color, Converter={StaticResource BrushToColorConverter}}" StrokeDashArray="{Binding Path=Type, Converter={StaticResource BorderTypeToStrokeDashArrayConverter}}" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased" StrokeThickness="{Binding Type, Converter={StaticResource BorderTypeToThicknessConverter}}">
+                            <Line.RenderTransform>
+                                <TransformGroup>
+                                    <SkewTransform AngleX="{Binding Type, Converter={StaticResource BorderTypeToAngleConverter}, Mode=OneWay}"/>
+                                </TransformGroup>
+                            </Line.RenderTransform>
+                        </Line>
+                        <Line Name="LR" DataContext="{Binding Path=Style.BorderStyleDiagonalUpLeftToBottomRight}" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="10" Tag="{Binding DataContext, RelativeSource={RelativeSource Self}}" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=button_LR, Mode=TwoWay}" Stroke="{Binding Path=Color, Converter={StaticResource BrushToColorConverter}}" StrokeDashArray="{Binding Path=Type, Converter={StaticResource BorderTypeToStrokeDashArrayConverter}}" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased" StrokeThickness="{Binding Type, Converter={StaticResource BorderTypeToThicknessConverter}}"/>
+                        <Line Name="RL" DataContext="{Binding Path=Style.BorderStyleDiagonalUpRightToBottomLeft}" Stretch="Fill" X2="0" X1="1" Y1="0" Y2="10" Width="Auto" Height="Auto" Margin="10"  Tag="{Binding DataContext, RelativeSource={RelativeSource Self}}"  Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=button_RL, Mode=TwoWay}" Stroke="{Binding Path=Color, Converter={StaticResource BrushToColorConverter}}" StrokeDashArray="{Binding Path=Type, Converter={StaticResource BorderTypeToStrokeDashArrayConverter}}" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased" StrokeThickness="{Binding Type, Converter={StaticResource BorderTypeToThicknessConverter}}"/>
 
                         <Line Name="RightCl" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="1" HorizontalAlignment="Right" Width="15" Height="Auto" Margin="0,10,10,10" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Tag="{Binding ElementName=Right, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0" />
                         <Line Name="LeftCl" Stretch="Fill" Stroke="Black" X2="1" X1="0" Y1="0" Y2="1" HorizontalAlignment="Left" Width="15" Height="Auto" Margin="10,10,0,10" StrokeThickness="15" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Tag="{Binding ElementName=Left, Mode=OneWay}" MouseDown="Border_MouseDown" Opacity="0"/>
@@ -151,12 +178,12 @@
 
                     </Grid>
                 </Border>
-                <ToggleButton x:Name="button_T" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Tag="{Binding Style.BorderStyleTop}" Click="BorderVisibilityClick" IsChecked="{Binding Style.BorderStyleTop.Type, Converter={StaticResource borderVisibilityConverter}, Mode=TwoWay}"/>
-                <ToggleButton x:Name="button_B" HorizontalAlignment="Left" Margin="10,0,0,41" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Style.BorderStyleBottom.Type, Converter={StaticResource borderVisibilityConverter}, Mode=TwoWay}"/>
-                <ToggleButton x:Name="button_RL" HorizontalAlignment="Left" Margin="10,0,0,10" RenderTransformOrigin="0.487,1.269" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Style.BorderStyleDiagonalUpRightToBottomLeft.Type, Converter={StaticResource borderVisibilityConverter}, Mode=TwoWay}"/>
-                <ToggleButton x:Name="button_L" HorizontalAlignment="Left" Margin="41,0,0,10" RenderTransformOrigin="0.487,1.269" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Style.BorderStyleLeft.Type, Converter={StaticResource borderVisibilityConverter}, Mode=TwoWay}"/>
-                <ToggleButton x:Name="button_R" Margin="0,0,41,10" RenderTransformOrigin="0.487,1.269" Width="26" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Style.BorderStyleRight.Type, Converter={StaticResource borderVisibilityConverter}, Mode=TwoWay}"/>
-                <ToggleButton x:Name="button_LR" Margin="0,0,10,10" RenderTransformOrigin="0.487,1.269" Width="26" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" IsChecked="{Binding Style.BorderStyleDiagonalUpLeftToBottomRight.Type, Converter={StaticResource borderVisibilityConverter}, Mode=TwoWay}"/>
+                <ToggleButton x:Name="button_T" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Tag="{Binding ElementName=Top, Mode=OneWay}" Click="BorderVisibilityClick" IsChecked="{Binding Style.BorderStyleTop.Type, Converter={StaticResource borderVisibilityConverter}, Mode=OneWay}"/>
+                <ToggleButton x:Name="button_B" HorizontalAlignment="Left" Margin="10,0,0,41" Height="26" VerticalAlignment="Bottom" Tag="{Binding ElementName=Bottom, Mode=OneWay}" IsChecked="{Binding Style.BorderStyleBottom.Type, Converter={StaticResource borderVisibilityConverter}, Mode=OneWay}" Click="BorderVisibilityClick"/>
+                <ToggleButton x:Name="button_RL" HorizontalAlignment="Left" Margin="10,0,0,10" RenderTransformOrigin="0.487,1.269" Height="26" VerticalAlignment="Bottom" Tag="{Binding ElementName=RL, Mode=OneWay}" IsChecked="{Binding Style.BorderStyleDiagonalUpRightToBottomLeft.Type, Converter={StaticResource borderVisibilityConverter}, Mode=OneWay}" Click="BorderVisibilityClick"/>
+                <ToggleButton x:Name="button_L" HorizontalAlignment="Left" Margin="41,0,0,10" RenderTransformOrigin="0.487,1.269" Height="26" VerticalAlignment="Bottom" Tag="{Binding ElementName=Left, Mode=OneWay}" IsChecked="{Binding Style.BorderStyleLeft.Type, Converter={StaticResource borderVisibilityConverter}, Mode=OneWay}" Click="BorderVisibilityClick"/>
+                <ToggleButton x:Name="button_R" Margin="0,0,41,10" RenderTransformOrigin="0.487,1.269" Width="26" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" Tag="{Binding ElementName=Right, Mode=OneWay}" IsChecked="{Binding Style.BorderStyleRight.Type, Converter={StaticResource borderVisibilityConverter}, Mode=OneWay}" Click="BorderVisibilityClick"/>
+                <ToggleButton x:Name="button_LR" Margin="0,0,10,10" RenderTransformOrigin="0.487,1.269" Width="26" HorizontalAlignment="Right" Height="26" VerticalAlignment="Bottom" Tag="{Binding ElementName=LR, Mode=OneWay}" IsChecked="{Binding Style.BorderStyleDiagonalUpLeftToBottomRight.Type, Converter={StaticResource borderVisibilityConverter}, Mode=OneWay}" Click="BorderVisibilityClick"/>
             </Grid>
         </GroupBox>
     </Grid>

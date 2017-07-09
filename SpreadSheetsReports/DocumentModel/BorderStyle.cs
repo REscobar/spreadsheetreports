@@ -10,6 +10,7 @@ namespace SpreadSheetsReports.DocumentModel
         public BorderStyle()
         {
             this.Color = DocumentModel.Color.BlackColor;
+            this.Type = BorderType.None;
         }
 
         /// <summary>

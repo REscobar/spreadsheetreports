@@ -87,6 +87,8 @@
     <Compile Include="Cells\CellStyleWindow.xaml.cs">
       <DependentUpon>CellStyleWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BorderTypeToAngleConverter.cs" />
+    <Compile Include="Converters\BorderTypeToThicknessConverter.cs" />
     <Compile Include="Converters\NegativeValueConverter.cs" />
     <Compile Include="Converters\BorderTypeToStrokeDashArrayConverter.cs" />
     <Compile Include="Converters\BorderTypeToVisibilityConverter.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="Rows\RowEditor.xaml.cs">
       <DependentUpon>RowEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Sheets\ISheetConverter.cs" />
     <Compile Include="Sheets\SheetEditor.xaml.cs">
       <DependentUpon>SheetEditor.xaml</DependentUpon>
     </Compile>
@@ -262,6 +265,9 @@
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataBinders\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -2,7 +2,7 @@
 {
     using System.ComponentModel;
     using DocumentModel;
-    using SpreadSheetsReports.ReportModel;
+    using ReportModel;
 
     public class CellBinder : INotifyPropertyChanged
     {
