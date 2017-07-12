@@ -1,10 +1,11 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Cells
 {
     using System.ComponentModel;
+    using DataBinders;
     using DocumentModel;
     using ReportModel;
 
-    public class CellBinder : INotifyPropertyChanged
+    public class CellBinder : INotifyPropertyChanged, IBinder<ICellGenerator>
     {
         private CellStyle style;
         private string className;
@@ -120,5 +121,22 @@
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public ICellGenerator ConvertTo()
+        {
+            return new ReportModel.Cell
+            {
+                Style = this.Style,
+                Type = this.Type,
+                Value = this.Value
+            };
+        }
+
+        public void ConvertFrom(ICellGenerator obj)
+        {
+            var cell = obj as ReportModel.Cell;
+            this.Style = cell.Style;
+            this.Type = cell.Type;
+            this.Value = cell.Value;
+        }
     }
 }

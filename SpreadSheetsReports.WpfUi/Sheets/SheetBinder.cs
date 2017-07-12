@@ -3,8 +3,11 @@
     using System.ComponentModel;
     using SpreadSheetsReports.WpfUi.Rows;
     using Cells;
+    using DataBinders;
+    using ReportModel;
+    using System;
 
-    public class SheetBinder : INotifyPropertyChanged
+    public class SheetBinder : INotifyPropertyChanged, IBinder<Sheet>
     {
         private ReportSectionBinder content;
         private string name;
@@ -85,5 +88,23 @@
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public Sheet ConvertTo()
+        {
+            return new Sheet
+            {
+                Name = this.Name,
+                Content = this.Content.ConvertTo()
+            };
+        }
+
+        public void ConvertFrom(Sheet obj)
+        {
+            this.Name = obj.Name;
+            if (obj.Content != null)
+            {
+                this.Content = new ReportSectionBinder();
+                this.Content.ConvertFrom(obj.Content);
+            }
+        }
     }
 }

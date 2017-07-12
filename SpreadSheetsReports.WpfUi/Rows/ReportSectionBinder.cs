@@ -1,9 +1,10 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Rows
 {
     using System.ComponentModel;
+    using DataBinders;
     using ReportModel;
 
-    public class ReportSectionBinder : INotifyPropertyChanged
+    public class ReportSectionBinder : INotifyPropertyChanged, IBinder<IRowCollectionGenerator>
     {
         private ReportSection reportSection;
         private RowCollectionBinder header;
@@ -99,6 +100,38 @@
         private void NotifyPropertyChanged(string propertyName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public IRowCollectionGenerator ConvertTo()
+        {
+            return new ReportSection
+            {
+                Header = this.Header?.ConvertTo(),
+                SubSection = this.SubSection?.ConvertTo(),
+                Footer = this.Footer?.ConvertTo()
+            };
+        }
+
+        public void ConvertFrom(IRowCollectionGenerator obj)
+        {
+            var reportSection = obj as ReportSection;
+            if (reportSection?.Header != null)
+            {
+                this.Header = new RowCollectionBinder();
+                this.Header.ConvertFrom(reportSection.Header);
+            }
+
+            if (reportSection?.SubSection != null)
+            {
+                this.SubSection = new ReportSectionBinder();
+                this.SubSection.ConvertFrom(reportSection.SubSection);
+            }
+
+            if (reportSection?.Footer != null)
+            {
+                this.Footer = new RowCollectionBinder();
+                this.Footer.ConvertFrom(reportSection.Footer);
+            }
         }
     }
 }

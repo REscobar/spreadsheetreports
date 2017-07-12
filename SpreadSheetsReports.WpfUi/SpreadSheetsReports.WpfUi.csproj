@@ -87,6 +87,7 @@
     <Compile Include="Cells\CellStyleWindow.xaml.cs">
       <DependentUpon>CellStyleWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataBinders\IBinder.cs" />
     <Compile Include="Converters\BorderTypeToAngleConverter.cs" />
     <Compile Include="Converters\BorderTypeToThicknessConverter.cs" />
     <Compile Include="Converters\NegativeValueConverter.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Converters\UnderlineOrStriketroughConverter.cs" />
     <Compile Include="Converters\VerticalAlignmentConverter.cs" />
     <Compile Include="Converters\WrapTextConverter.cs" />
+    <Compile Include="DataBinders\ModelReader.cs" />
     <Compile Include="Documents\DocumentEditor.xaml.cs">
       <DependentUpon>DocumentEditor.xaml</DependentUpon>
     </Compile>
@@ -125,7 +127,7 @@
     <Compile Include="Rows\RowEditor.xaml.cs">
       <DependentUpon>RowEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sheets\ISheetConverter.cs" />
+    <Compile Include="Sheets\Column.cs" />
     <Compile Include="Sheets\SheetEditor.xaml.cs">
       <DependentUpon>SheetEditor.xaml</DependentUpon>
     </Compile>
@@ -134,7 +136,7 @@
       <DependentUpon>SheetCollectionEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sheets\SheetCollectionBinder.cs" />
-    <Compile Include="Utils\TrulyObservableCollection.cs" />
+    <Compile Include="Utility\GridHelpers.cs" />
     <Page Include="Cells\Border.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -266,9 +268,7 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataBinders\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

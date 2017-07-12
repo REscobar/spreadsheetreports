@@ -14,8 +14,6 @@
         public Document()
         {
             this.Sheets = Enumerable.Empty<Sheet>();
-            this.AreSummaryRowsBelowDetail = true;
-            this.AreSummaryColumnsRightOfDetail = true;
         }
 
         /// <summary>
@@ -26,16 +24,6 @@
         {
             this.Sheets = new List<Sheet>(sheets).AsReadOnly();
         }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the summary rows are below grouped rows.
-        /// </summary>
-        public bool AreSummaryRowsBelowDetail { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the summary columns are to the right of the grouped columns.
-        /// </summary>
-        public bool AreSummaryColumnsRightOfDetail { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="Document"/> sheets.

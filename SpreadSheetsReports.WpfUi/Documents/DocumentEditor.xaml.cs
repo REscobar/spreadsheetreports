@@ -21,7 +21,6 @@ namespace SpreadSheetsReports.WpfUi.Documents
     /// </summary>
     public partial class DocumentEditor : UserControl
     {
-
         public static DocumentEditor Current { get; set; }
 
         public DocumentEditor()

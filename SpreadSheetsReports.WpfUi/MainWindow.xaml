@@ -12,6 +12,6 @@
     </Window.DataContext>-->
 
     <Grid>
-        <document:DocumentEditor/>
+        <document:DocumentEditor x:Name="Editor"/>
     </Grid>
 </Window>

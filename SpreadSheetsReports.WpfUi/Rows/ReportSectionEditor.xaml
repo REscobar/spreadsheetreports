@@ -57,8 +57,6 @@
             <EventSetter Event="Button.Click" Handler="Button_Click"></EventSetter>
         </Style>
     </UserControl.Resources>
-
-
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Horizontal">
@@ -67,7 +65,6 @@
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsMouseOver, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}" >
                                 <Setter Property="Background" Value="Red" />
-
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

@@ -18,6 +18,9 @@
             foreach (var sheet in document.Sheets)
             {
                 ISheet documentSheet = sheet.Name != null ? this.workbook.CreateSheet(sheet.Name) : this.workbook.CreateSheet();
+                documentSheet.RowSumsBelow = sheet.AreSummaryRowsBelowDetail;
+                documentSheet.RowSumsRight = sheet.AreSummaryColumnsRightOfDetail;
+
                 int rowCounter = 0;
                 foreach (var row in sheet.Rows)
                 {
@@ -34,9 +37,12 @@
             }
 
             var path = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + ".xlsx");
-            Stream stream = File.Create(path);
 
-            this.workbook.Write(stream);
+            Stream stream;
+            using (stream = File.Create(path))
+            {
+                this.workbook.Write(stream);
+            }
 
             stream = new MemoryStream(File.ReadAllBytes(path));
 

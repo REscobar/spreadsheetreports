@@ -1,11 +1,13 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Sheets
 {
-    using Cells;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using System.Windows;
+    using System.Linq;
+    using DataBinders;
+    using ReportModel;
 
-    public class SheetCollectionBinder : INotifyPropertyChanged
+    public class SheetCollectionBinder : INotifyPropertyChanged, IBinder<IEnumerable<ISheetGenerator>>
     {
         private readonly ObservableCollection<SheetBinder> sheets;
         private long sheetNumber = 1;
@@ -41,6 +43,27 @@
         internal void RemoveSheet(SheetBinder sheet)
         {
             this.Sheets.Remove(sheet);
+        }
+
+        public IEnumerable<ISheetGenerator> ConvertTo()
+        {
+            return this.Sheets.Select(s => s.ConvertTo());
+        }
+
+        public void ConvertFrom(IEnumerable<ISheetGenerator> obj)
+        {
+            var sheets = obj == null ? Enumerable.Empty<Sheet>() : obj.OfType<Sheet>();
+
+            if (sheets != null)
+            {
+                foreach (var sheet in sheets)
+                {
+                    var sheetBinder = new SheetBinder();
+                    sheetBinder.ConvertFrom(sheet);
+
+                    this.Sheets.Add(sheetBinder);
+                }
+            }
         }
     }
 }
