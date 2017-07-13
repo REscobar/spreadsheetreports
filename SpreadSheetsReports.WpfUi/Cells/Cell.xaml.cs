@@ -11,9 +11,9 @@
     {
         public Cell()
         {
-            InitializeComponent();
-            this.MouseLeftButtonUp += Cell_MouseLeftButtonUp;
-            this.GotFocus += Cell_GotFocus;
+            this.InitializeComponent();
+            this.MouseLeftButtonUp += this.Cell_MouseLeftButtonUp;
+            this.GotFocus += this.Cell_GotFocus;
         }
 
         private void Cell_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)

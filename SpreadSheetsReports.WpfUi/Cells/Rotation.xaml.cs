@@ -14,7 +14,7 @@
     {
         public Rotation()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void IntegerUpDown_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -45,7 +45,7 @@
         {
             var s = sender as Shape;
             var value = Convert.ToInt32(s.Tag);
-            NUD.Value = value;
+            this.NUD.Value = value;
         }
 
         private void ContentControl_MouseMove(object sender, MouseEventArgs e)

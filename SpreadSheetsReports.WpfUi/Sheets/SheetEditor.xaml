@@ -11,6 +11,10 @@
     <UserControl.Resources>
         <ObjectDataProvider x:Key="columns" MethodName="GetDefaultColumns"
                           ObjectType="{x:Type local:Column}"/>
+        <ContextMenu x:Key="columMenu">
+            <MenuItem Header="Resize" Click="Resize_Click" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
+            </MenuItem>
+        </ContextMenu>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -20,27 +24,25 @@
         <ItemsControl Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Source={StaticResource columns}}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Grid Margin="0" helper:GridHelpers.ColumnCount="26" helper:GridHelpers.StarColumns="*" />
+                    <StackPanel Orientation="Horizontal"/>
+                    <!--<Grid Margin="0" helper:GridHelpers.ColumnCount="26" helper:GridHelpers.StarColumns="*" />-->
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
+            <!--<ItemsControl.ItemContainerStyle>
                 <Style>
                     <Setter Property="Grid.Column" Value="{Binding Index}" />
                 </Style>
-            </ItemsControl.ItemContainerStyle>
+            </ItemsControl.ItemContainerStyle>-->
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                    <Label Width="{Binding Path=Size}" Content="{Binding LetterIndex}" BorderBrush="Black" BorderThickness="1" Margin="0" HorizontalContentAlignment="Center" >
-                            <Label.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FFF6FFF8" Offset="0"/>
-                                    <GradientStop Color="White" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Label.Background>
-                        </Label>
-                        <GridSplitter HorizontalAlignment="Stretch" Height="30" Width="20"/>
-                    </StackPanel>
+                    <Label Width="{Binding Path=Size}" Content="{Binding LetterIndex}" BorderBrush="Black" BorderThickness="1" Margin="0" HorizontalContentAlignment="Center" ContextMenu="{StaticResource columMenu}" >
+                        <Label.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFF6FFF8" Offset="0"/>
+                                <GradientStop Color="White" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Label.Background>
+                    </Label>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

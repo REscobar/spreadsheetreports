@@ -21,7 +21,7 @@ namespace SpreadSheetsReports.WpfUi.Cells
     {
         public CellStyleWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void Window_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)

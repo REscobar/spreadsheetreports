@@ -128,6 +128,12 @@
       <DependentUpon>RowEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sheets\Column.cs" />
+    <Compile Include="Sheets\ColumnResizer.xaml.cs">
+      <DependentUpon>ColumnResizer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sheets\ColumnResizerWindow.xaml.cs">
+      <DependentUpon>ColumnResizerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Sheets\SheetEditor.xaml.cs">
       <DependentUpon>SheetEditor.xaml</DependentUpon>
     </Compile>
@@ -216,6 +222,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Rows\RowEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sheets\ColumnResizer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sheets\ColumnResizerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

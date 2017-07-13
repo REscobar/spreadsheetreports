@@ -9,7 +9,7 @@
     {
         public Font()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
       

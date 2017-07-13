@@ -12,7 +12,7 @@
     {
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             var binder = this.Editor.DataContext as SheetCollectionBinder;
             //binder.ConvertFrom(BorderType().Sheets);

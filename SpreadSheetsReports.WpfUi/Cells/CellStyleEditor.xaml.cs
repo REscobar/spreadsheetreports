@@ -9,7 +9,7 @@
     {
         public CellStyleEditor()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

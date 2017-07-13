@@ -12,7 +12,7 @@
     {
         public RowEditor()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

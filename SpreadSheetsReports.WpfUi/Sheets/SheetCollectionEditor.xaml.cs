@@ -12,7 +12,7 @@
     {
         public SheetCollectionEditor()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             var view = CollectionViewSource.GetDefaultView(this.SheetsTabPanel.Items);
             view.CollectionChanged += (o, e) =>
             {
@@ -26,7 +26,7 @@
 
         private void SelectTab(int index)
         {
-            Dispatcher.BeginInvoke((Action)(() => this.SheetsTabPanel.SelectedIndex = index));
+            this.Dispatcher.BeginInvoke((Action)(() => this.SheetsTabPanel.SelectedIndex = index));
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

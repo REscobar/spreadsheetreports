@@ -12,6 +12,8 @@
         private object value;
         private CellType type;
 
+        private int index;
+
         public CellBinder()
         {
             this.Value = "Sample";
@@ -105,6 +107,25 @@
 
                 this.type = value;
                 this.NotifyPropertyChanged(nameof(this.Type));
+            }
+        }
+
+        public int Index
+        {
+            get
+            {
+                return this.index;
+            }
+
+            set
+            {
+                if (this.index == value)
+                {
+                    return;
+                }
+
+                this.index = value;
+                this.NotifyPropertyChanged(nameof(this.Index));
             }
         }
 

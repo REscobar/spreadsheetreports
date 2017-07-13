@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SpreadSheetsReports.WpfUi.Rows
+namespace SpreadSheetsReports.WpfUi.Sheets
 {
     /// <summary>
-    /// Interaction logic for NewRow.xaml
+    /// Interaction logic for ColumnResizer.xaml
     /// </summary>
-    public partial class NewRow : UserControl
+    public partial class ColumnResizer : UserControl
     {
-        public NewRow()
+        public ColumnResizer()
         {
             this.InitializeComponent();
         }

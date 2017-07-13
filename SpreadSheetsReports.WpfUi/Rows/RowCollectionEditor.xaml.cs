@@ -9,7 +9,7 @@
     {
         public RowCollectionEditor()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void NewRow_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
