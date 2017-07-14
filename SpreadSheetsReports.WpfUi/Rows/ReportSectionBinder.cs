@@ -1,8 +1,10 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Rows
 {
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using DataBinders;
     using ReportModel;
+    using Sheets;
 
     public class ReportSectionBinder : INotifyPropertyChanged, IBinder<IRowCollectionGenerator>
     {
@@ -10,11 +12,18 @@
         private RowCollectionBinder header;
         private ReportSectionBinder subSection;
         private RowCollectionBinder footer;
+        private readonly ObservableCollection<Column> columns;
 
         public ReportSectionBinder()
         {
-            this.Header = new RowCollectionBinder();
-            this.Footer = new RowCollectionBinder();
+        }
+
+        public ReportSectionBinder(ObservableCollection<Column> columns)
+        {
+            this.columns = columns;
+
+            this.Header = new RowCollectionBinder(this.Columns);
+            this.Footer = new RowCollectionBinder(this.Columns);
         }
 
         /// <inheritdoc/>
@@ -97,6 +106,14 @@
             }
         }
 
+        public ObservableCollection<Column> Columns
+        {
+            get
+            {
+                return columns;
+            }
+        }
+
         private void NotifyPropertyChanged(string propertyName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -117,19 +134,19 @@
             var reportSection = obj as ReportSection;
             if (reportSection?.Header != null)
             {
-                this.Header = new RowCollectionBinder();
+                this.Header = new RowCollectionBinder(this.columns);
                 this.Header.ConvertFrom(reportSection.Header);
             }
 
             if (reportSection?.SubSection != null)
             {
-                this.SubSection = new ReportSectionBinder();
+                this.SubSection = new ReportSectionBinder(this.columns);
                 this.SubSection.ConvertFrom(reportSection.SubSection);
             }
 
             if (reportSection?.Footer != null)
             {
-                this.Footer = new RowCollectionBinder();
+                this.Footer = new RowCollectionBinder(this.columns);
                 this.Footer.ConvertFrom(reportSection.Footer);
             }
         }

@@ -5,11 +5,14 @@
     using System.Linq;
     using DataBinders;
     using ReportModel;
+    using Sheets;
 
     public class RowCollectionBinder : INotifyPropertyChanged, IBinder<IRowCollectionGenerator>
     {
-        public RowCollectionBinder()
+
+        public RowCollectionBinder(ObservableCollection<Column> columns)
         {
+            this.columns = columns;
             this.rows = new ObservableCollection<RowBinder>();
             this.AddNewRow();
             this.AddNewRow();
@@ -18,12 +21,21 @@
         public event PropertyChangedEventHandler PropertyChanged;
 
         private readonly ObservableCollection<RowBinder> rows;
+        private readonly ObservableCollection<Column> columns;
 
         public ObservableCollection<RowBinder> Rows
         {
             get
             {
                 return this.rows;
+            }
+        }
+
+        public ObservableCollection<Column> Columns
+        {
+            get
+            {
+                return columns;
             }
         }
 
@@ -34,7 +46,7 @@
 
         public void AddNewRow()
         {
-            this.Rows.Add(new RowBinder());
+            this.Rows.Add(new RowBinder(this.columns));
         }
 
         public IRowCollectionGenerator ConvertTo()
@@ -54,7 +66,7 @@
             {
                 foreach (var row in rowCollection.Rows)
                 {
-                    var rowBinder = new RowBinder();
+                    var rowBinder = new RowBinder(this.columns);
                     rowBinder.ConvertFrom(row);
                     this.Rows.Add(rowBinder);
                 }

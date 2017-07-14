@@ -6,27 +6,43 @@
     using Cells;
     using DataBinders;
     using ReportModel;
+    using Sheets;
 
     public class RowBinder : INotifyPropertyChanged, IBinder<IRowGenerator>
     {
         private readonly ObservableCollection<CellBinder> cells;
+        private readonly ObservableCollection<Column> columns;
+        private int cellIndex = 0;
 
-        public RowBinder()
+        public RowBinder(ObservableCollection<Column> columns)
         {
+            this.columns = columns;
             this.cells = new ObservableCollection<CellBinder>();
-            this.cells.Add(new CellBinder());
-            this.cells.Add(new CellBinder());
-            this.cells.Add(new CellBinder());
-            this.cells.Add(new CellBinder());
+            this.AddCell();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public void AddCell()
+        {
+            var cell = new CellBinder(this.cellIndex++);
+            cell.AssignColumn(this.columns[cell.Index]);
+            this.cells.Add(cell);
+        }
 
         public ObservableCollection<CellBinder> Cells
         {
             get
             {
                 return this.cells;
+            }
+        }
+
+        public ObservableCollection<Column> Columns
+        {
+            get
+            {
+                return columns;
             }
         }
 

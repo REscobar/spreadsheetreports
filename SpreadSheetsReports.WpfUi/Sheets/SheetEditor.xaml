@@ -9,8 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <ObjectDataProvider x:Key="columns" MethodName="GetDefaultColumns"
-                          ObjectType="{x:Type local:Column}"/>
         <ContextMenu x:Key="columMenu">
             <MenuItem Header="Resize" Click="Resize_Click" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
             </MenuItem>
@@ -21,7 +19,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ItemsControl Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Source={StaticResource columns}}">
+        <ItemsControl Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Path=Columns}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"/>

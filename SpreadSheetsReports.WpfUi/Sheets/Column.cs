@@ -89,7 +89,7 @@
 
         static string ColumnIndexToColumnLetter(int colIndex)
         {
-            int div = colIndex;
+            int div = colIndex + 1;
             string colLetter = string.Empty;
             int mod = 0;
 

@@ -17,7 +17,7 @@
         {
             var binder = this.DataContext as ReportSectionBinder;
 
-            binder.SubSection = new ReportSectionBinder();
+            binder.SubSection = new ReportSectionBinder(binder.Columns);
         }
     }
 }

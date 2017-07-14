@@ -7,7 +7,8 @@
              xmlns:cells="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
              xmlns:converters="clr-namespace:SpreadSheetsReports.WpfUi.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance Type=local:RowBinder,  IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <converters:DebuggerConverter x:Key="Debugger"/>
     </UserControl.Resources>
@@ -19,7 +20,7 @@
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <cells:Cell Margin="0" Width="40" Padding="0,0,0,0"/>
+                <cells:Cell Margin="0" Width="{Binding Width}" Padding="0,0,0,0"/>
                 
             </DataTemplate>
         </ItemsControl.ItemTemplate>

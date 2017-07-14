@@ -4,6 +4,7 @@
     using DataBinders;
     using DocumentModel;
     using ReportModel;
+    using Sheets;
 
     public class CellBinder : INotifyPropertyChanged, IBinder<ICellGenerator>
     {
@@ -13,10 +14,17 @@
         private CellType type;
 
         private int index;
+        private int width;
 
         public CellBinder()
         {
             this.Value = "Sample";
+        }
+
+        public CellBinder(int index)
+            : this()
+        {
+            this.index = index;
         }
 
         /// <inheritdoc/>
@@ -127,6 +135,38 @@
                 this.index = value;
                 this.NotifyPropertyChanged(nameof(this.Index));
             }
+        }
+
+        public int Width
+        {
+            get
+            {
+                return this.width;
+            }
+
+            set
+            {
+                if (this.width == value)
+                {
+                    return;
+                }
+
+                this.width = value;
+
+                this.NotifyPropertyChanged(nameof(this.Width));
+            }
+        }
+
+        public void AssignColumn(Column column)
+        {
+            this.Width = column.Size;
+            column.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(Column.Size))
+                {
+                    this.Width = column.Size;
+                }
+            };
         }
 
         public void EnsureStyleIsCreated()

@@ -6,12 +6,15 @@
     using DataBinders;
     using ReportModel;
     using System;
+    using System.Collections.ObjectModel;
 
     public class SheetBinder : INotifyPropertyChanged, IBinder<Sheet>
     {
         private ReportSectionBinder content;
         private string name;
         private CellBinder current;
+
+        private readonly ObservableCollection<Column> columns;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -22,7 +25,8 @@
 
         public SheetBinder(long sheetNumber)
         {
-            this.Content = new ReportSectionBinder();
+            this.columns = new ObservableCollection<Column>(Column.GetDefaultColumns());
+            this.Content = new ReportSectionBinder(this.Columns);
             this.Name = $"Sheet{sheetNumber}";
         }
 
@@ -83,6 +87,14 @@
             }
         }
 
+        public ObservableCollection<Column> Columns
+        {
+            get
+            {
+                return columns;
+            }
+        }
+
         private void NotifyPropertyChanged(string propertyName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -102,7 +114,7 @@
             this.Name = obj.Name;
             if (obj.Content != null)
             {
-                this.Content = new ReportSectionBinder();
+                this.Content = new ReportSectionBinder(this.Columns);
                 this.Content.ConvertFrom(obj.Content);
             }
         }
