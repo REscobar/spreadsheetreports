@@ -1,5 +1,6 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Rows
 {
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
@@ -12,22 +13,56 @@
     {
         private readonly ObservableCollection<CellBinder> cells;
         private readonly ObservableCollection<Column> columns;
+        private readonly Dictionary<Column, CellBinder> cellMapper = new Dictionary<Column, CellBinder>();
         private int cellIndex = 0;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public RowBinder(ObservableCollection<Column> columns)
         {
             this.columns = columns;
             this.cells = new ObservableCollection<CellBinder>();
-            this.AddCell();
+            foreach (var column in columns)
+            {
+                this.AddCell(column);
+            }
+            this.Columns.CollectionChanged += this.Columns_CollectionChanged;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void AddCell()
+        private void Columns_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            var cell = new CellBinder(this.cellIndex++);
-            cell.AssignColumn(this.columns[cell.Index]);
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                foreach (Column column in e.NewItems)
+                {
+                    this.AddCell(column);
+                }
+            }
+            else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+            {
+                foreach (Column column in e.OldItems)
+                {
+                    this.RemoveCell(column);
+                }
+            }
+        }
+
+        private void RemoveCell(Column column)
+        {
+            CellBinder cell;
+            this.cellMapper.TryGetValue(column, out cell);
+            if (cell != null)
+            {
+                this.cellMapper.Remove(column);
+                this.cells.Remove(cell);
+            }
+        }
+
+        public void AddCell(Column column)
+        {
+            var cell = new CellBinder(this.cellIndex++, column);
             this.cells.Add(cell);
+            this.cellMapper[column] = cell;
         }
 
         public ObservableCollection<CellBinder> Cells
@@ -42,7 +77,7 @@
         {
             get
             {
-                return columns;
+                return this.columns;
             }
         }
 

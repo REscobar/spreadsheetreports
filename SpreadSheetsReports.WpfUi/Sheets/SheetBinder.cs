@@ -28,6 +28,15 @@
             this.columns = new ObservableCollection<Column>(Column.GetDefaultColumns());
             this.Content = new ReportSectionBinder(this.Columns);
             this.Name = $"Sheet{sheetNumber}";
+            this.columns.CollectionChanged += this.Columns_CollectionChanged;
+        }
+
+        private void Columns_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            for (int i = 0; i < this.Columns.Count; i++)
+            {
+                this.Columns[i].Index = i;
+            }
         }
 
         public ReportSectionBinder Content
@@ -91,7 +100,7 @@
         {
             get
             {
-                return columns;
+                return this.columns;
             }
         }
 

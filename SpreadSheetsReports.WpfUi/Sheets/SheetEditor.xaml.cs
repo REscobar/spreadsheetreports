@@ -1,5 +1,6 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Sheets
 {
+    using System.Collections.ObjectModel;
     using System.Windows;
     using System.Windows.Controls;
 
@@ -13,12 +14,10 @@
             this.InitializeComponent();
         }
 
-        private void Resize_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var item = sender as FrameworkElement;
-            var resizer = new ColumnResizerWindow();
-            resizer.DataContext = item.DataContext;
-            resizer.ShowDialog();
+            var columns = ((sender as FrameworkElement).Tag as ObservableCollection<Column>);
+            columns.Add(new Column());
         }
     }
 }

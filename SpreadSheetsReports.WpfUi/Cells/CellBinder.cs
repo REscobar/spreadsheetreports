@@ -21,10 +21,11 @@
             this.Value = "Sample";
         }
 
-        public CellBinder(int index)
+        public CellBinder(int index, Column column)
             : this()
         {
             this.index = index;
+            this.AssignColumn(column);
         }
 
         /// <inheritdoc/>
@@ -157,7 +158,7 @@
             }
         }
 
-        public void AssignColumn(Column column)
+        private void AssignColumn(Column column)
         {
             this.Width = column.Size;
             column.PropertyChanged += (s, e) =>

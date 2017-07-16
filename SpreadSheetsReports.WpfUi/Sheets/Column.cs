@@ -10,6 +10,11 @@
         private int index;
         private int size;
 
+        public Column()
+        {
+            this.Size = 40;
+        }
+
         public int Index
         {
             get

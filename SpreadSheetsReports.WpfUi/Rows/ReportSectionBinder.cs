@@ -110,7 +110,7 @@
         {
             get
             {
-                return columns;
+                return this.columns;
             }
         }
 
