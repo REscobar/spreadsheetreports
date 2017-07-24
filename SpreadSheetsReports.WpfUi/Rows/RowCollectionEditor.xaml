@@ -35,7 +35,7 @@
                         </local:NewRow.RenderTransform>
                     </local:NewRow>-->
 
-                    <local:RowEditor Margin="0,0" x:Name="Editor" Grid.ZIndex="0"/>
+                    <local:RowEditor Margin="0,0" x:Name="Editor" Grid.ZIndex="0" Tag="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RowCollectionEditor}}}"/>
                     <!--<Grid Height="9" Margin="0" Width="Auto">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="9"/>

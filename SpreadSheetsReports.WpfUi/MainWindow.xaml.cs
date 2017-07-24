@@ -1,9 +1,9 @@
 ﻿namespace SpreadSheetsReports.WpfUi
 {
-    using ReportModel;
-    using Sheets;
     using System.Collections.Generic;
     using System.Windows;
+    using ReportModel;
+    using Sheets;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml

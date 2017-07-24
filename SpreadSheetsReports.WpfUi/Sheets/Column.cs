@@ -12,7 +12,7 @@
 
         public Column()
         {
-            this.Size = 40;
+            this.Size = 50;
         }
 
         public int Index
@@ -86,8 +86,7 @@
             {
                 yield return new Column
                 {
-                    Index = i,
-                    Size = 40
+                    Index = i
                 };
             }
         }

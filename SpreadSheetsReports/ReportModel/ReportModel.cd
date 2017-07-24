@@ -12,12 +12,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="SpreadSheetsReports.ReportModel.DataSourceBoundReportControl" HideInheritanceLine="true">
-    <Position X="26.25" Y="10.75" Width="2.5" />
-    <AssociationLine Name="DataSource" Type="SpreadSheetsReports.ReportModel.DataSourceBrowser">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.024" Y="0.413" />
-      </MemberNameLabel>
-    </AssociationLine>
+    <Position X="22.75" Y="13.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ReportModel\DataSourceBoundReportControl.cs</FileName>
@@ -28,7 +23,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="SpreadSheetsReports.ReportModel.DataSourceBrowser">
-    <Position X="26.5" Y="13.25" Width="1.75" />
+    <Position X="19.75" Y="13.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAQAAACgAAAAAAAAAAAAIBAAAAAAAAA=</HashCode>
       <FileName>ReportModel\DataSourceBrowser.cs</FileName>
@@ -38,12 +33,9 @@
   <Class Name="SpreadSheetsReports.ReportModel.ExpressionBinding">
     <Position X="29.25" Y="14" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAIACAAAAAAgAAAAAAAAAAAAAAAAAQAAAAAABAAAA=</HashCode>
+      <HashCode>AAAAIACAAAAAAgAAAAAAAAAAAAAAAAAQAAAAAgBAAAA=</HashCode>
       <FileName>ReportModel\ExpressionBinding.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="DataSource" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="SpreadSheetsReports.ReportModel.ExpressionSource">
     <Position X="40" Y="8.25" Width="1.5" />
@@ -53,7 +45,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SpreadSheetsReports.ReportModel.ObjectDataSourceBrowser">
-    <Position X="26.25" Y="16.5" Width="2.25" />
+    <Position X="19.5" Y="16.25" Width="2.25" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
@@ -67,23 +59,10 @@
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
-    <AssociationLine Name="DataSource" Type="SpreadSheetsReports.ReportModel.DataSourceBrowser" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="31.75" Y="16.312" />
-        <Point X="27.812" Y="16.312" />
-        <Point X="27.812" Y="15.834" />
-      </Path>
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-1.096" Y="0.171" />
-      </MemberNameLabel>
-    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAIACAAAAAAgAoAAAAAAAAAAAAAAAQAAAAAABAEAA=</HashCode>
       <FileName>ReportModel\PropertyBinding.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="DataSource" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="SpreadSheetsReports.ReportModel.PropertyBindingBase">
     <Position X="30.25" Y="10.5" Width="2.5" />
@@ -91,9 +70,6 @@
       <HashCode>AAAAIACAAAAAAgAAAAAAAAAAAAAAAAAQAAAAAABAAAA=</HashCode>
       <FileName>ReportModel\PropertyBindingBase.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="DataSource" />
-    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="SpreadSheetsReports.ReportModel.PropertyBindingCollection" Collapsed="true" BaseTypeListCollapsed="true">
@@ -147,8 +123,8 @@
       <FileName>ReportModel\ReportSection.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Footer" />
       <Property Name="Header" />
+      <Property Name="Footer" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
@@ -211,7 +187,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="SpreadSheetsReports.ReportModel.IDataSourceBound">
-    <Position X="23.5" Y="13.25" Width="1.75" />
+    <Position X="16.75" Y="13.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ReportModel\IDataSourceBound.cs</FileName>
@@ -221,7 +197,7 @@
     </ShowAsAssociation>
   </Interface>
   <Interface Name="SpreadSheetsReports.ReportModel.IDataSourceBrowser">
-    <Position X="44" Y="8.75" Width="1.5" />
+    <Position X="19.75" Y="11" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAAAAACAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>ReportModel\IDataSourceBrowser.cs</FileName>
@@ -242,7 +218,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="SpreadSheetsReports.ReportModel.IPropertyBinding">
-    <Position X="23.5" Y="14.5" Width="2" />
+    <Position X="16.75" Y="14.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAQAAAAAABAAAA=</HashCode>
       <FileName>ReportModel\IPropertyBinding.cs</FileName>

@@ -6,10 +6,18 @@
     using DataBinders;
     using ReportModel;
     using Sheets;
+    using DataSource;
 
-    public class RowCollectionBinder : INotifyPropertyChanged, IBinder<IRowCollectionGenerator>
+    public class RowCollectionBinder : INotifyPropertyChanged, IBinder<IRowCollectionGenerator>, IDataSourceBindable
     {
 
+        private readonly ObservableCollection<RowBinder> rows;
+        private readonly ObservableCollection<Column> columns;
+
+        private string dataMember;
+        private ObservableCollection<DataSourceBinding> bindings;
+
+        public event PropertyChangedEventHandler PropertyChanged;
         public RowCollectionBinder(ObservableCollection<Column> columns)
         {
             this.columns = columns;
@@ -18,10 +26,11 @@
             this.AddNewRow();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        private readonly ObservableCollection<RowBinder> rows;
-        private readonly ObservableCollection<Column> columns;
+        public void Remove(RowBinder rowBinder)
+        {
+            this.Rows.Remove(rowBinder);
+        }
 
         public ObservableCollection<RowBinder> Rows
         {
@@ -37,6 +46,58 @@
             {
                 return this.columns;
             }
+        }
+
+        public string DataMember
+        {
+            get
+            {
+                return this.dataMember;
+            }
+
+            set
+            {
+                if (this.dataMember == value)
+                {
+                    return;
+                }
+
+                this.dataMember = value;
+
+                this.NotifyPropertyChanged(nameof(this.DataMember));
+            }
+        }
+
+        public ObservableCollection<DataSourceBinding> Bindings
+        {
+            get
+            {
+                return this.bindings;
+            }
+
+            set
+            {
+                if (this.bindings == value)
+                {
+                    return;
+                }
+
+                this.bindings = value;
+
+                this.NotifyPropertyChanged(nameof(this.Bindings));
+            }
+        }
+
+        public void AddNewBefore(RowBinder rowBinder)
+        {
+            var newRow = new RowBinder(this.columns);
+            this.Rows.Insert(this.Rows.IndexOf(rowBinder), newRow);
+        }
+
+        public void AddNewAfter(RowBinder rowBinder)
+        {
+            var newRow = new RowBinder(this.columns);
+            this.Rows.Insert(this.Rows.IndexOf(rowBinder) + 1, newRow);
         }
 
         private void NotifyPropertyChanged(string propertyName)

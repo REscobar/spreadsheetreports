@@ -25,7 +25,7 @@
         <SolidColorBrush x:Key="LineBrush" Color="{Binding SelectedColor, Mode=OneWay, Source={x:Reference Name=colorPicker}}" />
         <converters:BorderTypeToVisibilityConverter x:Key="borderVisibilityConverter"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="White">
         <GroupBox x:Name="groupBox" Header="Line" Margin="10,10,0,17" HorizontalAlignment="Left" Width="185">
             <Grid Margin="10,10,10,-12">
                 <Label x:Name="label" Content="Style:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -41,7 +41,7 @@
                         </Style>
                         <Style TargetType="{x:Type Line}">
                             <!--<Setter Property="Stroke" Value="{DynamicResource LineBrush}" />-->
-                            <Setter Property="Stroke" Value="{DynamicResource LineBrush}" />
+                            <Setter Property="Stroke" Value="Black" />
                             <Setter Property="SnapsToDevicePixels" Value="True" />
                             <Setter Property="RenderOptions.EdgeMode" Value="Aliased" />
                         </Style>

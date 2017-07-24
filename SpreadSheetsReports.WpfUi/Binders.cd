@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SpreadSheetsReports.WpfUi.Cells.CellBinder">
+    <Position X="8.25" Y="9.25" Width="2" />
+    <Members>
+      <Field Name="className" Hidden="true" />
+      <Field Name="index" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Field Name="style" Hidden="true" />
+      <Field Name="type" Hidden="true" />
+      <Field Name="value" Hidden="true" />
+      <Field Name="width" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAICAAIAAQAAAAEAAgAQFACAABQEgAAABAAA=</HashCode>
+      <FileName>Cells\CellBinder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SpreadSheetsReports.WpfUi.Rows.ReportSectionBinder">
+    <Position X="14" Y="12.75" Width="2.75" />
+    <Members>
+      <Field Name="columns" Hidden="true" />
+      <Field Name="footer" Hidden="true" />
+      <Field Name="header" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Field Name="reportSection" Hidden="true" />
+      <Field Name="subSection" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="SubSection" Type="SpreadSheetsReports.WpfUi.Rows.ReportSectionBinder" ManuallyRouted="true">
+      <Path>
+        <Point X="14.968" Y="15.074" />
+        <Point X="14.968" Y="15.324" />
+        <Point X="15.801" Y="15.324" />
+        <Point X="15.801" Y="15.074" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>BAgAgAQIAACAAIAAAAAAAAAAgAAAACAACAAAAIgAAAA=</HashCode>
+      <FileName>Rows\ReportSectionBinder.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Footer" />
+      <Property Name="Header" />
+      <Property Name="SubSection" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SpreadSheetsReports.WpfUi.Rows.RowCollectionBinder">
+    <Position X="11" Y="13.5" Width="2" />
+    <Members>
+      <Field Name="columns" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Field Name="rows" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>BAAAgAAAAAAAAMAAAIBABAAAgAAAACAACAAABAgAAAA=</HashCode>
+      <FileName>Rows\RowCollectionBinder.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Columns" />
+      <Property Name="Rows" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SpreadSheetsReports.WpfUi.Sheets.Column">
+    <Position X="14" Y="16" Width="2.25" />
+    <Members>
+      <Field Name="index" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Field Name="size" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAgIAAAIABAAAAgAAAAAAAAIEAAEABAAA=</HashCode>
+      <FileName>Sheets\Column.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SpreadSheetsReports.WpfUi.Sheets.SheetBinder">
+    <Position X="16" Y="9.5" Width="2.25" />
+    <Members>
+      <Field Name="columns" Hidden="true" />
+      <Field Name="content" Hidden="true" />
+      <Field Name="current" Hidden="true" />
+      <Field Name="name" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+    </Members>
+    <AssociationLine Name="Content" Type="SpreadSheetsReports.WpfUi.Rows.ReportSectionBinder" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="17.5" Y="12.017" />
+        <Point X="17.5" Y="13.812" />
+        <Point X="16.75" Y="13.812" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.963" Y="0.135" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACgAAAAgAAAIAAAAAAAAQAgAAEQCAgCAAAAAAAAAA=</HashCode>
+      <FileName>Sheets\SheetBinder.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Content" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SpreadSheetsReports.WpfUi.Sheets.SheetCollectionBinder">
+    <Position X="13" Y="9.25" Width="2" />
+    <Members>
+      <Event Name="PropertyChanged" Hidden="true" />
+      <Field Name="sheetNumber" Hidden="true" />
+      <Field Name="sheets" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AgAAgAAAAQABAIEgAAAAAAAAgAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sheets\SheetCollectionBinder.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Sheets" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SpreadSheetsReports.WpfUi.Rows.RowBinder">
+    <Position X="8.25" Y="13.75" Width="1.5" />
+    <Members>
+      <Field Name="cellIndex" Hidden="true" />
+      <Field Name="cellMapper" Hidden="true" />
+      <Field Name="cells" Hidden="true" />
+      <Field Name="columns" Hidden="true" />
+      <Event Name="PropertyChanged" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAQAAABAAAgAIAgAACgAAAACAgCAAAAAAAAAA=</HashCode>
+      <FileName>Rows\RowBinder.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Cells" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="SpreadSheetsReports.WpfUi.DataBinders.IBinder&lt;T&gt;">
+    <Position X="10.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataBinders\IBinder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi"
         xmlns:document="clr-namespace:SpreadSheetsReports.WpfUi.Documents"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="525">
+        Title="SpreadSheets Report Designer" Height="450" Width="525">
     <!--<Window.DataContext>
         <cells:CellBinder/>
     </Window.DataContext>-->

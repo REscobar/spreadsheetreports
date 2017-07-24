@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
-
-namespace SpreadSheetsReports.ReportModel
+﻿namespace SpreadSheetsReports.ReportModel
 {
+    using System.Runtime.Serialization;
+
     [DataContract]
     public abstract class DataSourceBoundReportControl : ReportControl, IDataSourceBound
     {

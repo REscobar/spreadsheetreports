@@ -1,8 +1,8 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Cells
 {
-    using Documents;
     using System.Windows;
     using System.Windows.Controls;
+    using Documents;
 
     /// <summary>
     /// Interaction logic for Cell.xaml

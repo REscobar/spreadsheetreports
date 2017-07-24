@@ -1,20 +1,23 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Sheets
 {
-    using System.ComponentModel;
-    using SpreadSheetsReports.WpfUi.Rows;
-    using Cells;
-    using DataBinders;
-    using ReportModel;
     using System;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using Cells;
+    using DataBinders;
+    using DataSource;
+    using ReportModel;
+    using Rows;
 
-    public class SheetBinder : INotifyPropertyChanged, IBinder<Sheet>
+    public class SheetBinder : INotifyPropertyChanged, IBinder<Sheet>, IDataSourceBindable
     {
+
+        private readonly ObservableCollection<Column> columns;
         private ReportSectionBinder content;
         private string name;
         private CellBinder current;
-
-        private readonly ObservableCollection<Column> columns;
+        private string dataMember;
+        private ObservableCollection<DataSourceBinding> bindings;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -101,6 +104,46 @@
             get
             {
                 return this.columns;
+            }
+        }
+
+        public string DataMember
+        {
+            get
+            {
+                return this.dataMember;
+            }
+
+            set
+            {
+                if (this.dataMember == value)
+                {
+                    return;
+                }
+
+                this.dataMember = value;
+
+                this.NotifyPropertyChanged(nameof(this.DataMember));
+            }
+        }
+
+        public ObservableCollection<DataSourceBinding> Bindings
+        {
+            get
+            {
+                return this.bindings;
+            }
+
+            set
+            {
+                if (this.bindings == value)
+                {
+                    return;
+                }
+
+                this.bindings = value;
+
+                this.NotifyPropertyChanged(nameof(this.Bindings));
             }
         }
 

@@ -19,7 +19,6 @@
             <Label Content="FX"/>
             <TextBox Margin="0" DataContext="{Binding CurrentCell, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:DocumentEditor}}}" Text="{Binding Value}" >
             </TextBox>
-
         </DockPanel>
         <sheets:SheetCollectionEditor Grid.Row="1"/>
 

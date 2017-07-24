@@ -15,7 +15,7 @@
                     <MenuItem.Header>
                         <StackPanel>
                             <Slider Width="150" Value="{Binding Path=Size}" Minimum="1" Maximum="500" SmallChange="1" ></Slider>
-                            <xctk:IntegerUpDown Width="150" Value="{Binding Path=Size}" />
+                            <!--<xctk:IntegerUpDown Width="150" Value="{Binding Path=Size}" />-->
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -30,6 +30,14 @@
         <StackPanel Orientation="Horizontal">
             <rows:GutterFiller></rows:GutterFiller>
             <rows:GutterFiller DataContext="{Binding Content}"/>
+            <Label BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1">
+                <Label.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="#f9f9f9"/>
+                        <GradientStop Color="#e6e3e3" Offset="1"/>
+                    </LinearGradientBrush>
+                </Label.Background>
+            </Label>
             <ItemsControl Grid.Row="0" ItemsSource="{Binding Mode=OneWay, Path=Columns}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

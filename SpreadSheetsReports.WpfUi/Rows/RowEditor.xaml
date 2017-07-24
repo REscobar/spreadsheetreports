@@ -10,19 +10,36 @@
              d:DesignHeight="300" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=local:RowBinder,  IsDesignTimeCreatable=True}">
     <UserControl.Resources>
-        <converters:DebuggerConverter x:Key="Debugger"/>
+        <ContextMenu x:Key="rowMenu">
+            <MenuItem Header="Remove" Click="RemoveClick" Tag="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" >
+            </MenuItem>
+            <MenuItem Header="Add before" Click="AddBeforeClick" Tag="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"></MenuItem>
+            <MenuItem Header="Add after" Click="AddAfterClick"  Tag="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
+        </ContextMenu>
     </UserControl.Resources>
-    <ItemsControl ItemsSource="{Binding Cells}" BorderBrush="{x:Null}" Background="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Auto">
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <StackPanel Orientation="Horizontal"/>
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <cells:Cell Margin="0" Width="{Binding Width}" Padding="0,0,0,0"/>
-                
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>
+    <StackPanel Orientation="Horizontal">
+        <Label BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1" ContextMenu="{StaticResource rowMenu}" Tag="{Binding Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RowEditor}}}">
+            <Label.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#f9f9f9"/>
+                    <GradientStop Color="#e6e3e3" Offset="0.5"/>
+                    <GradientStop Color="#f9f9f9" Offset="1"/>
+                </LinearGradientBrush>
+            </Label.Background>
+        </Label>
+        <ItemsControl ItemsSource="{Binding Cells}" BorderBrush="{x:Null}" Background="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel IsItemsHost="True" Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <cells:Cell Margin="0" Width="{Binding Width}" Padding="0,0,0,0"/>
+
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+    </StackPanel>
 </UserControl>

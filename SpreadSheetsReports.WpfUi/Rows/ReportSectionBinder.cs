@@ -3,16 +3,19 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using DataBinders;
+    using DataSource;
     using ReportModel;
     using Sheets;
 
-    public class ReportSectionBinder : INotifyPropertyChanged, IBinder<IRowCollectionGenerator>
+    public class ReportSectionBinder : INotifyPropertyChanged, IBinder<IRowCollectionGenerator>, IDataSourceBindable
     {
+        private readonly ObservableCollection<Column> columns;
         private ReportSection reportSection;
         private RowCollectionBinder header;
         private ReportSectionBinder subSection;
         private RowCollectionBinder footer;
-        private readonly ObservableCollection<Column> columns;
+        private string dataMember;
+        private ObservableCollection<DataSourceBinding> bindings;
 
         public ReportSectionBinder()
         {
@@ -111,6 +114,46 @@
             get
             {
                 return this.columns;
+            }
+        }
+
+        public string DataMember
+        {
+            get
+            {
+                return this.dataMember;
+            }
+
+            set
+            {
+                if (this.dataMember == value)
+                {
+                    return;
+                }
+
+                this.dataMember = value;
+
+                this.NotifyPropertyChanged(nameof(this.DataMember));
+            }
+        }
+
+        public ObservableCollection<DataSourceBinding> Bindings
+        {
+            get
+            {
+                return this.bindings;
+            }
+
+            set
+            {
+                if (this.bindings == value)
+                {
+                    return;
+                }
+
+                this.bindings = value;
+
+                this.NotifyPropertyChanged(nameof(this.Bindings));
             }
         }
 

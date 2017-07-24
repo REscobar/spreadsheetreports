@@ -24,8 +24,8 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button x:Name="button" Content="Button" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom"/>
-        <Button x:Name="button1" Content="Button" Margin="0,0,90,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
+        <Button x:Name="button" Content="Cancel" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom"/>
+        <Button x:Name="button1" Content="Ok" Margin="0,0,90,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
 
     </Grid>
 </UserControl>

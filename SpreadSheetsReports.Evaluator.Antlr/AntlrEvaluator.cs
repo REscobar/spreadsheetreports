@@ -1,8 +1,8 @@
 ﻿namespace SpreadSheetsReports.Evaluator.Antlr
 {
     using System;
-    using Antlr4.Runtime;
     using System.IO;
+    using Antlr4.Runtime;
 
     public class AntlrEvaluator : IEvaluator
     {

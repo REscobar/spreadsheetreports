@@ -11,7 +11,5 @@
         {
             this.InitializeComponent();
         }
-
-      
     }
 }

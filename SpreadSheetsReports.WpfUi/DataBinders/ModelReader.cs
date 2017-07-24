@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpreadSheetsReports.WpfUi.DataBinders
+﻿namespace SpreadSheetsReports.WpfUi.DataBinders
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     public class ModelReader
     {
-
     }
 }

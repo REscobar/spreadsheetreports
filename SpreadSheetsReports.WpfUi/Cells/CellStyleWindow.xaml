@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=local:CellBinder, IsDesignTimeCreatable=True}"
-        Title="CellStyleWindow" Height="480" Width="640" ResizeMode="NoResize" DataContextChanged="Window_DataContextChanged">
+        Title="Cell Style" Height="480" Width="640" ResizeMode="NoResize" DataContextChanged="Window_DataContextChanged">
     <Grid>
         <local:CellStyleEditor />
     </Grid>
