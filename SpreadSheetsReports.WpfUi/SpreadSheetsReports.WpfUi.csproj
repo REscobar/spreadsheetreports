@@ -37,10 +37,14 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>SpreadSheetsReports.WpfUi.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -84,6 +88,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Cells\CellBindingEditor.xaml.cs">
+      <DependentUpon>CellBindingEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cells\CellBindingsEditorWindow.xaml.cs">
+      <DependentUpon>CellBindingsEditorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cells\CellBindingsViewModel.cs" />
     <Compile Include="Cells\CellStyleWindow.xaml.cs">
       <DependentUpon>CellStyleWindow.xaml</DependentUpon>
     </Compile>
@@ -117,6 +128,10 @@
       <DependentUpon>NewRow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Rows\ReportSectionBinder.cs" />
+    <Compile Include="Rows\ReportSectionPropertiesEditor.xaml.cs">
+      <DependentUpon>ReportSectionPropertiesEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Rows\ReportSectionPropertiesViewModel.cs" />
     <Compile Include="Rows\RowBinder.cs" />
     <Compile Include="Rows\RowCollectionBinder.cs" />
     <Compile Include="Rows\RowCollectionEditor.xaml.cs">
@@ -128,6 +143,7 @@
     <Compile Include="Rows\RowEditor.xaml.cs">
       <DependentUpon>RowEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Serilization\Serializer.cs" />
     <Compile Include="Sheets\Column.cs" />
     <Compile Include="Sheets\ColumnResizer.xaml.cs">
       <DependentUpon>ColumnResizer.xaml</DependentUpon>
@@ -150,6 +166,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Cells\Cell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Cells\CellBindingEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Cells\CellBindingsEditorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -215,6 +239,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Rows\ReportSectionPropertiesEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Rows\RowCollectionEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -276,6 +304,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SpreadSheetsReports.Evaluator.Antlr\SpreadSheetsReports.Evaluator.Antlr.csproj">
+      <Project>{16d7372f-6b92-4ac6-82b4-853a94e01882}</Project>
+      <Name>SpreadSheetsReports.Evaluator.Antlr</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SpreadSheetsReports\SpreadSheetsReports.csproj">
       <Project>{83a56f6b-aeaa-407d-9846-ae04f29182ff}</Project>
       <Name>SpreadSheetsReports</Name>
@@ -285,7 +317,9 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="icon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

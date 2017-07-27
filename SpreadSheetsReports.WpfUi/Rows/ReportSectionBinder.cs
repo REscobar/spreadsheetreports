@@ -6,6 +6,7 @@
     using DataSource;
     using ReportModel;
     using Sheets;
+    using System.Linq;
 
     public class ReportSectionBinder : INotifyPropertyChanged, IBinder<IRowCollectionGenerator>, IDataSourceBindable
     {
@@ -166,6 +167,7 @@
         {
             return new ReportSection
             {
+                DataMember = this.DataMember,
                 Header = this.Header?.ConvertTo(),
                 SubSection = this.SubSection?.ConvertTo(),
                 Footer = this.Footer?.ConvertTo()
@@ -175,6 +177,14 @@
         public void ConvertFrom(IRowCollectionGenerator obj)
         {
             var reportSection = obj as ReportSection;
+
+            this.DataMember = reportSection?.DataMember;
+
+            if (reportSection?.Bindings != null)
+            {
+                this.Bindings = new ObservableCollection<DataSourceBinding>(reportSection.Bindings.Select(b => new DataSourceBinding { Expression = b.Expression, PropertyName = b.PropertyName, Type = b.GetType().ToString() }));
+            }
+
             if (reportSection?.Header != null)
             {
                 this.Header = new RowCollectionBinder(this.columns);

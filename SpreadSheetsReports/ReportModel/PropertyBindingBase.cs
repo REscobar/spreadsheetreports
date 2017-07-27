@@ -6,9 +6,11 @@
     [DataContract]
     public abstract class PropertyBindingBase : IPropertyBinding
     {
-        public string PropertyName { get; set; }
+        [DataMember]
+        public virtual string PropertyName { get; set; }
 
-        public string Expression { get; set; }
+        [DataMember]
+        public virtual string Expression { get; set; }
 
         [IgnoreDataMember]
         public DataSourceBrowser DataSource { get; set; }

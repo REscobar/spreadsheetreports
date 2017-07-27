@@ -16,6 +16,16 @@
             this.bindings = new List<PropertyBindingBase>();
         }
 
+        public PropertyBindingCollection(IEnumerable<PropertyBindingBase> items)
+            :this()
+        {
+            foreach (var item in items)
+            {
+                this.Add(item);
+            }
+        }
+
+
         public PropertyBindingCollection(ReportControl owner)
             : this()
         {

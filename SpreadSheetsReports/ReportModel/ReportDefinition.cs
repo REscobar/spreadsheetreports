@@ -16,11 +16,22 @@
             List<DocumentModel.Sheet> sheets = new List<DocumentModel.Sheet>();
             if (this.DataSource != null)
             {
-                DataSourceBrowser browser = this.GetDataBrowser();
-
-                while (this.DataSource.MoveNext())
+                DataSourceBrowser browser;
+                if (!string.IsNullOrWhiteSpace(this.DataMember))
                 {
+                    browser = new ObjectDataSourceBrowser(this.DataSource, this.DataMember);
+                    while (browser.MoveNext())
+                    {
+                        DataBindingContext.Push(browser.Current);
+                        sheets.AddRange(this.Sheets.Select(s => s.Generate()));
+                        DataBindingContext.Pop();
+                    }
+                }
+                else
+                {
+                    DataBindingContext.Push(this.DataSource.Current);
                     sheets.AddRange(this.Sheets.Select(s => s.Generate()));
+                    DataBindingContext.Pop();
                 }
             }
             else

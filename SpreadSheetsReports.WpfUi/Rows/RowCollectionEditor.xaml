@@ -9,7 +9,7 @@
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             d:DataContext="{d:DesignInstance Type=local:RowCollectionBinder, IsDesignTimeCreatable=True}" >
+             d:DataContext="{d:DesignInstance Type=local:RowCollectionBinder, IsDesignTimeCreatable=False}" >
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <converters:DebuggerConverter x:Key="Debugger"/>

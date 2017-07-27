@@ -37,9 +37,10 @@
         <ContextMenu x:Key="cellMenu">
             <MenuItem Header="Format Cells" DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" Click="FormatCells_Click">
             </MenuItem>
+            <MenuItem Header="Bindings"  DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" Click="Bindings_Click" />
         </ContextMenu>
     </UserControl.Resources>
-    <Grid Background="{Binding Style.BackgroundColor, Converter={StaticResource ColorConverter}}" ContextMenu="{StaticResource cellMenu}" >
+    <Grid Margin="0" Background="{Binding Style.BackgroundColor, Converter={StaticResource ColorConverter}}" ContextMenu="{StaticResource cellMenu}" >
         <Grid.Resources>
             <Style TargetType="{x:Type Line}">
                 <Setter Property="SnapsToDevicePixels" Value="True" />

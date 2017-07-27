@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.CodeDom;
 using System.Collections.ObjectModel;
 using System.Reflection;
+using SpreadSheetsReports.Evaluator;
 
 namespace SpreadSheetsReports.Sandbox
 {
@@ -93,16 +94,25 @@ namespace SpreadSheetsReports.Sandbox
             types = types.Concat(AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
                 .Where(p => type.IsAssignableFrom(p) && !p.IsInterface).ToList().AsEnumerable());
+            type = typeof(IEvaluator);
+            types = types.Concat(AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p) && !p.IsInterface).ToList().AsEnumerable());
             type = typeof(Cell);
             types = types.Concat(AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
                 .Where(p => type.IsAssignableFrom(p) && !p.IsInterface).ToList().AsEnumerable());
-            System.Runtime.Serialization.DataContractSerializer reader = new System.Runtime.Serialization.DataContractSerializer(typeof(ReportDefinition), types, int.MaxValue,false,true, new Surrogate());
-           // var definition = reader.ReadObject(File.OpenRead("TestData.xml")) as ReportDefinition;
+            System.Runtime.Serialization.DataContractSerializer reader = new System.Runtime.Serialization.DataContractSerializer(typeof(ReportDefinition), types, int.MaxValue, false, true, new Surrogate());
+            // var definition = reader.ReadObject(File.OpenRead("TestData.xml")) as ReportDefinition;
 
             var definition = TestReport();
 
-            reader.WriteObject(File.OpenWrite("Test.xml"), definition);
+            using (var file = File.Open("Test.xml", FileMode.Truncate))
+            {
+                reader.WriteObject(file, definition);
+
+            }
+
 
             IReportRenderer renderer = new NPOIRenderer.NPOIRenderer();
             var stream = File.Create("Workbook1.xlsx");
@@ -166,6 +176,19 @@ namespace SpreadSheetsReports.Sandbox
                 {
                     new Sheet
                     {
+                        Bindings = new PropertyBindingCollection
+                        {
+                            new ExpressionBinding
+                            {
+                                Expression = @"if(2 < 3)if(1<2)
+{
+    this.Name = param.Value;
+}",
+                                DataSource = new ObjectDataSourceBrowser(new { Value = "Dinamic" }),
+                                PropertyName = "Name",
+                                ExpressionEvaluator = new Evaluator.Antlr.AntlrEvaluator()
+                            }
+                        },
                         Name= "ONE",
                         Content = new ReportSection
                         {
@@ -5889,7 +5912,7 @@ namespace SpreadSheetsReports.Sandbox
         {
             var reportData = Enumerable.Range(1, 10).Select(i => new
             {
-                Data = TestPocoData( i * 100 + 1, i * 100 + 100),
+                Data = TestPocoData(i * 100 + 1, i * 100 + 100),
                 Name = $"Page {i}"
             }).ToList();
 
@@ -6046,7 +6069,7 @@ namespace SpreadSheetsReports.Sandbox
                     }
                 }
             };
-           
+
 
             report.DataSource = datasource;
 
@@ -6057,7 +6080,7 @@ namespace SpreadSheetsReports.Sandbox
         {
             var reportData = Enumerable.Range(1, 3).Select(i => new
             {
-                Data = NestedPocoData(i *i * 100 + 1, i * i * 100 + 10, 1, 10 * i),
+                Data = NestedPocoData(i * i * 100 + 1, i * i * 100 + 10, 1, 10 * i),
                 Name = $"Hoja generada {i}"
             }).ToList();
 
@@ -6284,7 +6307,9 @@ namespace SpreadSheetsReports.Sandbox
                     new Sheet
                     {
                         Name = "Border",
-                        Content =  new RowCollectionSection
+                        Content = new ReportSection
+                        {
+                            Footer = new RowCollectionSection
                         {
                             Rows = new RowCollection
                             {
@@ -6452,6 +6477,7 @@ namespace SpreadSheetsReports.Sandbox
                                 }
                             }
                         }
+                        }
                     }
                 }
             };
@@ -6493,7 +6519,7 @@ namespace SpreadSheetsReports.Sandbox
             public int Header1 { get; set; }
             public string Header2 { get; set; }
             public IEnumerable<TestPoco> Inner { get; set; }
-        
+
         }
 
         class TestPoco

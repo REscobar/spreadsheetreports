@@ -11,15 +11,12 @@
     [DataContract]
     public class ExpressionBinding : PropertyBindingBase
     {
-        public string PropertyName { get; set; }
-
-        public string Expression { get; set; }
-
         [IgnoreDataMember]
         public IDataSourceBrowser DataSource { get; set; }
 
         public PropertyBindingCollection Owner { get; set; }
 
+        [DataMember]
         public IEvaluator ExpressionEvaluator { get; set; }
 
         protected internal override void PerformBind(ReportControl reportControl)

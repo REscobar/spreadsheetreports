@@ -206,6 +206,11 @@
             font.VerticalAlignment = this.GetFontSuperScript(fontStyle.ScriptStyle);
             font.Underline = this.GetFontUnderLine(fontStyle.Underline);
 
+            if (fontStyle.Size != 0m)
+            {
+                font.FontSize = Convert.ToDouble(fontStyle.Size);
+            }
+
             if (fontStyle.Color.HasValue)
             {
                 var color = fontStyle.Color.Value;

@@ -4,6 +4,8 @@
     using System.Windows;
     using ReportModel;
     using Sheets;
+    using System.Linq;
+    using Microsoft.Win32;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -26,6 +28,15 @@
                 {
                     new Sheet
                     {
+                        Bindings = new PropertyBindingCollection
+                        {
+                            new PropertyBinding
+                            {
+                                DataSource = new ObjectDataSourceBrowser(new { Name = "Test Binding" }),
+                                Expression = "Name",
+                                PropertyName = "Name"
+                            }
+                        },
                         Name = "Border",
                         Content = new ReportSection
                         {
@@ -201,6 +212,46 @@
                     }
                 }
             };
+        }
+
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            var binder = this.Editor.DataContext as SheetCollectionBinder;
+            binder.ConvertFrom(new[] { new Sheet { Name = "Sheet1" } });
+        }
+
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.DefaultExt = ".ssrxml"; // Default file extension
+            openFileDialog.Filter = "SpreadSheet Report Definition (.ssrxml)|*.ssrxml|Xml Files|*.xml|All Files|*.*"; // Filter files by extension
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var report = Serializer.Deserialize(openFileDialog.FileName);
+                var binder = this.Editor.DataContext as SheetCollectionBinder;
+                binder.ConvertFrom(report.Sheets);
+            }
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.DefaultExt = ".ssrxml"; // Default file extension
+            saveDialog.Filter = "SpreadSheet Report Definition (.ssrxml)|*.ssrxml|Xml Files|*.xml|All Files|*.*"; // Filter files by extension
+
+            // Show save file dialog box
+            bool? result = saveDialog.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = saveDialog.FileName;
+                var binder = this.Editor.DataContext as SheetCollectionBinder;
+                var definition = new ReportDefinition { Sheets = binder.ConvertTo().ToList() };
+                Serializer.Serialize(definition, filename);
+            }
         }
     }
 }

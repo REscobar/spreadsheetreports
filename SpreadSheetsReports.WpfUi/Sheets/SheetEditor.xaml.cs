@@ -16,7 +16,7 @@
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var columns = ((sender as FrameworkElement).Tag as ObservableCollection<Column>);
+            var columns = (sender as FrameworkElement).Tag as ObservableCollection<Column>;
             columns.Add(new Column());
         }
     }

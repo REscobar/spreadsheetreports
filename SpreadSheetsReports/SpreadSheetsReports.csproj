@@ -66,6 +66,7 @@
     <Compile Include="DocumentModel\VerticalAlignment.cs" />
     <Compile Include="DocumentModel\HorizontalAlignment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportModel\DataBindingContext.cs" />
     <Compile Include="ReportModel\DataSourceBrowser.cs" />
     <Compile Include="ReportModel\ExpressionBinding.cs" />
     <Compile Include="ReportModel\ExpressionSource.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="ReportModel\Row.cs" />
     <Compile Include="ReportModel\RowCollection.cs" />
     <Compile Include="ReportModel\RowCollectionSection.cs" />
+    <Compile Include="ReportModel\Serializer.cs" />
     <Compile Include="ReportModel\Sheet.cs" />
   </ItemGroup>
   <ItemGroup>

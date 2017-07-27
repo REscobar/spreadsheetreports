@@ -18,7 +18,7 @@
         /// <param name="blue">The blue channel value.</param>
         public Color(byte red, byte green, byte blue)
         {
-            this.Alpha = 255;
+            //this.Alpha = 255;
             this.Red = red;
             this.Green = green;
             this.Blue = blue;
@@ -33,7 +33,7 @@
         /// <param name="alpha">The alpha channel value.</param>
         public Color(byte red = 0, byte green = 0, byte blue = 0, byte alpha = 255)
         {
-            this.Alpha = alpha;
+            //this.Alpha = 255;
             this.Red = red;
             this.Green = green;
             this.Blue = blue;
@@ -42,7 +42,17 @@
         /// <summary>
         /// Gets the alpha channel of the color.
         /// </summary>
-        public byte Alpha { get; private set; }
+        public byte Alpha
+        {
+            get
+            {
+                return 255;
+            }
+
+            private set
+            {
+            }
+        }
 
         /// <summary>
         /// Gets the red channel of the color.

@@ -57,6 +57,7 @@
 
             if (sheets != null)
             {
+                this.Sheets.Clear();
                 foreach (var sheet in sheets)
                 {
                     var sheetBinder = new SheetBinder();

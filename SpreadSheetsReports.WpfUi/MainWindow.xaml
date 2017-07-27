@@ -6,12 +6,19 @@
         xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi"
         xmlns:document="clr-namespace:SpreadSheetsReports.WpfUi.Documents"
         mc:Ignorable="d"
-        Title="SpreadSheets Report Designer" Height="450" Width="525">
+        Title="SpreadSheets Report Designer" Height="450" Width="525" Icon="icon.ico">
     <!--<Window.DataContext>
         <cells:CellBinder/>
     </Window.DataContext>-->
-
-    <Grid>
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Content="New" Click="New_Click"></Button>
+                <Button Content="Open" Click="Open_Click"></Button>
+                <Button Content="Save" Click="Save_Click"></Button>
+            </ToolBar>
+        </ToolBarTray>
         <document:DocumentEditor x:Name="Editor"/>
-    </Grid>
+
+    </DockPanel>
 </Window>

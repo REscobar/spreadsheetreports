@@ -6,15 +6,18 @@
     using System.Linq;
     using Cells;
     using DataBinders;
+    using DataSource;
     using ReportModel;
     using Sheets;
 
-    public class RowBinder : INotifyPropertyChanged, IBinder<IRowGenerator>
+    public class RowBinder : INotifyPropertyChanged, IBinder<IRowGenerator>, IDataSourceBindable
     {
         private readonly ObservableCollection<CellBinder> cells;
         private readonly ObservableCollection<Column> columns;
         private readonly Dictionary<Column, CellBinder> cellMapper = new Dictionary<Column, CellBinder>();
         private int cellIndex = 0;
+        private string dataMember;
+        private ObservableCollection<DataSourceBinding> bindings;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -26,6 +29,7 @@
             {
                 this.AddCell(column);
             }
+
             this.Columns.CollectionChanged += this.Columns_CollectionChanged;
         }
 
@@ -81,16 +85,69 @@
             }
         }
 
+        public string DataMember
+        {
+            get
+            {
+                return this.dataMember;
+            }
+
+            set
+            {
+                if (this.dataMember == value)
+                {
+                    return;
+                }
+
+                this.dataMember = value;
+
+                this.NotifyPropertyChanged(nameof(this.DataMember));
+            }
+        }
+
+        public ObservableCollection<DataSourceBinding> Bindings
+        {
+            get
+            {
+                return this.bindings;
+            }
+
+            set
+            {
+                if (this.bindings == value)
+                {
+                    return;
+                }
+
+                this.bindings = value;
+
+                this.NotifyPropertyChanged(nameof(this.Bindings));
+            }
+        }
+
         public void ConvertFrom(IRowGenerator obj)
         {
             var row = obj as Row;
             if (row != null)
             {
-                foreach (var cell in row.Cells)
+                if (row.Bindings != null)
                 {
-                    var cellBinder = new CellBinder();
+                    this.Bindings = new ObservableCollection<DataSourceBinding>(row.Bindings.Select(b => new DataSourceBinding { Expression = b.Expression, PropertyName = b.PropertyName, Type = b.GetType().ToString() }));
+                }
+
+                var cellcount = this.Cells.Count;
+                for (int i = 0; i < row.Cells.Count; i++)
+                {
+                    var cell = row.Cells[i];
+
+                    CellBinder cellBinder;
+                    if (cellcount <= i)
+                    {
+                        this.columns.Add(new Column());
+                    }
+
+                    cellBinder = this.Cells[i];
                     cellBinder.ConvertFrom(cell);
-                    this.Cells.Add(cellBinder);
                 }
             }
         }
@@ -101,6 +158,11 @@
             {
                 Cells = this.Cells.Select(c => c.ConvertTo()).ToList()
             };
+        }
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

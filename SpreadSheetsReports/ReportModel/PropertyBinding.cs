@@ -37,10 +37,6 @@
             this.Expression = dataMember;
         }
 
-        public string PropertyName { get; set; }
-
-        public string Expression { get; set; }
-
         [IgnoreDataMember]
         public DataSourceBrowser DataSource { get; set; }
 
@@ -53,7 +49,18 @@
                 throw new ArgumentNullException(nameof(obj));
             }
 
-            object value = this.DataSource.GetValue(this.Expression);
+            var source = this.DataSource;
+            if (source == null)
+            {
+                var newSource = DataBindingContext.Peek();
+                source = newSource as DataSourceBrowser;
+                if (source == null)
+                {
+                    source = new ObjectDataSourceBrowser(newSource);
+                }
+            }
+
+            object value = source.GetValue(this.Expression);
             var objectType = obj.GetType();
             var setter = GetWriter(objectType);
 

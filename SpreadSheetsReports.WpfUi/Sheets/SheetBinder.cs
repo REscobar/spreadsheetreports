@@ -8,10 +8,10 @@
     using DataSource;
     using ReportModel;
     using Rows;
+    using System.Linq;
 
     public class SheetBinder : INotifyPropertyChanged, IBinder<Sheet>, IDataSourceBindable
     {
-
         private readonly ObservableCollection<Column> columns;
         private ReportSectionBinder content;
         private string name;
@@ -30,6 +30,7 @@
         {
             this.columns = new ObservableCollection<Column>(Column.GetDefaultColumns());
             this.Content = new ReportSectionBinder(this.Columns);
+            this.Bindings = new ObservableCollection<DataSourceBinding>();
             this.Name = $"Sheet{sheetNumber}";
             this.columns.CollectionChanged += this.Columns_CollectionChanged;
         }
@@ -167,6 +168,11 @@
             if (obj.Content != null)
             {
                 this.Content = new ReportSectionBinder(this.Columns);
+                if (obj.Bindings != null)
+                {
+                    this.Bindings = new ObservableCollection<DataSourceBinding>(obj.Bindings.Select(b => new DataSourceBinding { Expression = b.Expression, PropertyName = b.PropertyName, Type = b.GetType().ToString() }));
+                }
+
                 this.Content.ConvertFrom(obj.Content);
             }
         }

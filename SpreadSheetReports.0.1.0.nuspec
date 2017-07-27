@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>SpreadSheetsReports</id>
+        <version>0.01.0</version>
+        <title>SpreadSheetsReports</title>
+        <authors>REscobar</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Create spreadsheet reports</description>
+        <copyright>Copyright © REscobar 2015</copyright>
+    </metadata>
+    <files>
+        <file src="lib\net452\SpreadSheetsReports.dll" target="lib\net452\SpreadSheetsReports.dll" />
+        <file src="lib\net452\SpreadSheetsReports.XML" target="lib\net452\SpreadSheetsReports.XML" />
+    </files>
+</package>

@@ -56,10 +56,24 @@
         <Style x:Key="ButtonStyle" TargetType="Button">
             <EventSetter Event="Button.Click" Handler="Button_Click"></EventSetter>
         </Style>
+        <ContextMenu x:Key="rowMenu">
+            <MenuItem Header="Add row" DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" Click="AddRow_Click">
+            </MenuItem>
+            <MenuItem Header="Properties">
+                <MenuItem StaysOpenOnClick="True">
+                    <MenuItem.Header>
+                        <StackPanel>
+                            <local:ReportSectionPropertiesEditor Width="200" Height="40"  />
+                            <!--<xctk:IntegerUpDown Width="150" Value="{Binding Path=Size}" />-->
+                        </StackPanel>
+                    </MenuItem.Header>
+                </MenuItem>
+            </MenuItem>
+        </ContextMenu>
     </UserControl.Resources>
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Tag="{Binding Header}" ContextMenu="{StaticResource rowMenu}">
                 <StackPanel.Resources>
                     <Style TargetType="Label">
                         <Style.Triggers>
@@ -116,7 +130,7 @@
                 </ContentControl.Style>
             </ContentControl>
         </StackPanel>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Tag="{Binding Footer}" ContextMenu="{StaticResource rowMenu}">
             <Label Style="{StaticResource GutterStyle}" RenderTransformOrigin="0.5,0.5" Margin="0" Width="{Binding Height, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}">
                 Footer
             </Label>

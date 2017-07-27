@@ -19,5 +19,11 @@
 
             binder.SubSection = new ReportSectionBinder(binder.Columns);
         }
+
+        private void AddRow_Click(object sender, RoutedEventArgs e)
+        {
+            var rowCollection = (sender as FrameworkElement).DataContext as RowCollectionBinder;
+            rowCollection.AddNewRow();
+        }
     }
 }

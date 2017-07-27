@@ -32,5 +32,11 @@
             cellStyleEditor.DataContext = this.DataContext;
             cellStyleEditor.ShowDialog();
         }
+
+        private void Bindings_Click(object sender, RoutedEventArgs e)
+        {
+            var cellStyleEditor = new CellBindingsEditorWindow(this.DataContext as CellBinder);
+            cellStyleEditor.ShowDialog();
+        }
     }
 }

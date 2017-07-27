@@ -4,9 +4,9 @@
     using System.ComponentModel;
     using System.Linq;
     using DataBinders;
+    using DataSource;
     using ReportModel;
     using Sheets;
-    using DataSource;
 
     public class RowCollectionBinder : INotifyPropertyChanged, IBinder<IRowCollectionGenerator>, IDataSourceBindable
     {
@@ -18,14 +18,13 @@
         private ObservableCollection<DataSourceBinding> bindings;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public RowCollectionBinder(ObservableCollection<Column> columns)
         {
             this.columns = columns;
             this.rows = new ObservableCollection<RowBinder>();
             this.AddNewRow();
-            this.AddNewRow();
         }
-
 
         public void Remove(RowBinder rowBinder)
         {
@@ -123,8 +122,14 @@
         public void ConvertFrom(IRowCollectionGenerator obj)
         {
             var rowCollection = obj as RowCollectionSection;
-            if (obj != null)
+            if (rowCollection != null)
             {
+                if (rowCollection.Bindings != null)
+                {
+                    this.Bindings = new ObservableCollection<DataSourceBinding>(rowCollection.Bindings.Select(b => new DataSourceBinding { Expression = b.Expression, PropertyName = b.PropertyName, Type = b.GetType().ToString() }));
+                }
+
+                this.Rows.Clear();
                 foreach (var row in rowCollection.Rows)
                 {
                     var rowBinder = new RowBinder(this.columns);

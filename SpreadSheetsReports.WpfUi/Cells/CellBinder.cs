@@ -1,12 +1,15 @@
 ﻿namespace SpreadSheetsReports.WpfUi.Cells
 {
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using DataBinders;
+    using DataSource;
     using DocumentModel;
     using ReportModel;
     using Sheets;
+    using System.Linq;
 
-    public class CellBinder : INotifyPropertyChanged, IBinder<ICellGenerator>
+    public class CellBinder : INotifyPropertyChanged, IBinder<ICellGenerator>, IDataSourceBindable
     {
         private CellStyle style;
         private string className;
@@ -15,10 +18,13 @@
 
         private int index;
         private int width;
+        private string dataMember;
+        private ObservableCollection<DataSourceBinding> bindings;
 
         public CellBinder()
         {
-            this.Value = "Sample";
+            this.Value = this.Value ?? string.Empty;
+            this.Bindings = this.Bindings ?? new ObservableCollection<DataSourceBinding>();
         }
 
         public CellBinder(int index, Column column)
@@ -82,7 +88,7 @@
         {
             get
             {
-                return "Sample";// this.value;
+                return this.value;
             }
 
             set
@@ -158,6 +164,46 @@
             }
         }
 
+        public string DataMember
+        {
+            get
+            {
+                return this.dataMember;
+            }
+
+            set
+            {
+                if (this.dataMember == value)
+                {
+                    return;
+                }
+
+                this.dataMember = value;
+
+                this.NotifyPropertyChanged(nameof(this.DataMember));
+            }
+        }
+
+        public ObservableCollection<DataSourceBinding> Bindings
+        {
+            get
+            {
+                return this.bindings;
+            }
+
+            set
+            {
+                if (this.bindings == value)
+                {
+                    return;
+                }
+
+                this.bindings = value;
+
+                this.NotifyPropertyChanged(nameof(this.Bindings));
+            }
+        }
+
         private void AssignColumn(Column column)
         {
             this.Width = column.Size;
@@ -189,16 +235,26 @@
             {
                 Style = this.Style,
                 Type = this.Type,
-                Value = this.Value
+                Value = this.Value,
+                Bindings = new PropertyBindingCollection(this.Bindings.Select(b => b.ConvertTo()))
             };
         }
 
         public void ConvertFrom(ICellGenerator obj)
         {
             var cell = obj as ReportModel.Cell;
-            this.Style = cell.Style;
-            this.Type = cell.Type;
-            this.Value = cell.Value;
+            if (cell != null)
+            {
+
+                if (cell.Bindings != null)
+                {
+                    this.Bindings = new ObservableCollection<DataSourceBinding>(cell.Bindings.Select(b => new DataSourceBinding { Expression = b.Expression, PropertyName = b.PropertyName, Type = b.GetType().Name }));
+                }
+
+                this.Style = cell.Style;
+                this.Type = cell.Type;
+                this.Value = cell.Value;
+            }
         }
     }
 }

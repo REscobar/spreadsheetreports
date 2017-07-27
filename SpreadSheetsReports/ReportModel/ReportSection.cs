@@ -14,30 +14,57 @@
         {
             this.Databind();
             List<DocumentModel.Row> rows = new List<DocumentModel.Row>();
-            if (this.Header != null)
+
+            DataSourceBrowser browser;
+            if (!string.IsNullOrWhiteSpace(this.DataMember))
             {
-                rows.AddRange(this.Header.Generate());
+                browser = new ObjectDataSourceBrowser((this.DataSource ?? new ObjectDataSourceBrowser(DataBindingContext.Peek())).GetValue(this.DataMember));
+            }
+            else
+            {
+                browser = this.DataSource;
             }
 
-            if (this.SubSection != null)
+            if (browser != null)
             {
-                if (this.DataSource != null)
+                while (browser.MoveNext())
                 {
-                    DataSourceBrowser browser = this.GetBrowser();
-                    while (this.DataSource.MoveNext())
+                    DataBindingContext.Push(browser.Current);
+
+                    if (this.Header != null)
+                    {
+                        rows.AddRange(this.Header.Generate());
+                    }
+
+                    if (this.SubSection != null)
                     {
                         rows.AddRange(this.SubSection.Generate());
                     }
+
+                    if (this.Footer != null)
+                    {
+                        rows.AddRange(this.Footer.Generate());
+                    }
                 }
-                else
+
+                DataBindingContext.Pop();
+            }
+            else
+            {
+                if (this.Header != null)
+                {
+                    rows.AddRange(this.Header.Generate());
+                }
+
+                if (this.SubSection != null)
                 {
                     rows.AddRange(this.SubSection.Generate());
                 }
-            }
 
-            if (this.Footer != null)
-            {
-                rows.AddRange(this.Footer.Generate());
+                if (this.Footer != null)
+                {
+                    rows.AddRange(this.Footer.Generate());
+                }
             }
 
             return rows;

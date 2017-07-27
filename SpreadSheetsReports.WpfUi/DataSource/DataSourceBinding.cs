@@ -2,9 +2,12 @@
 
 namespace SpreadSheetsReports.WpfUi.DataSource
 {
+    using System;
     using System.ComponentModel;
+    using DataBinders;
+    using ReportModel;
 
-    public class DataSourceBinding : INotifyPropertyChanged
+    public class DataSourceBinding : INotifyPropertyChanged, IBinder<PropertyBindingBase>
     {
         private string propertyName;
         private string expression;
@@ -71,6 +74,31 @@ namespace SpreadSheetsReports.WpfUi.DataSource
         private void NotifyPropertyChanged(string propertyName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public PropertyBindingBase ConvertTo()
+        {
+            if (this.Type == typeof(PropertyBinding).Name)
+            {
+                return new PropertyBinding
+                {
+                    Expression = this.Expression,
+                    PropertyName = this.PropertyName
+                };
+            }
+            else
+            {
+                return new ExpressionBinding
+                {
+                    Expression = this.Expression,
+                    PropertyName = this.PropertyName
+                };
+            }
+        }
+
+        public void ConvertFrom(PropertyBindingBase obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }
