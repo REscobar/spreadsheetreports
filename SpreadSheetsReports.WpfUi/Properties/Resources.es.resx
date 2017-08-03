@@ -121,111 +121,111 @@
     <value>Horizontal</value>
   </data>
   <data name="Alignment_Indent" xml:space="preserve">
-    <value>Indent:</value>
+    <value>Sangría:</value>
   </data>
   <data name="Alignment_Rotation" xml:space="preserve">
-    <value>Rotation</value>
+    <value>Rotación</value>
   </data>
   <data name="Alignment_ShrinkToFit" xml:space="preserve">
-    <value>Shrink to Fit</value>
+    <value>Reducir hasta ajustar</value>
   </data>
   <data name="Alignment_TextAlignment" xml:space="preserve">
-    <value>Text alignment</value>
+    <value>Alineación del texto</value>
   </data>
   <data name="Alignment_TextControl" xml:space="preserve">
-    <value>Text control</value>
+    <value>Control del texto</value>
   </data>
   <data name="Alignment_Vertical" xml:space="preserve">
     <value>Vertical</value>
   </data>
   <data name="Alignment_WrapText" xml:space="preserve">
-    <value>Wrap Text</value>
+    <value>Ajustar texto</value>
   </data>
   <data name="Border_Border" xml:space="preserve">
-    <value>Border</value>
+    <value>Borde</value>
   </data>
   <data name="Border_Line" xml:space="preserve">
-    <value>Line</value>
+    <value>Línea</value>
   </data>
   <data name="Border_LineColor" xml:space="preserve">
     <value>Color:</value>
   </data>
   <data name="Border_LineStyle" xml:space="preserve">
-    <value>Style:</value>
+    <value>Estilo:</value>
   </data>
   <data name="Border_None" xml:space="preserve">
-    <value>None</value>
+    <value>Ninguno</value>
   </data>
   <data name="Border_Text" xml:space="preserve">
-    <value>Text</value>
+    <value>Texto</value>
   </data>
   <data name="CellStyleEditor_Aligment" xml:space="preserve">
-    <value>Alignment</value>
+    <value>Alineación</value>
   </data>
   <data name="CellStyleEditor_Border" xml:space="preserve">
-    <value>Border</value>
+    <value>Bordes</value>
   </data>
   <data name="CellStyleEditor_Font" xml:space="preserve">
-    <value>Font</value>
+    <value>Fuente</value>
   </data>
   <data name="Font_Bold" xml:space="preserve">
-    <value>Bold</value>
+    <value>Negrita</value>
   </data>
   <data name="Font_Color" xml:space="preserve">
     <value>Color:</value>
   </data>
   <data name="Font_Font" xml:space="preserve">
-    <value>Font:</value>
+    <value>Fuente:</value>
   </data>
   <data name="Font_FontSize" xml:space="preserve">
-    <value>Font Size:</value>
+    <value>Tamaño:</value>
   </data>
   <data name="Font_FontStyle" xml:space="preserve">
-    <value>Font Style:</value>
+    <value>Estilo:</value>
   </data>
   <data name="Font_Italic" xml:space="preserve">
-    <value>Italic</value>
+    <value>Cursiva</value>
   </data>
   <data name="MainWindow_New" xml:space="preserve">
-    <value>New</value>
+    <value>Nuevo</value>
   </data>
   <data name="MainWindow_Open" xml:space="preserve">
-    <value>Open</value>
+    <value>Abrir</value>
   </data>
   <data name="MainWindow_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Guardar</value>
   </data>
   <data name="MainWindow_Title" xml:space="preserve">
-    <value>SpreadSheets Reports Designer</value>
+    <value>Diseñador de SpreadSheets Reports</value>
   </data>
   <data name="ReportSectionEditor_AddRow" xml:space="preserve">
-    <value>Add Row</value>
+    <value>Agregar fila</value>
   </data>
   <data name="ReportSectionEditor_Create" xml:space="preserve">
-    <value>Create</value>
+    <value>Crear</value>
   </data>
   <data name="ReportSectionEditor_Detail" xml:space="preserve">
-    <value>Detail</value>
+    <value>Detalle</value>
   </data>
   <data name="ReportSectionEditor_Footer" xml:space="preserve">
-    <value>Footer</value>
+    <value>Pie</value>
   </data>
   <data name="ReportSectionEditor_HeaderText" xml:space="preserve">
-    <value>Header</value>
+    <value>Encabezado</value>
   </data>
   <data name="ReportSectionEditor_Properties" xml:space="preserve">
-    <value>Properties</value>
+    <value>Propiedades</value>
   </data>
   <data name="SheetCollectionEditor_AddSheet" xml:space="preserve">
-    <value>Add Sheet</value>
+    <value>Agregar hoja</value>
   </data>
   <data name="SheetCollectionEditor_RemoveSheet" xml:space="preserve">
-    <value>Remove</value>
+    <value>Eliminar</value>
   </data>
   <data name="SheetEditor_AddColumn" xml:space="preserve">
-    <value>Add Column</value>
+    <value>Agregar columna</value>
   </data>
   <data name="SheetEditor_Resize" xml:space="preserve">
-    <value>Resize</value>
+    <value>Redimensionar</value>
   </data>
 </root>

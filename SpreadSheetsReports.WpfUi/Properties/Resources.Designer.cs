@@ -124,7 +124,7 @@ namespace SpreadSheetsReports.WpfUi.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wrapt Text.
+        ///   Looks up a localized string similar to Wrap Text.
         /// </summary>
         public static string Alignment_WrapText {
             get {
@@ -322,7 +322,7 @@ namespace SpreadSheetsReports.WpfUi.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Detial.
+        ///   Looks up a localized string similar to Detail.
         /// </summary>
         public static string ReportSectionEditor_Detail {
             get {
