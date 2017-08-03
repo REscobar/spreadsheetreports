@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Rows"
              xmlns:converters="clr-namespace:SpreadSheetsReports.WpfUi.Converters"
+            xmlns:p="clr-namespace:SpreadSheetsReports.WpfUi.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -57,14 +58,13 @@
             <EventSetter Event="Button.Click" Handler="Button_Click"></EventSetter>
         </Style>
         <ContextMenu x:Key="rowMenu">
-            <MenuItem Header="Add row" DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" Click="AddRow_Click">
+            <MenuItem Header="{x:Static p:Resources.ReportSectionEditor_AddRow}" DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" Click="AddRow_Click">
             </MenuItem>
-            <MenuItem Header="Properties">
+            <MenuItem Header="{x:Static p:Resources.ReportSectionEditor_Properties}">
                 <MenuItem StaysOpenOnClick="True">
                     <MenuItem.Header>
                         <StackPanel>
                             <local:ReportSectionPropertiesEditor Width="200" Height="40"  />
-                            <!--<xctk:IntegerUpDown Width="150" Value="{Binding Path=Size}" />-->
                         </StackPanel>
                     </MenuItem.Header>
                 </MenuItem>
@@ -83,23 +83,20 @@
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Resources>
-                <Label Style="{StaticResource GutterStyle}" RenderTransformOrigin="0.5,0.5" Margin="0" Width="{Binding Height, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}">
-                    Header
-                </Label>
+                <Label Content="{x:Static p:Resources.ReportSectionEditor_HeaderText}" Style="{StaticResource GutterStyle}" RenderTransformOrigin="0.5,0.5" Margin="0" Width="{Binding Height, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}"/>
                 <local:GutterFiller/>
             </StackPanel>
             <local:RowCollectionEditor DataContext="{Binding Header}"/>
 
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Label Style="{StaticResource GutterStyleDetail}" RenderTransformOrigin="0.5,0.5" Margin="0" Width="{Binding Height, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}">
+            <Label Content="{x:Static p:Resources.ReportSectionEditor_Detail}" Style="{StaticResource GutterStyleDetail}" RenderTransformOrigin="0.5,0.5" Margin="0" Width="{Binding Height, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}">
                 <Label.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="Gainsboro" Offset="0"/>
                         <GradientStop Color="#FFC5C5C5" Offset="1"/>
                     </LinearGradientBrush>
                 </Label.Background>
-                Detail
             </Label>
             <ContentControl>
                 <ContentControl.Style>
@@ -109,7 +106,7 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate>
-                                            <Button Style="{DynamicResource ButtonStyle}">Create</Button>
+                                            <Button Content="{x:Static p:Resources.ReportSectionEditor_Create}" Style="{DynamicResource ButtonStyle}"/>
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -131,9 +128,7 @@
             </ContentControl>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Tag="{Binding Footer}" ContextMenu="{StaticResource rowMenu}">
-            <Label Style="{StaticResource GutterStyle}" RenderTransformOrigin="0.5,0.5" Margin="0" Width="{Binding Height, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}">
-                Footer
-            </Label>
+            <Label Content="{x:Static p:Resources.ReportSectionEditor_Footer}" Style="{StaticResource GutterStyle}" RenderTransformOrigin="0.5,0.5" Margin="0" Width="{Binding Height, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}"/>
             <local:GutterFiller/>
             <local:RowCollectionEditor DataContext="{Binding Footer}"/>
 

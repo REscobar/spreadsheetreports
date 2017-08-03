@@ -63,14 +63,19 @@ namespace SpreadSheetsReports.Sandbox
         static void Main(string[] args)
         {
             var val = new Evaluator.Antlr.AntlrEvaluator();
-            val.Evaluate(new Evaluator.EvaluationContext
+            val.Evaluate(new EvaluationContext
             {
                 Target = new Cell(),
-                Expression = @"if(2 < 3)if(1<2)
-{
-    this.Style.Indent = 1 * (4 + - 3);
-    this.Value = -10 * -20 + - param.Value;
-}",
+                Expression = @"
+                if(param.Value < 20)
+                {
+                    this.Style.Indent = 1 * (4 + - 3);
+                    this.Value = -10 * (-20 + - param.Value);
+                }
+                else
+                {
+                    this.Value = -10 * param.Value;
+                }",
                 Source = new
                 {
                     Value = 25m

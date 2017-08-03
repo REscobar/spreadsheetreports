@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Sheets"
+            xmlns:p="clr-namespace:SpreadSheetsReports.WpfUi.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=local:SheetCollectionBinder, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <ContextMenu x:Key="sheetMenu">
-            <MenuItem Header="Remove" Click="MenuItem_Click" DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
+            <MenuItem Header="{x:Static p:Resources.SheetCollectionEditor_RemoveSheet}" Click="MenuItem_Click" DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}">
             </MenuItem>
         </ContextMenu>
     </UserControl.Resources>
@@ -85,6 +86,6 @@
                 </ControlTemplate>
             </TabControl.Template>
         </TabControl>
-        <Button x:Name="button" Content="Add Sheet" Margin="10,0,0,10" HorizontalAlignment="Left" Width="75" Height="20" VerticalAlignment="Bottom" Click="button_Click"/>
+        <Button x:Name="button" Content="{x:Static p:Resources.SheetCollectionEditor_AddSheet}" Margin="10,0,0,10" HorizontalAlignment="Left" Width="75" Height="20" VerticalAlignment="Bottom" Click="button_Click"/>
     </Grid>
 </UserControl>

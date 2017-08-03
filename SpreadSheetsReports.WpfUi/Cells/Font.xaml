@@ -7,6 +7,7 @@
              x:Class="SpreadSheetsReports.WpfUi.Cells.Font"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
              xmlns:converters="clr-namespace:SpreadSheetsReports.WpfUi.Converters"
+            xmlns:p="clr-namespace:SpreadSheetsReports.WpfUi.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="640"
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type local:CellBinder}}">
@@ -33,23 +34,23 @@
         <Label x:Name="label" Content="Font:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="42"/>
         <TextBox x:Name="fontNameText" Height="23" Margin="10,36,0,0" TextWrapping="Wrap" Text="{Binding SelectedValue, ElementName=fontName}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="265"/>
         <ListBox x:Name="fontName" Margin="10,64,0,68" HorizontalAlignment="Left" Width="265" ItemsSource="{Binding Mode=OneWay, Source={StaticResource familyCollection}}" ItemTemplate="{StaticResource fontFamilyData}"/>
-        <Label x:Name="label1" Content="Underline" HorizontalAlignment="Left" Margin="14,0,0,37" VerticalAlignment="Bottom" Width="66"/>
-        <ComboBox x:Name="comboBox" Margin="14,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="261"/>
-        <Label x:Name="label2_Copy" Content="Color:" Margin="280,0,0,37" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="41"/>
+        <!--<Label x:Name="label1" Content="Underline" HorizontalAlignment="Left" Margin="14,0,0,37" VerticalAlignment="Bottom" Width="66"/>
+        <ComboBox x:Name="comboBox" Margin="14,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="261"/>-->
+        <Label x:Name="label2_Copy" Content="{x:Static p:Resources.Font_Color}" Margin="280,0,0,37" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="41"/>
         <xctk:ColorPicker x:Name="colorPicker" Margin="280,0,0,10" ColorMode="ColorCanvas" ShowAdvancedButton="False" ShowStandardColors="False" UsingAlphaChannel="False" HorizontalAlignment="Left" Width="154" Height="22" VerticalAlignment="Bottom" SelectedColor="{Binding Style.FontStyle.Color, Converter={StaticResource DocumentColorToColorConverter}}" />
-        <Label x:Name="label2_Copy1" Content="Font size" Margin="439,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="64"/>
+        <Label x:Name="label2_Copy1" Content="{x:Static p:Resources.Font_FontSize}" Margin="439,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="64"/>
         <TextBox x:Name="textBox1_Copy" Height="23" Margin="439,36,10,0" TextWrapping="Wrap" Text="{Binding Style.FontStyle.Size, Mode=TwoWay}" VerticalAlignment="Top"/>
         <ListBox x:Name="listBox2" Margin="439,64,10,68" ItemsSource="{Binding Mode=OneWay, Source={StaticResource fontSizes}}" SelectedValue="{Binding Style.FontStyle.Size, Converter={StaticResource DebuggerConverter}, Mode=TwoWay}"/>
-        <GroupBox x:Name="groupBox" Header="Font Style" HorizontalAlignment="Left" Margin="280,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.07,-1.174" Height="222" Width="154">
+        <GroupBox x:Name="groupBox" Header="{x:Static p:Resources.Font_FontStyle}" HorizontalAlignment="Left" Margin="280,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.07,-1.174" Height="222" Width="154">
             <Grid Margin="0,0,-12,-3">
                 <CheckBox x:Name="checkBox" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" IsChecked="{Binding Style.FontStyle.IsBold}">
                     <CheckBox.Content>
-                        <TextBlock FontWeight="Bold">Bold</TextBlock>
+                        <TextBlock FontWeight="Bold" Text="{x:Static p:Resources.Font_Bold}"></TextBlock>
                     </CheckBox.Content>
                 </CheckBox>
                 <CheckBox x:Name="checkBox1" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" IsChecked="{Binding Style.FontStyle.IsItalic}">
                     <CheckBox.Content>
-                        <TextBlock FontStyle="Italic">Italic</TextBlock>
+                        <TextBlock FontStyle="Italic" Text="{x:Static p:Resources.Font_Italic}"/>
                     </CheckBox.Content>
                 </CheckBox>
             </Grid>

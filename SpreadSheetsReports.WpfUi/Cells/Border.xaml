@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
              xmlns:converters="clr-namespace:SpreadSheetsReports.WpfUi.Converters"
              xmlns:Document="clr-namespace:SpreadSheetsReports.DocumentModel;assembly=SpreadSheetsReports"
+            xmlns:p="clr-namespace:SpreadSheetsReports.WpfUi.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="640"
              d:DataContext="{d:DesignInstance Type=local:CellBinder, IsDesignTimeCreatable=True}">
@@ -26,9 +27,9 @@
         <converters:BorderTypeToVisibilityConverter x:Key="borderVisibilityConverter"/>
     </UserControl.Resources>
     <Grid Background="White">
-        <GroupBox x:Name="groupBox" Header="Line" Margin="10,10,0,17" HorizontalAlignment="Left" Width="185">
+        <GroupBox x:Name="groupBox" Header="{x:Static p:Resources.Border_Line}" Margin="10,10,0,17" HorizontalAlignment="Left" Width="185">
             <Grid Margin="10,10,10,-12">
-                <Label x:Name="label" Content="Style:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label x:Name="label" Content="{x:Static p:Resources.Border_LineStyle}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <ListBox x:Name="listBox"  Margin="0,26,0,66" SelectedIndex="0" >
                     <ListBox.Resources>
                         <Style TargetType="{x:Type Label}">
@@ -54,7 +55,7 @@
                     </ListBox.ItemsPanel>
                     <ListBox.Items>
                         <Label Margin="0" Tag="{x:Static Document:BorderType.None}" >
-                            <TextBlock>None</TextBlock>
+                            <TextBlock Text="{x:Static p:Resources.Border_None}" />
                         </Label>
                         <Label Tag="{x:Static Document:BorderType.MediumDashDotDot}">
                             <Line X2="1" StrokeDashArray="5 2 2 2 2 2" Stretch="Fill" StrokeThickness="2" />
@@ -107,11 +108,11 @@
                         </Label>
                     </ListBox.Items>
                 </ListBox>
-                <Label x:Name="label1" Content="Color:" HorizontalAlignment="Left" Margin="10,0,0,35" RenderTransformOrigin="-0.237,0.269" Height="26" VerticalAlignment="Bottom"/>
+                <Label x:Name="label1" Content="{x:Static p:Resources.Border_LineColor}" HorizontalAlignment="Left" Margin="10,0,0,35" RenderTransformOrigin="-0.237,0.269" Height="26" VerticalAlignment="Bottom"/>
                 <xctk:ColorPicker x:Name="colorPicker" Margin="10,0,10,13" Height="22" VerticalAlignment="Bottom" SelectedColor="Black" ColorMode="ColorCanvas" ShowAdvancedButton="False" ShowStandardColors="False" UsingAlphaChannel="False" />
             </Grid>
         </GroupBox>
-        <GroupBox x:Name="groupBox1" Header="Border" Margin="200,10,16,90">
+        <GroupBox x:Name="groupBox1" Header="{x:Static p:Resources.Border_Border}" Margin="200,10,16,90">
             <Grid Margin="0">
                 <Grid.Resources>
                     <Style TargetType="{x:Type Line}">
@@ -128,7 +129,7 @@
                 </Grid.Resources>
                 <Border BorderBrush="Black" BorderThickness="1" Margin="41,10,41,41">
                     <Grid>
-                        <Label x:Name="label2" Content="Text" HorizontalAlignment="Center" Width="31" Height="26" VerticalAlignment="Center" />
+                        <Label x:Name="label2" Content="{x:Static p:Resources.Border_Text}" HorizontalAlignment="Center" Width="31" Height="26" VerticalAlignment="Center" />
                         <Line Name="Right" DataContext="{Binding Path=Style.BorderStyleRight}" Stretch="Fill" X2="1" X1="0" Y1="0" Y2="10" Width="{Binding Type, Converter={StaticResource BorderTypeToThicknessConverter}}" Height="Auto" Margin="0,10,10,10" HorizontalAlignment="Right" Tag="{Binding DataContext, RelativeSource={RelativeSource Self}}"  Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=button_R, Mode=TwoWay}" Stroke="{Binding Path=Color, Converter={StaticResource BrushToColorConverter}}" StrokeDashArray="{Binding Path=Type, Converter={StaticResource BorderTypeToStrokeDashArrayConverter}}" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased" StrokeThickness="{Binding Type, Converter={StaticResource BorderTypeToThicknessConverter}}">
                             <Line.RenderTransform>
                                 <TransformGroup>

@@ -4,28 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SpreadSheetsReports.WpfUi.Cells"
+            xmlns:p="clr-namespace:SpreadSheetsReports.WpfUi.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid>
         <TabControl x:Name="tabControl"  Margin="10,10,10,35" >
-            <TabItem Header="Alignment">
+            <TabItem Header="{x:Static p:Resources.CellStyleEditor_Aligment}">
                 <Grid>
                     <local:Aligment />
                 </Grid>
             </TabItem>
-            <TabItem Header="Font">
+            <TabItem Header="{x:Static p:Resources.CellStyleEditor_Font}">
                 <Grid>
                     <local:Font />
                 </Grid>
             </TabItem>
-            <TabItem Header="Border">
+            <TabItem Header="{x:Static p:Resources.CellStyleEditor_Border}">
                 <Grid>
                     <local:Border />
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button x:Name="button" Content="Cancel" Margin="0,0,10,10" HorizontalAlignment="Right" Width="75" Height="20" VerticalAlignment="Bottom"/>
-        <Button x:Name="button1" Content="Ok" Margin="0,0,90,10" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
-
     </Grid>
 </UserControl>

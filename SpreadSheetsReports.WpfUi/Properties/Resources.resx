@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -68,9 +69,10 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -85,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -109,9 +112,120 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Alignment_Horizontal" xml:space="preserve">
+    <value>Horizontal</value>
+  </data>
+  <data name="Alignment_Indent" xml:space="preserve">
+    <value>Indent:</value>
+  </data>
+  <data name="Alignment_Rotation" xml:space="preserve">
+    <value>Rotation</value>
+  </data>
+  <data name="Alignment_ShrinkToFit" xml:space="preserve">
+    <value>Shrink to Fit</value>
+  </data>
+  <data name="Alignment_TextAlignment" xml:space="preserve">
+    <value>Text alignment</value>
+  </data>
+  <data name="Alignment_TextControl" xml:space="preserve">
+    <value>Text control</value>
+  </data>
+  <data name="Alignment_Vertical" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
+  <data name="Alignment_WrapText" xml:space="preserve">
+    <value>Wrapt Text</value>
+  </data>
+  <data name="Border_Border" xml:space="preserve">
+    <value>Border</value>
+  </data>
+  <data name="Border_Line" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="Border_LineColor" xml:space="preserve">
+    <value>Color:</value>
+  </data>
+  <data name="Border_LineStyle" xml:space="preserve">
+    <value>Style:</value>
+  </data>
+  <data name="Border_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Border_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="CellStyleEditor_Aligment" xml:space="preserve">
+    <value>Alignment</value>
+  </data>
+  <data name="CellStyleEditor_Border" xml:space="preserve">
+    <value>Border</value>
+  </data>
+  <data name="CellStyleEditor_Font" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="Font_Bold" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="Font_Color" xml:space="preserve">
+    <value>Color:</value>
+  </data>
+  <data name="Font_Font" xml:space="preserve">
+    <value>Font:</value>
+  </data>
+  <data name="Font_FontSize" xml:space="preserve">
+    <value>Font Size:</value>
+  </data>
+  <data name="Font_FontStyle" xml:space="preserve">
+    <value>Font Style:</value>
+  </data>
+  <data name="Font_Italic" xml:space="preserve">
+    <value>Italic</value>
+  </data>
+  <data name="MainWindow_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="MainWindow_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="MainWindow_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="MainWindow_Title" xml:space="preserve">
+    <value>SpreadSheets Reports Designer</value>
+  </data>
+  <data name="ReportSectionEditor_AddRow" xml:space="preserve">
+    <value>Add Row</value>
+  </data>
+  <data name="ReportSectionEditor_Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="ReportSectionEditor_Detail" xml:space="preserve">
+    <value>Detial</value>
+  </data>
+  <data name="ReportSectionEditor_Footer" xml:space="preserve">
+    <value>Footer</value>
+  </data>
+  <data name="ReportSectionEditor_HeaderText" xml:space="preserve">
+    <value>Header</value>
+  </data>
+  <data name="ReportSectionEditor_Properties" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="SheetCollectionEditor_AddSheet" xml:space="preserve">
+    <value>Add Sheet</value>
+  </data>
+  <data name="SheetCollectionEditor_RemoveSheet" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="SheetEditor_AddColumn" xml:space="preserve">
+    <value>Add Column</value>
+  </data>
+  <data name="SheetEditor_Resize" xml:space="preserve">
+    <value>Resize</value>
+  </data>
 </root>
