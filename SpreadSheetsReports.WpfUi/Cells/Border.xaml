@@ -41,8 +41,7 @@
                             <Setter Property="HorizontalAlignment" Value="Stretch" />
                         </Style>
                         <Style TargetType="{x:Type Line}">
-                            <!--<Setter Property="Stroke" Value="{DynamicResource LineBrush}" />-->
-                            <Setter Property="Stroke" Value="Black" />
+                            <Setter Property="Stroke" Value="{DynamicResource LineBrush}" />
                             <Setter Property="SnapsToDevicePixels" Value="True" />
                             <Setter Property="RenderOptions.EdgeMode" Value="Aliased" />
                         </Style>

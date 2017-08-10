@@ -21,11 +21,22 @@
 
         protected internal override void PerformBind(ReportControl reportControl)
         {
+            var source = this.DataSource;
+            if (source == null)
+            {
+                var newSource = DataBindingContext.Peek();
+                source = newSource as DataSourceBrowser;
+                if (source == null)
+                {
+                    source = new ObjectDataSourceBrowser(newSource);
+                }
+            }
+
             this.ExpressionEvaluator.Evaluate(new EvaluationContext
             {
                 Target = reportControl,
                 Expression = this.Expression,
-                Source = this.DataSource.Current
+                Source = source.Current
             });
         }
     }

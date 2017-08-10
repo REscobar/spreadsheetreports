@@ -29,9 +29,12 @@
                 }
                 else
                 {
-                    DataBindingContext.Push(this.DataSource.Current);
-                    sheets.AddRange(this.Sheets.Select(s => s.Generate()));
-                    DataBindingContext.Pop();
+                    while (this.DataSource.MoveNext())
+                    {
+                        DataBindingContext.Push(this.DataSource.Current);
+                        sheets.AddRange(this.Sheets.Select(s => s.Generate()));
+                        DataBindingContext.Pop();
+                    }
                 }
             }
             else

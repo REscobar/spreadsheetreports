@@ -119,17 +119,17 @@ namespace SpreadSheetsReports.Sandbox
             }
 
 
-            IReportRenderer renderer = new NPOIRenderer.NPOIRenderer();
-            var stream = File.Create("Workbook1.xlsx");
-            renderer.Render(definition).CopyTo(stream);
-            stream.Flush();
-            stream.Close();
+            //IReportRenderer renderer = new NPOIRenderer.NPOIRenderer();
+            //var stream = File.Create("Workbook1.xlsx");
+            //renderer.Render(definition).CopyTo(stream);
+            //stream.Flush();
+            //stream.Close();
 
 
 
             definition = BorderType();
-            renderer = new SpreadsheetLightRenderer.SpreadsheetLightRenderer();
-            stream = File.Create("BorderType.xlsx");
+            var renderer = new SpreadsheetLightRenderer.SpreadsheetLightRenderer();
+            var stream = File.Create("BorderType.xlsx");
             renderer.Render(definition).CopyTo(stream);
             stream.Flush();
             stream.Close();
@@ -142,12 +142,12 @@ namespace SpreadSheetsReports.Sandbox
             stream.Close();
 
 
-            definition = TestReport2();
-            renderer = new NPOIRenderer.NPOIRenderer();
-            stream = File.Create("BindingNpoi.xlsx");
-            renderer.Render(definition).CopyTo(stream);
-            stream.Flush();
-            stream.Close();
+            //definition = TestReport2();
+            //renderer = new NPOIRenderer.NPOIRenderer();
+            //stream = File.Create("BindingNpoi.xlsx");
+            //renderer.Render(definition).CopyTo(stream);
+            //stream.Flush();
+            //stream.Close();
 
             definition = TestReport2();
             renderer = new SpreadsheetLightRenderer.SpreadsheetLightRenderer();
@@ -156,14 +156,14 @@ namespace SpreadSheetsReports.Sandbox
             stream.Flush();
             stream.Close();
 
-            definition = TestReport3();
-            renderer = new NPOIRenderer.NPOIRenderer();
-            stream = File.Create("NestedNpoi.xlsx");
-            renderer.Render(definition).CopyTo(stream);
-            stream.Flush();
-            stream.Close();
+            //definition = TestReport3();
+            //renderer = new NPOIRenderer.NPOIRenderer();
+            //stream = File.Create("NestedNpoi.xlsx");
+            //renderer.Render(definition).CopyTo(stream);
+            //stream.Flush();
+            //stream.Close();
 
-            definition = TestReport3();
+            definition = DeepNest();
             renderer = new SpreadsheetLightRenderer.SpreadsheetLightRenderer();
             stream = File.Create("NestedSL.xlsx");
             renderer.Render(definition).CopyTo(stream);
@@ -6081,7 +6081,7 @@ namespace SpreadSheetsReports.Sandbox
             return report;
         }
 
-        private static ReportDefinition TestReport3()
+        private static ReportDefinition DeepNest()
         {
             var reportData = Enumerable.Range(1, 3).Select(i => new
             {
@@ -6101,10 +6101,7 @@ namespace SpreadSheetsReports.Sandbox
                 },
                 FontStyle = new DocumentModel.FontStyle
                 {
-                    Color = new DocumentModel.Color
-                    (
-                        red: 127
-                    )
+                    Color = new DocumentModel.Color(red: 127)
                 }
             };
 
@@ -6117,15 +6114,13 @@ namespace SpreadSheetsReports.Sandbox
                 HorizontalAlignment = DocumentModel.HorizontalAlignment.Right,
                 FontStyle = new DocumentModel.FontStyle
                 {
-                    Color = new DocumentModel.Color
-                    (
-                        green: 127
-                    )
+                    Color = new DocumentModel.Color(green: 127)
                 }
             };
 
             var report = new ReportDefinition
             {
+                DataSource = datasource,
                 Sheets = new List<ISheetGenerator>
                 {
                     new Sheet
@@ -6134,8 +6129,7 @@ namespace SpreadSheetsReports.Sandbox
                         {
                             new ExpressionBinding
                             {
-                                DataSource = datasource,
-                                Expression = "this.Name = param.Name",
+                                Expression = "this.Name = param.Name;",
                                 PropertyName = nameof(Sheet.Name),
                                 ExpressionEvaluator = new Evaluator.Antlr.AntlrEvaluator()
                             }
